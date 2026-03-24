@@ -25,6 +25,7 @@ export default function Header() {
         {/* Десктопне меню */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
           <Link href="/pro-nas" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Про нас</Link>
+          <Link href="/novyny" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Новини</Link>
           
           {/* Випадаюче меню */}
           <div className="relative group py-8">
@@ -38,15 +39,18 @@ export default function Header() {
             </div>
           </div>
 
-          <Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
-          <Link href="#" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
+          <Link href="/napryamky" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
+          <Link href="/komanda" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
           <ThemeToggle />
-          <button className="hidden md:block bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+          
+          {/* ТУТ ЗМІНА: Кнопка стала посиланням на /kontakty */}
+          <Link href="/kontakty" className="hidden md:flex bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
             Зв'язатися
-          </button>
+          </Link>
+          
           <button className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -63,6 +67,9 @@ export default function Header() {
             <nav className="flex flex-col gap-5 text-lg font-medium text-slate-700 dark:text-slate-200">
               <Link href="/pro-nas" onClick={closeMenu}>Про нас</Link>
               
+              {/* ТУТ ЗМІНА: Додано onClick={closeMenu} */}
+              <Link href="/novyny" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Новини</Link>
+              
               <div className="border-l-2 border-blue-500 pl-4 py-1 flex flex-col gap-4 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
                 <span className="text-sm text-slate-400 uppercase tracking-wider font-bold">Для пацієнта</span>
                 <Link href="/dlya-patsiyenta/dokumenty" onClick={closeMenu} className="text-base text-slate-600 dark:text-slate-300">Необхідні документи</Link>
@@ -70,12 +77,14 @@ export default function Header() {
                 <Link href="/dlya-patsiyenta/platni-poslugy" onClick={closeMenu} className="text-base text-slate-600 dark:text-slate-300">Платні послуги</Link>
               </div>
 
-              <Link href="#" onClick={closeMenu}>Напрямки</Link>
-              <Link href="#" onClick={closeMenu}>Команда</Link>
+              <Link href="/napryamky" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
+              <Link href="/komanda" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
             </nav>
-            <button className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-blue-700 transition">
-              Зателефонувати нам
-            </button>
+            
+            {/* ТУТ ЗМІНА: Кнопка стала посиланням на /kontakty і закриває меню */}
+            <Link href="/kontakty" onClick={closeMenu} className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-blue-700 transition text-center block">
+              Зв'язатися з нами
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

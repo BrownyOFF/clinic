@@ -1,5 +1,4 @@
-// components/Facts.tsx
-"use client"; // Також Client Component
+"use client";
 
 import Image from 'next/image';
 import { motion, Variants } from 'framer-motion';
@@ -20,7 +19,6 @@ const facts = [
 ];
 
 const Facts = () => {
-  // Явно вказуємо тип : Variants
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: { 
@@ -36,26 +34,27 @@ const Facts = () => {
   };
 
   return (
-    <section className="bg-slate-50 py-24 md:py-32">
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-bold text-center text-blue-950 mb-16 tracking-tight max-w-3xl mx-auto">
-          12 фактів про Центр медичної реабілітації <span className="text-blue-700">Вітрила Життя</span>
+    <section className="py-24 transition-colors duration-500 relative z-10">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Заголовок тепер підтримує темну тему */}
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 dark:text-white mb-16 tracking-tight max-w-3xl mx-auto transition-colors">
+          12 фактів про Центр медичної реабілітації <span className="text-blue-600 dark:text-blue-400">Вітрила Життя</span>
         </h2>
         
-        {/* Ми додаємо анімацію не на всю сітку, а на кожну картку окремо */}
+        {/* Повернув вашу сітку з 4 колонок (xl:grid-cols-4) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {facts.map((fact, index) => (
+          {facts.map((fact) => (
             <motion.div 
               key={fact.id} 
-              className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 group"
+              // МАГІЯ ТУТ: напівпрозорий фон та класи dark:
+              className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[32px] overflow-hidden shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-xl dark:hover:shadow-blue-900/10 transition-all duration-300 group flex flex-col"
               variants={cardVariants}
-              initial="hidden" // Починаємо як "прихований"
-              whileInView="visible" // Запускаємо анімацію появу "whileInView" (коли в області видимості)
-              viewport={{ once: true, amount: 0.2 }} // Тільки один раз (при першому скролі) і коли 20% картки видно
-              // Можна також додати затримку для staggered ефекту, якщо це сітка,
-              // але simple approach per card працює краще для скролу.
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
             >
-              <div className="relative h-60 w-full overflow-hidden">
+              <div className="relative h-56 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
                 <Image 
                   src={fact.img} 
                   alt={fact.title} 
@@ -63,11 +62,11 @@ const Facts = () => {
                   className="object-cover object-center group-hover:scale-105 transition duration-500"
                 />
               </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-blue-900 mb-4 tracking-tight">
+              <div className="p-8 flex-grow flex flex-col justify-center">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight transition-colors">
                   {fact.title}
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed transition-colors">
                   {fact.desc}
                 </p>
               </div>
