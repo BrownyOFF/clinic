@@ -47,12 +47,11 @@ export default function ContactsPage() {
     });
 
     try {
-      // 4. Відправляємо на сервер Web3Forms
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Замініть посилання на Web3Forms на ваш локальний шлях:
+      const response = await fetch("/api/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json"
         },
         body: JSON.stringify(data),
       });
@@ -125,7 +124,7 @@ export default function ContactsPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Email</p>
-                    <a href="mailto:3brownjohn3@gmail.com" className="text-slate-600 dark:text-slate-400 text-sm mt-1 hover:text-amber-600 transition-colors block">3brownjohn3@gmail.com</a>
+                    <a href="mailto:3brownjohn3@gmail.com" className="text-slate-600 dark:text-slate-400 text-sm mt-1 hover:text-amber-600 transition-colors block">baby_house@ukr.net</a>
                   </div>
                 </div>
 

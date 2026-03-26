@@ -117,7 +117,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} Вітрила Життя. Всі права захищені.</p>
+        <p>© {new Date().getFullYear()} КНП «ЦМР та ПДД» ЖОР (Вітрила Життя). Всі права захищені.</p>
         <p className="mt-2 md:mt-0">Житомир, Україна</p>
       </div>
     </footer>
