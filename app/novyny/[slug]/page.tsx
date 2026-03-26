@@ -13,7 +13,6 @@ export function generateStaticParams() {
   }));
 }
 
-// ТУТ ГОЛОВНА ЗМІНА: додали async та Promise
 export default async function NewsArticle({ params }: { params: Promise<{ slug: string }> }) {
   // Розпаковуємо параметри (чекаємо, поки Next.js їх прочитає)
   const resolvedParams = await params;
@@ -66,11 +65,30 @@ export default async function NewsArticle({ params }: { params: Promise<{ slug: 
             />
           </div>
 
-          {/* Текст статті */}
-          <div className="prose prose-lg dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed space-y-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
-            {newsItem.content.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
+          {/* МАГІЯ ТУТ: Розумний рендер тексту статті */}
+          <div className="prose prose-lg dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+            {newsItem.content.map((block: any, index: number) => {
+              if (block.type === "paragraph") {
+                return (
+                  <p key={index} className="mb-6" dangerouslySetInnerHTML={{ __html: block.value }} />
+                );
+              }
+              if (block.type === "heading") {
+                return (
+                  <h2 key={index} className="text-2xl md:text-3xl font-bold mt-10 mb-4 text-slate-900 dark:text-white" dangerouslySetInnerHTML={{ __html: block.value }} />
+                );
+              }
+              if (block.type === "list") {
+                return (
+                  <ul key={index} className="list-disc pl-6 mb-6 space-y-2 marker:text-blue-500">
+                    {block.items.map((item: string, i: number) => (
+                      <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
+                    ))}
+                  </ul>
+                );
+              }
+              return null;
+            })}
           </div>
         </article>
 

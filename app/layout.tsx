@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./components/ThemeProvider"; // Або відносний шлях, якщо ви так налаштували
+import { ThemeProvider } from "@/app/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["cyrillic", "latin"] });
+// 1. Імпортуємо GoogleAnalytics
+import { GoogleAnalytics } from '@next/third-parties/google';
+
+const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
 export const metadata: Metadata = {
   title: "Вітрила Життя | Центр медичної реабілітації",
-  description: "Сучасний центр медичної реабілітації у Житомирі.",
+  description: "Комунальне некомерційне підприємство «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради.",
 };
 
 export default function RootLayout({
@@ -16,13 +19,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // suppressHydrationWarning потрібен для next-themes
-    <html lang="uk" suppressHydrationWarning>
+    // Обов'язково додайте suppressHydrationWarning сюди, якщо використовуєте темну тему
+    <html lang="uk" suppressHydrationWarning> 
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>
+
+      {/* 2. Вставляємо компонент і ваш ID */}
+      <GoogleAnalytics gaId="G-RSQEJVSJFQ" /> 
+      
     </html>
   );
 }
