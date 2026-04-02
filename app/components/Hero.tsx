@@ -3,6 +3,7 @@
 import { motion, Variants } from "framer-motion";
 import { ShieldCheck, ArrowRight, PhoneCall } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link"; // 1. Обов'язково додаємо імпорт Link
 
 export default function Hero() {
   const fadeUp: Variants = {
@@ -26,7 +27,6 @@ export default function Hero() {
             <span className="truncate">Державний медичний заклад</span>
           </motion.div>
           
-          {/* ТУТ ГОЛОВНА ЗМІНА: text-4xl для мобільних */}
           <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-6 transition-colors">
             Простір <span className="text-blue-600 dark:text-blue-400">турботи</span>, підтримки та відновлення.
           </motion.h1>
@@ -36,18 +36,26 @@ export default function Hero() {
           </motion.p>
           
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 md:gap-4">
-            <button className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-blue-600 text-white rounded-xl md:rounded-2xl font-semibold hover:bg-blue-700 transition shadow-xl shadow-blue-600/30 flex items-center justify-center gap-2 group">
+            {/* 2. Замінюємо button на Link і додаємо href */}
+            <Link 
+              href="/kontakty" 
+              className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-blue-600 text-white rounded-xl md:rounded-2xl font-semibold hover:bg-blue-700 transition shadow-xl shadow-blue-600/30 flex items-center justify-center gap-2 group"
+            >
               Записатися на прийом
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-            <button className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl md:rounded-2xl font-semibold hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center justify-center gap-2">
-              <PhoneCall size={18} className="text-slate-400 dark:text-slate-400" />
+            </Link>
+
+            {/* 3. Замінюємо button на тег <a> для дзвінка */}
+            <a 
+              href="tel:+380674572828" 
+              className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-xl md:rounded-2xl font-semibold hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center justify-center gap-2 hover:text-blue-600 dark:hover:text-blue-400"
+            >
+              <PhoneCall size={18} className="text-slate-400 dark:text-slate-400 transition-colors" />
               (067) 457-28-28
-            </button>
+            </a>
           </motion.div>
         </motion.div>
 
-        {/* Фото на мобільному тепер виглядає гармонійно */}
         <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-6 relative aspect-[4/3] md:aspect-[5/4] rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200 dark:shadow-none border-4 border-white dark:border-slate-800 transition-colors w-full">
           <Image src="/images/fact1.jpg" alt="Дитина з реабілітологом" fill className="object-cover object-center" priority />
         </motion.div>

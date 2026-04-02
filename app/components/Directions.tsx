@@ -40,7 +40,7 @@ export default function Directions() {
                   <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 transition-colors">
                       Сучасне обладнання та індивідуальні програми для кожної дитини. З нами працюють кращі лікарі, реабілітологи та логопеди для досягнення максимального результату відновлення.
                   </p>
-                  <Link href="#" className="inline-flex items-center gap-2 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition">
+                  <Link href="napryamky" className="inline-flex items-center gap-2 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition">
                       Дізнатися більше <ArrowRight size={16} />
                   </Link>
               </div>
@@ -87,7 +87,7 @@ export default function Directions() {
                   </div>
                   <p className="text-slate-300 leading-relaxed max-w-lg mb-8">Ми об'єднали вузькопрофільних спеціалістів, щоб дитина отримувала комплексну допомогу в одному місці.</p>
               </div>
-              <Link href="#" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold transition group">
+              <Link href="komanda" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold transition group">
                 Познайомитись з командою <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

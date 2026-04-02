@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/app/components/ThemeProvider";
 
 // 1. Імпортуємо GoogleAnalytics
 import { GoogleAnalytics } from '@next/third-parties/google';
+// 2. Імпортуємо нашу нову кнопку
+import ScrollToTop from "@/app/components/ScrollToTop";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -29,10 +31,13 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          
+          {/* 3. Вставляємо кнопку, щоб вона відображалася поверх усіх сторінок */}
+          <ScrollToTop />
         </ThemeProvider>
       </body>
 
-      {/* 2. Вставляємо компонент і ваш ID */}
+      {/* Вставляємо компонент аналітики і ваш ID */}
       <GoogleAnalytics gaId="G-RSQEJVSJFQ" /> 
       
     </html>

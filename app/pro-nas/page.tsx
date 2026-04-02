@@ -152,7 +152,9 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-3xl font-bold mb-4">Державні гарантії та ліцензії</h2>
-            <p className="text-slate-600 dark:text-slate-400">Підприємство є медичним закладом вищого рівня акредитації та надає безкоштовні послуги за договорами з Національною службою здоров'я України.</p>
+            <p className="text-slate-600 dark:text-slate-400">
+                Підприємство є медичним закладом вищого рівня акредитації та надає <span className="font-bold text-blue-600 dark:text-blue-400">безкоштовні</span> послуги за договорами з Національною службою здоров'я України.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
