@@ -5,6 +5,10 @@ import { ThemeProvider } from "@/app/components/ThemeProvider";
 
 // 1. Імпортуємо GoogleAnalytics
 import { GoogleAnalytics } from '@next/third-parties/google';
+
+// 1. Імпортуємо заставку
+import SplashScreen from "@/app/components/SplashScreen";
+
 // 2. Імпортуємо нашу нову кнопку
 import ScrollToTop from "@/app/components/ScrollToTop";
 
@@ -24,6 +28,10 @@ export default function RootLayout({
     // Обов'язково додайте suppressHydrationWarning сюди, якщо використовуєте темну тему
     <html lang="uk" suppressHydrationWarning> 
       <body className={inter.className}>
+
+        {/* 2. Ставимо заставку сюди, щоб вона перекривала все */}
+        <SplashScreen />
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
