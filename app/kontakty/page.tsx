@@ -23,12 +23,7 @@ export default function ContactsPage() {
     const formData = new FormData(e.currentTarget);
     const data: Record<string, any> = {};
 
-    // 1. Обов'язкові налаштування Web3Forms
-    data['access_key'] = '80d35c41-da71-47af-8dfa-e2ad941562a2'; // <--- ВСТАВТЕ ВАШ КЛЮЧ ОСЬ ТУТ
-    data['subject'] = 'Нова анкета пацієнта з сайту!';
-    data['from_name'] = 'Сайт Вітрила Життя';
-
-    // 2. Збираємо дані форми
+    // 1. Збираємо дані форми
     formData.forEach((value, key) => {
       if (key.endsWith('[]')) {
         const cleanKey = key.replace('[]', '');
@@ -39,7 +34,7 @@ export default function ContactsPage() {
       }
     });
 
-    // 3. Об'єднуємо лікарів через кому
+    // 2. Об'єднуємо масиви (наприклад, обраних лікарів) через кому
     Object.keys(data).forEach((key) => {
       if (Array.isArray(data[key])) {
         data[key] = data[key].join(', ');
@@ -47,7 +42,7 @@ export default function ContactsPage() {
     });
 
     try {
-      // Замініть посилання на Web3Forms на ваш локальний шлях:
+      // 3. Відправляємо на наш власний безпечний API маршрут
       const response = await fetch("/api/send", {
         method: "POST",
         headers: {
@@ -124,7 +119,7 @@ export default function ContactsPage() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Email</p>
-                    <a href="mailto:3brownjohn3@gmail.com" className="text-slate-600 dark:text-slate-400 text-sm mt-1 hover:text-amber-600 transition-colors block">baby_house@ukr.net</a>
+                    <a href="mailto:baby_house@ukr.net" className="text-slate-600 dark:text-slate-400 text-sm mt-1 hover:text-amber-600 transition-colors block">baby_house@ukr.net</a>
                   </div>
                 </div>
 

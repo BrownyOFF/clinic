@@ -3,56 +3,33 @@
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
-import Header from "@/app/components/Header"; // Перевірте свій шлях
-import Footer from "@/app/components/Footer"; // Перевірте свій шлях
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 
 // Категорії для фільтрації
 const categories = ["Всі", "Керівництво", "Лікарі", "Фахівці з реабілітації", "Психологи та Логопеди"];
 
-// Масив співробітників (підставте реальні імена та назви файлів)
+// Масив співробітників
 const teamMembers = [
-  {
-    id: 1,
-    name: "Тетяна Шевченко",
-    role: "В.о. директора, дитячий психіатр, дитячий невролог",
-    category: "Керівництво",
-    image: "/images/shevckenko.jpg", // Фото керівника
-  },
-  {
-    id: 2,
-    name: "Ім'я Прізвище 1",
-    role: "Лікар фізичної та реабілітаційної медицини (ФРМ)",
-    category: "Лікарі",
-    image: "/images/image_0f9825.jpg", // Фото зі скану
-  },
-  {
-    id: 3,
-    name: "Ім'я Прізвище 2",
-    role: "Ерготерапевт",
-    category: "Фахівці з реабілітації",
-    image: "/images/image_0f9844.jpg", // Фото зі скану
-  },
-  {
-    id: 4,
-    name: "Ім'я Прізвище 3",
-    role: "Фізичний терапевт",
-    category: "Фахівці з реабілітації",
-    image: "/images/image_0f9864.jpg", // Фото зі скану
-  },
-  {
-    id: 5,
-    name: "Ім'я Прізвище 4",
-    role: "Лікар-педіатр",
-    category: "Лікарі",
-    image: "/images/logo.jpg", // Заглушка
-  },
-  {
-    id: 6,
-    name: "Ім'я Прізвище 5",
-    role: "Логопед-дефектолог",
-    category: "Психологи та Логопеди",
-    image: "/images/logo.jpg", // Заглушка
-  },
+  { id: 1, name: "Тетяна Шевченко", role: "В.о. директора, дитячий психіатр, дитячий невролог", category: "Керівництво", image: "/images/shevckenko.jpg" },
+  { id: 2, name: "Левківська Кароліна", role: "Завідувач паліативним відділенням, лікар-педіатр", category: "Лікарі", image: "/images/Levkivska.png" },
+  { id: 3, name: "Машталер Тетяна", role: "Лікар - невролог, Лікар - ФРМ", category: "Лікарі", image: "/images/Mashtaler.png" },
+  { id: 4, name: "Кобилінська Віра", role: "Лікар-психіатр дитячий", category: "Лікарі", image: "/images/Kobulinska.png" },
+  { id: 5, name: "Шевчук Євгенія", role: "Фізичний терапевт, ерготерапевт", category: "Лікарі", image: "/images/Shevchyk.png" },
+  { id: 6, name: "Щербак Олександр", role: "Лікар-хірург дитячий", category: "Лікарі", image: "/images/Sherbak.png" },
+  { id: 7, name: "Фурман Олесандра", role: "Клінічний психолог", category: "Психологи та Логопеди", image: "/images/Furman.png" },
+  { id: 8, name: "Шадура Світлана", role: "Асистент фізичного терапевта", category: "Фахівці з реабілітації", image: "/images/Shadyra.jpg" },
+  { id: 9, name: "Михальчук Віта", role: "Асистент ерготерапевта", category: "Фахівці з реабілітації", image: "/images/Muchalchyk.jpg" },
+  { id: 10, name: "Гераймович Світлана", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Heraimovich.jpg" },
+  { id: 11, name: "Бондарчу Олена", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Bondarchyk.jpg" },
+  { id: 12, name: "Дмитрук Алла", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Dmitryk.jpg" },
+  { id: 13, name: "Чумакевич Оксана", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Chymackevich.png" },
+  { id: 14, name: "Ковальова Ольга", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Kovaloyva.png" },
+  { id: 15, name: "Зозуля Світлана", role: "Вчитель - дефектолог", category: "Психологи та Логопеди", image: "/images/Zozyla.jpg" },
+  { id: 16, name: "Матвієнко Ганна", role: "Музичний керівник", category: "Психологи та Логопеди", image: "/images/Maatvienko.png" },
+  { id: 17, name: "Мельничук Дарина", role: "Вчитель - дефектолог", category: "Психологи та Логопеди", image: "/images/Melnichyk.png" }
 ];
 
 export default function TeamPage() {
@@ -63,7 +40,6 @@ export default function TeamPage() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  // Фільтруємо команду залежно від обраної категорії
   const filteredTeam = teamMembers.filter(member => 
     activeCategory === "Всі" || member.category === activeCategory
   );
@@ -71,7 +47,6 @@ export default function TeamPage() {
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-slate-50 transition-colors duration-500 overflow-x-hidden">
       
-      {/* АБСТРАКТНИЙ ФОН */}
       <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
          <div className="absolute left-0 right-0 top-[-10%] -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-500 dark:bg-blue-700 opacity-20 dark:opacity-30 blur-[100px]"></div>
@@ -81,7 +56,6 @@ export default function TeamPage() {
 
       <main className="py-16 md:py-24 relative z-10">
         
-        {/* ШАПКА СТОРІНКИ */}
         <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white">
@@ -93,7 +67,6 @@ export default function TeamPage() {
           </motion.div>
         </div>
 
-        {/* ФІЛЬТРИ */}
         <div className="max-w-7xl mx-auto px-6 mb-12">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.1 }} className="flex flex-wrap justify-center gap-2 md:gap-4">
             {categories.map((category) => (
@@ -112,8 +85,7 @@ export default function TeamPage() {
           </motion.div>
         </div>
 
-        {/* СІТКА СПІВРОБІТНИКІВ */}
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 mb-24">
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <AnimatePresence>
               {filteredTeam.map((member) => (
@@ -126,17 +98,9 @@ export default function TeamPage() {
                   transition={{ duration: 0.3 }}
                   className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-shadow group"
                 >
-                  {/* ФОТО */}
                   <div className="relative aspect-[4/5] overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <Image 
-                      src={member.image} 
-                      alt={member.name} 
-                      fill 
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-700" 
-                    />
+                    <Image src={member.image} alt={member.name} fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
                   </div>
-                  
-                  {/* ІНФОРМАЦІЯ */}
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{member.name}</h3>
                     <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-3">{member.category}</p>
@@ -155,6 +119,25 @@ export default function TeamPage() {
             </div>
           )}
         </div>
+
+        {/* НОВА СЕКЦІЯ: ЗАКЛИК ДО РОБОТИ */}
+        <section className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 rounded-3xl p-10 md:p-14">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
+              Ви молоді і амбітні, готові до навчання?
+            </h2>
+            <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
+              Чекаємо Вас в нашій команді! Надішліть свою анкету, і ми зв'яжемося з вами для обговорення кар'єрних можливостей.
+            </p>
+            <Link 
+              href="/vakansiyi" 
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/30 group"
+            >
+              Заповнити анкету кандидата
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </section>
 
       </main>
 

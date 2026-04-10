@@ -16,12 +16,36 @@ export default function AboutPage() {
   };
 
   const nszuPackages = [
-    { id: "23", title: "Стаціонарна паліативна медична допомога" },
-    { id: "24", title: "Мобільна паліативна медична допомога" },
-    { id: "25", title: "Медична реабілітація немовлят (до 3 років)" },
-    { id: "53", title: "Реабілітаційна допомога у стаціонарних умовах" },
-    { id: "54", title: "Реабілітаційна допомога в амбулаторних умовах" },
-    { id: "86", title: "Програма «Раннє втручання»" },
+    { 
+      id: "23", 
+      title: "Стаціонарна паліативна медична допомога",
+      description: "Комплексний медичний догляд, знеболення та цілодобова підтримка в умовах стаціонару для пацієнтів із важкими захворюваннями."
+    },
+    { 
+      id: "24", 
+      title: "Мобільна паліативна медична допомога",
+      description: "Виїзна медична, соціальна та психологічна допомога пацієнтам безпосередньо за місцем їхнього перебування (вдома)."
+    },
+    { 
+      id: "25", 
+      title: "Медична реабілітація немовлят (до 3 років)",
+      description: "Раннє втручання та реабілітаційні заходи для малюків, які народилися передчасно або мають вроджені патології."
+    },
+    { 
+      id: "53", 
+      title: "Реабілітаційна допомога у стаціонарних умовах",
+      description: "Інтенсивна комплексна реабілітація під цілодобовим наглядом мультидисциплінарної команди фахівців."
+    },
+    { 
+      id: "54", 
+      title: "Реабілітаційна допомога в амбулаторних умовах",
+      description: "Реабілітаційні заняття та процедури за графіком, без необхідності цілодобового перебування в нашому центрі."
+    },
+    { 
+      id: "86", 
+      title: "Програма «Раннє втручання»",
+      description: "Міждисциплінарна допомога дітям раннього віку з порушеннями розвитку, а також психологічна підтримка їхніх родин."
+    },
   ];
 
   return (
@@ -163,8 +187,16 @@ export default function AboutPage() {
                 <motion.div 
                   key={pkg.id}
                   initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
-                  className="bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex gap-4 items-start hover:shadow-md transition-shadow"
+                  // 1. Додано relative, group та cursor-help
+                  className="relative group bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex gap-4 items-start hover:shadow-md transition-shadow cursor-help"
                 >
+                  {/* 2. БЛОК ПІДКАЗКИ (Вспливає при наведенні) */}
+                  <div className="absolute z-20 bottom-full left-0 mb-3 w-full bg-slate-800 dark:bg-slate-700 text-white text-xs leading-relaxed p-4 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-xl pointer-events-none">
+                    {pkg.description}
+                    {/* Декоративний трикутник внизу підказки */}
+                    <div className="absolute top-full left-8 border-4 border-transparent border-t-slate-800 dark:border-t-slate-700"></div>
+                  </div>
+
                   <div className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-bold px-3 py-1 rounded-lg shrink-0">
                     №{pkg.id}
                   </div>
