@@ -2,15 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
-
-// 1. Імпортуємо GoogleAnalytics
 import { GoogleAnalytics } from '@next/third-parties/google';
-
-// 1. Імпортуємо заставку
-import SplashScreen from "@/app/components/SplashScreen";
-
-// 2. Імпортуємо нашу нову кнопку
 import ScrollToTop from "@/app/components/ScrollToTop";
+import SplashScreen from "@/app/components/SplashScreen";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -64,28 +58,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // Обов'язково додайте suppressHydrationWarning сюди, якщо використовуєте темну тему
     <html lang="uk" suppressHydrationWarning> 
+      {/* 1. Пряма вказівка на іконку */}
       <head>
-        {/* Примусово кажемо браузеру шукати іконку тут */}
-        <link rel="icon" href="public/images/logo.png" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
       </head>
-      <body className={`${inter.className} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50`}>
+      
+      <body className={inter.className}>
         <SplashScreen />
+
+        {/* 2. ГЛОБАЛЬНИЙ ФОН: Тепер він не зникає при перемиканні вкладок! */}
+        <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
+           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+           <div className="absolute left-0 right-0 top-[-10%] -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-500 dark:bg-blue-700 opacity-20 dark:opacity-30 blur-[100px]"></div>
+        </div>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-        {children}
-        <ScrollToTop />
+          {children}
+          <ScrollToTop />
         </ThemeProvider>
       </body>
-
-      {/* Вставляємо компонент аналітики і ваш ID */}
       <GoogleAnalytics gaId="G-RSQEJVSJFQ" /> 
-      
     </html>
   );
 }

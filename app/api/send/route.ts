@@ -19,10 +19,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Формуємо повідомлення
-    let message = `Нова заявка з сайту!\n\n`;
+   // 2. Формуємо повідомлення (БЕЗПЕЧНИЙ HTML)
+    let message = `<b>Нова заявка з сайту!</b>\n\n`;
     for (const [key, value] of Object.entries(data)) {
-      message += `*${key}:* ${value}\n`;
+      message += `<b>${key}:</b> ${value}\n`;
     }
 
     // 3. Відправляємо в Telegram
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         chat_id: chatId,
         text: message,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML', // Змінили на HTML для надійності
       }),
     });
 
