@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const runtime = 'edge'; // cloudflare
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
