@@ -5,6 +5,7 @@ import { Calendar, ArrowLeft } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { newsData } from "@/app/data/news";
+import PhotoCarousel from "@/app/components/PhotoCarousel";
 
 // Генерація статичних шляхів
 export function generateStaticParams() {
@@ -54,18 +55,22 @@ export default async function NewsArticle({ params }: { params: Promise<{ slug: 
             {newsItem.title}
           </h1>
 
-          {/* Головне фото новини */}
-          <div className="relative w-full aspect-[21/9] md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 shadow-xl shadow-slate-200 dark:shadow-none border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-            <Image 
-              src={newsItem.image} 
-              alt={newsItem.title} 
-              fill 
-              className="object-cover object-center" 
-              priority
-            />
-          </div>
+          {/* МАГИЯ ЗДЕСЬ: Если у новости есть массив images, показываем карусель. Иначе - обычное фото */}
+          {newsItem.images && newsItem.images.length > 0 ? (
+            <PhotoCarousel images={newsItem.images} />
+          ) : (
+            <div className="relative w-full aspect-[21/9] md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 shadow-xl shadow-slate-200 dark:shadow-none border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+              <Image 
+                src={newsItem.image} 
+                alt={newsItem.title} 
+                fill 
+                className="object-cover object-center" 
+                priority
+              />
+            </div>
+          )}
 
-          {/* МАГІЯ ТУТ: Розумний рендер тексту статті */}
+          {/* Розумний рендер тексту статті */}
           <div className="prose prose-lg dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
             {newsItem.content.map((block: any, index: number) => {
               if (block.type === "paragraph") {
