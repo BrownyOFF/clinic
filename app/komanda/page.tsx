@@ -88,7 +88,7 @@ export default function TeamPage() {
         <div className="max-w-7xl mx-auto px-6 mb-24">
           <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <AnimatePresence>
-              {filteredTeam.map((member) => (
+              {filteredTeam.map((member, index) => (
                 <motion.div
                   layout
                   key={member.id}
@@ -99,7 +99,7 @@ export default function TeamPage() {
                   className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-shadow group"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <Image src={member.image} alt={member.name} fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+                    <Image src={member.image} alt={member.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" priority={index < 4} className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{member.name}</h3>

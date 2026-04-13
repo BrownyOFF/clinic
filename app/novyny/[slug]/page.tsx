@@ -59,6 +59,7 @@ export default async function NewsArticle({ params }: { params: Promise<{ slug: 
                 src={newsItem.image} 
                 alt={newsItem.title} 
                 fill 
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                 className="object-cover object-center" 
                 priority
               />

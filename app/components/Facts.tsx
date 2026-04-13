@@ -59,6 +59,8 @@ const Facts = () => {
                   src={fact.img} 
                   alt={fact.title} 
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  priority={fact.id <= 4}
                   className="object-cover object-center group-hover:scale-105 transition duration-500"
                 />
               </div>

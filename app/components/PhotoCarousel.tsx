@@ -51,10 +51,11 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
             {images.map((src, index) => (
               <div 
                 key={index} 
-                className="relative w-full md:w-[85%] shrink-0 aspect-video md:aspect-[21/9] snap-center rounded-[32px] overflow-hidden shadow-md cursor-zoom-in group/photo"
+                className="relative w-full md:w-[85%] shrink-0 aspect-video md:aspect-[21/9] snap-center rounded-[32px] overflow-hidden shadow-md cursor-zoom-in group/photo bg-slate-200 dark:bg-slate-800 та animate-pulse"
                 onClick={() => setSelectedImage(src)}
               >
-                <Image src={src} alt={`Фото ${index + 1}`} fill className="object-cover group-hover/photo:scale-105 transition-transform duration-700" priority={index === 0} />
+                <Image src={src} alt={`Фото ${index + 1}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px" className="object-cover group-hover/photo:scale-105 transition-transform duration-700" priority={index === 0} 
+  loading={index === 0 ? "eager" : "lazy"} />
                 <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full pointer-events-none">
                   {index + 1} / {images.length}
                 </div>
