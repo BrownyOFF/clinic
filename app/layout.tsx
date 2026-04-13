@@ -66,21 +66,20 @@ export default function RootLayout({
   return (
     // Обов'язково додайте suppressHydrationWarning сюди, якщо використовуєте темну тему
     <html lang="uk" suppressHydrationWarning> 
-      <body className={inter.className}>
-
-        {/* 2. Ставимо заставку сюди, щоб вона перекривала все */}
+      <head>
+        {/* Примусово кажемо браузеру шукати іконку тут */}
+        <link rel="icon" href="public/images/logo.png" sizes="any" />
+      </head>
+      <body className={`${inter.className} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50`}>
         <SplashScreen />
-        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          
-          {/* 3. Вставляємо кнопку, щоб вона відображалася поверх усіх сторінок */}
-          <ScrollToTop />
+        {children}
+        <ScrollToTop />
         </ThemeProvider>
       </body>
 
