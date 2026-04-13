@@ -7,6 +7,8 @@ import Footer from "@/app/components/Footer";
 import { newsData } from "@/app/data/news";
 import PhotoCarousel from "@/app/components/PhotoCarousel";
 
+export const runtime = 'edge';
+
 export default async function NewsArticle({ params }: { params: Promise<{ slug: string }> }) {
   // Розпаковуємо параметри (чекаємо, поки Next.js їх прочитає)
   const resolvedParams = await params;
