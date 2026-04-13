@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="lg:col-span-4">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1">
-               <Image src="/images/logo.jpg" alt="Логотип Вітрила Життя" width={40} height={40} className="rounded-full object-contain" />
+               <Image src="/images/logo.png" alt="Логотип Вітрила Життя" width={40} height={40} className="rounded-full object-contain" />
             </div>
             <span className="text-xl font-bold text-white tracking-tight">Вітрила Життя</span>
           </div>

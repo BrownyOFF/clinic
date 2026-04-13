@@ -46,7 +46,7 @@ export default function SplashScreen() {
           >
             <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center p-2 shadow-2xl shadow-blue-500/20">
               <Image 
-                src="/images/logo.jpg" 
+                src="/images/logo.png" 
                 alt="Логотип Вітрила Життя" 
                 width={100} 
                 height={100} 

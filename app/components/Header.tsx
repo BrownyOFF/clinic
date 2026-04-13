@@ -17,7 +17,7 @@ export default function Header() {
         
         <Link href="/" className="flex items-center gap-3 md:gap-4 z-50">
           <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-blue-100 dark:border-slate-700 p-0.5 md:p-1 bg-white dark:bg-slate-800 shadow-inner flex-shrink-0">
-              <Image src="/images/logo.jpg" alt="Логотип" fill className="object-contain object-center" priority />
+              <Image src="/images/logo.png" alt="Логотип" fill className="object-contain object-center" priority />
           </div>
           <span className="text-xl md:text-2xl font-bold text-slate-800 dark:text-white tracking-tight truncate">Вітрила Життя</span>
         </Link>
