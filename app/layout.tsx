@@ -32,6 +32,10 @@ export const metadata: Metadata = {
     "ЦМР та ПДД ЖОР"
   ],
   
+  icons: {
+    icon: 'public/icon.png',
+  },
+
   openGraph: {
     title: "Вітрила Життя | Центр медичної реабілітації",
     description: "Комплексна медична реабілітація та паліативна допомога дітям у Житомирі.",
