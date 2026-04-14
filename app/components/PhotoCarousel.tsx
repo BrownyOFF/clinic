@@ -36,10 +36,18 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
       {/* --- ОСНОВНА КАРУСЕЛЬ (Або одне фото) --- */}
       {images.length === 1 ? (
         <div 
-          className="relative w-full aspect-video md:aspect-[21/9] rounded-[32px] overflow-hidden mb-10 shadow-lg cursor-zoom-in group"
+          className="relative w-full aspect-video md:aspect-[21/9] rounded-[32px] overflow-hidden mb-10 shadow-lg cursor-zoom-in group bg-slate-200 dark:bg-slate-800"
           onClick={() => setSelectedImage(images[0])}
         >
-          <Image src={images[0]} alt="Фото новини" fill className="object-cover group-hover:scale-105 transition-transform duration-700" priority />
+          <Image 
+            src={images[0]} 
+            alt="Фото новини" 
+            fill 
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+            className="object-cover group-hover:scale-105 transition-transform duration-700" 
+            priority 
+            unoptimized
+          />
         </div>
       ) : (
         <div className="relative w-full mb-10 group">
@@ -50,12 +58,19 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
           >
             {images.map((src, index) => (
               <div 
-                key={index} 
-                className="relative w-full md:w-[85%] shrink-0 aspect-video md:aspect-[21/9] snap-center rounded-[32px] overflow-hidden shadow-md cursor-zoom-in group/photo bg-slate-200 dark:bg-slate-800 та animate-pulse"
+                key={`${src}-${index}`} 
+                className="relative w-full md:w-[85%] shrink-0 aspect-video md:aspect-[21/9] snap-center rounded-[32px] overflow-hidden shadow-md cursor-zoom-in group/photo bg-slate-200 dark:bg-slate-800"
                 onClick={() => setSelectedImage(src)}
               >
-                <Image src={src} alt={`Фото ${index + 1}`} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px" className="object-cover group-hover/photo:scale-105 transition-transform duration-700" priority={index === 0} 
-  loading={index === 0 ? "eager" : "lazy"} />
+                <Image 
+                  src={src} 
+                  alt={`Фото ${index + 1}`} 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px" 
+                  className="object-cover group-hover/photo:scale-105 transition-transform duration-700" 
+                  priority
+                  unoptimized 
+                />
                 <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full pointer-events-none">
                   {index + 1} / {images.length}
                 </div>
@@ -115,8 +130,9 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
                 src={selectedImage} 
                 alt="Збільшене фото" 
                 fill 
-                className="object-contain" // object-contain гарантує, що фото поміститься цілком без обрізки
+                className="object-contain" 
                 priority
+                unoptimized
               />
             </motion.div>
 
