@@ -41,12 +41,12 @@ export default function Header() {
 
           <Link href="/napryamky" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
           <Link href="/komanda" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
+          <Link href="/vakansiyi" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Вакансії</Link>
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
           <ThemeToggle />
           
-          {/* ТУТ ЗМІНА: Кнопка стала посиланням на /kontakty */}
           <Link href="/kontakty" className="hidden md:flex bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
             Зв'язатися
           </Link>
@@ -66,8 +66,6 @@ export default function Header() {
           >
             <nav className="flex flex-col gap-5 text-lg font-medium text-slate-700 dark:text-slate-200">
               <Link href="/pro-nas" onClick={closeMenu}>Про нас</Link>
-              
-              {/* ТУТ ЗМІНА: Додано onClick={closeMenu} */}
               <Link href="/novyny" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Новини</Link>
               
               <div className="border-l-2 border-blue-500 pl-4 py-1 flex flex-col gap-4 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
@@ -79,9 +77,9 @@ export default function Header() {
 
               <Link href="/napryamky" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
               <Link href="/komanda" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
+              <Link href="/vakansiyi" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Вакансії</Link>
             </nav>
             
-            {/* ТУТ ЗМІНА: Кнопка стала посиланням на /kontakty і закриває меню */}
             <Link href="/kontakty" onClick={closeMenu} className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-blue-700 transition text-center block">
               Зв'язатися з нами
             </Link>

@@ -9,11 +9,11 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 
 // Категорії для фільтрації
-const categories = ["Всі", "Керівництво", "Лікарі", "Фахівці з реабілітації", "Психологи та Логопеди"];
+const categories = ["Всі", "Лікарі", "Фахівці з реабілітації", "Психологи та Логопеди"];
 
 // Масив співробітників
 const teamMembers = [
-  { id: 1, name: "Тетяна Шевченко", role: "В.о. директора, дитячий психіатр, дитячий невролог", category: "Керівництво", image: "/images/shevckenko.jpg" },
+  { id: 1, name: "Тетяна Шевченко", role: "В.о. директора, дитячий психіатр, дитячий невролог", category: "Лікарі", image: "/images/shevckenko.jpg" },
   { id: 2, name: "Левківська Кароліна", role: "Завідувач паліативним відділенням, лікар-педіатр", category: "Лікарі", image: "/images/Levkivska.png" },
   { id: 3, name: "Машталер Тетяна", role: "Лікар - невролог, Лікар - ФРМ", category: "Лікарі", image: "/images/Mashtaler.png" },
   { id: 4, name: "Кобилінська Віра", role: "Лікар-психіатр дитячий", category: "Лікарі", image: "/images/Kobulinska.png" },
