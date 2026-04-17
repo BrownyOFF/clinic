@@ -51,7 +51,7 @@ export default function Header() {
             Зв'язатися
           </Link>
           
-          <button className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <button aria-label="Відкрити меню" className="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>

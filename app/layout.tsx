@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import ScrollToTop from "@/app/components/ScrollToTop";
-import SplashScreen from "@/app/components/SplashScreen";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
@@ -65,7 +64,6 @@ export default function RootLayout({
       </head>
       
       <body className={inter.className}>
-        <SplashScreen />
 
         {/* 2. ГЛОБАЛЬНИЙ ФОН: Тепер він не зникає при перемиканні вкладок! */}
         <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
