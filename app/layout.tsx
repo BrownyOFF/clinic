@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   
   icons: {
-    icon: 'public/icon.webp',
+    icon: 'public/logo.png',
   },
 
   openGraph: {
@@ -60,7 +60,7 @@ export default function RootLayout({
     <html lang="uk" suppressHydrationWarning> 
       {/* 1. Пряма вказівка на іконку */}
       <head>
-        <link rel="icon" href="/icon.webp" type="image/png" sizes="any" />
+        <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
       </head>
       
       <body className={inter.className}>
