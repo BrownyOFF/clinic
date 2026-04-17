@@ -131,6 +131,9 @@ export default function VacancyPage() {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-8">
+
+                {/* 🛡️ HONEYPOT (Пастка для спам-ботів) */}
+                <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
                 
                 {/* ПІБ */}
                 <div>

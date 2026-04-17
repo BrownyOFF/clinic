@@ -6,6 +6,19 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
     
+    // ==========================================
+    // 🛡️ АНТИ-СПАМ (HONEYPOT)
+    // ==========================================
+    // Якщо приховане поле заповнене — це 100% спам-бот
+    if (data.bot_check) {
+      console.warn("Заблоковано спам-бота!");
+      // Повертаємо 'success', щоб бот пішов задоволений і не намагався пробити захист далі
+      return NextResponse.json({ success: true }); 
+    }
+    // Видаляємо це поле з об'єкта, щоб порожній рядок не летів у ваш Телеграм
+    delete data.bot_check;
+    // ==========================================
+
     // Отримуємо ключі
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;

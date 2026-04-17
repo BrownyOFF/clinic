@@ -173,6 +173,10 @@ export default function ContactsPage() {
                   <p className="text-slate-600 dark:text-slate-400 mb-8">Заповніть анкету, і наш адміністратор зв'яжеться з вами для узгодження візиту.</p>
                   
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    
+                    {/* 🛡️ HONEYPOT (Пастка для спам-ботів) */}
+                    <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ПІБ пацієнта *</label>
