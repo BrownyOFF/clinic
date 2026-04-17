@@ -239,27 +239,27 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 relative h-80 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image2.png" alt="Команда Реабілітації" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/pro-nas/image2.webp" alt="Команда Реабілітації" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium text-lg">Наша команда</p>
             </div>
             <div className="relative h-80 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image1.png" alt="Центральний вхід" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/pro-nas/image1.webp" alt="Центральний вхід" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium">Центральний вхід</p>
             </div>
             <div className="relative h-64 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image3.png" alt="Дитячий майданчик" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/pro-nas/image3.webp" alt="Дитячий майданчик" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium">Дитячий майданчик</p>
             </div>
             <div className="relative h-64 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image4.png" alt="Зал фізичної терапії" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/pro-nas/image4.webp" alt="Зал фізичної терапії" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium">Зал фізичної терапії</p>
             </div>
             <div className="relative h-64 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image7.png" alt="Акваріум" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/pro-nas/image7.webp" alt="Акваріум" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium">Улюбленці наших пацієнтів</p>
             </div>

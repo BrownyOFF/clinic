@@ -8,18 +8,18 @@ export const newsData = [
     title: "Разом до перемог: щира подяка ФК «Полісся» за підтримку та подаровані усмішки!",
     date: "16 квітня 2026",
     excerpt: "Колектив та вихованці Центру висловлюють найтеплішу подяку нашим добрим друзям — футбольному клубу «Полісся» за подаровані емоції та підтримку.",
-    image: "/images/news/polissya1.jpg", // Обкладинка новини у загальному списку
+    image: "/images/news/polissya1.webp", // Обкладинка новини у загальному списку
     images: [ // Карусель з 10 зображень
-      "/images/news/polissya1.jpg",
-      "/images/news/polissya2.jpg",
-      "/images/news/polissya3.jpg",
-      "/images/news/polissya4.jpg",
-      "/images/news/polissya5.jpg",
-      "/images/news/polissya6.jpg",
-      "/images/news/polissya7.jpg",
-      "/images/news/polissya8.jpg",
-      "/images/news/polissya9.jpg",
-      "/images/news/polissya10.jpg"
+      "/images/news/polissya1.webp",
+      "/images/news/polissya2.webp",
+      "/images/news/polissya3.webp",
+      "/images/news/polissya4.webp",
+      "/images/news/polissya5.webp",
+      "/images/news/polissya6.webp",
+      "/images/news/polissya7.webp",
+      "/images/news/polissya8.webp",
+      "/images/news/polissya9.webp",
+      "/images/news/polissya10.webp"
     ],
     content: [
       {
@@ -58,19 +58,19 @@ export const newsData = [
     title: "Світле свято Великодня: як пройшло дитяче святкування у нашому Центрі",
     date: "13 Квітня 2026",
     excerpt: "13 квітня наш Центр медичної реабілітації та паліативної допомоги дітям наповнився дзвінким сміхом, щирими усмішками та справжньою весняною радістю...",
-    image: "/images/news/velykden-1.jpg", // Головне фото для картки новин
+    image: "/images/news/velykden-1.webp", // Головне фото для картки новин
     // Масив фотографій для каруселі всередині новини
     images: [
-      "/images/news/velykden-1.jpg",
-      "/images/news/velykden-2.jpg",
-      "/images/news/velykden-3.jpg",
-      "/images/news/velykden-4.jpg",
-      "/images/news/velykden-5.jpg",
-      "/images/news/velykden-6.jpg",
-      "/images/news/velykden-7.jpg",
-      "/images/news/velykden-8.jpg",
-      "/images/news/velykden-9.jpg",
-      "/images/news/velykden-10.jpg"
+      "/images/news/velykden-1.webp",
+      "/images/news/velykden-2.webp",
+      "/images/news/velykden-3.webp",
+      "/images/news/velykden-4.webp",
+      "/images/news/velykden-5.webp",
+      "/images/news/velykden-6.webp",
+      "/images/news/velykden-7.webp",
+      "/images/news/velykden-8.webp",
+      "/images/news/velykden-9.webp",
+      "/images/news/velykden-10.webp"
     ],
     content: [
       {
@@ -106,7 +106,7 @@ export const newsData = [
     title: "Всесвітній день боротьби з туберкульозом: чому це стосується кожного?",
     date: "24 Березня 2026",
     excerpt: "Щороку 24 березня світ об’єднується навколо однієї мети — підвищити обізнаність про туберкульоз (ТБ). Попри те, що ми живемо в епоху високих технологій, ця хвороба залишається однією з найбільш смертоносних інфекцій у світі. ",
-    image: "/images/news/tyberkyloz.png",
+    image: "/images/news/tyberkyloz.webp",
     content: [
       {
         type: "paragraph",
@@ -179,7 +179,7 @@ export const newsData = [
     title: "Пішов із життя Гусак Олександр Якович",
     date: "22 Березня 2026",
     excerpt: "З глибоким сумом повідомляємо, що 22 березня 2026 року на 65 році пішов із життя Гусак Олександр Якович — Заслужений лікар України.",
-    image: "/images/news/hysak.png",
+    image: "/images/news/hysak.webp",
     content: [
       {
         type: "paragraph",
@@ -238,7 +238,7 @@ export const newsData = [
     title: "Від декларацій до винагороди викривачам: як трансформувалася система доброчесності в Україні",
     date: "4 Грудня 2025",
     excerpt: "Побудова прозорої держави — це тривалий еволюційний процес, який Україна проходить крок за кроком вже понад три десятиліття.",
-    image: "/images/news/corruption.png",
+    image: "/images/news/corruption.webp",
     content: [
       {
         type: "paragraph",
@@ -305,7 +305,7 @@ export const newsData = [
     title: "Святкова атмосфера в Центрі",
     date: "2 Грудня 2025",
     excerpt: "Маленькі пацієнти разом із батьками готуються до Дня Святого Миколая...",
-    image: "/images/news/christmas.jpg",
+    image: "/images/news/christmas.webp",
     content: [
       {
         type: "paragraph",
@@ -332,7 +332,7 @@ export const newsData = [
     title: "Пізнаємо світ через гру та працю",
     date: "27 Листопада 2025",
     excerpt: "Прогулянка для дитини — це не просто час для фізичної активності, а повноцінний урок пізнання навколишнього світу...",
-    image: "/images/news/walk.png",
+    image: "/images/news/walk.webp",
     content: [
       {
         type: "paragraph",
@@ -387,7 +387,7 @@ export const newsData = [
     title: "«Шлях батьківства»",
     date: "24 Листопада 2025",
     excerpt: "В Україні стартувала програма для розвитку навичок батьківства...",
-    image: "/images/news/parenthood.png",
+    image: "/images/news/parenthood.webp",
     content: [
       {
         type: "paragraph",
@@ -430,7 +430,7 @@ export const newsData = [
     title: "День пам'яті жертв Голодоморів",
     date: "22 Листопада 2025",
     excerpt: "У четверту суботу листопада Україна та весь світ завмирають у хвилині мовчання...",
-    image: "/images/news/holodomor.png",
+    image: "/images/news/holodomor.webp",
     content: [
       {
         type: "paragraph",
@@ -469,7 +469,7 @@ export const newsData = [
     title: "Новий етап розвитку Центру: відбулося перше засідання Опікунської ради",
     date: "20 Листопада 2025",
     excerpt: "Важлива подія в житті КНП \"ЦМР та ПДД\" ЖОР — днями у стінах нашого закладу відбулося установче засідання новоствореної Опікунської ради...",
-    image: "/images/news/op-rada.png",
+    image: "/images/news/op-rada.webp",
     content: [
       {
         type: "paragraph",
@@ -528,7 +528,7 @@ export const newsData = [
     title: "День захисту дитини",
     date: "20 Листопада 2025",
     excerpt: "20 листопада відзначають Міжнародний день захисту дітей — свято радості, любові та надії...",
-    image: "/images/news/child-safety.jpg",
+    image: "/images/news/child-safety.webp",
     content: [
       {
         type: "paragraph",
@@ -591,7 +591,7 @@ export const newsData = [
     title: "Прогулянка в гідропарку",
     date: "17 Листопада 2025",
     excerpt: "Осінь — це не лише пора жовтого листя, а й чудовий час для нових відкриттів, спостережень та єднання з природою...",
-    image: "/images/news/hydropark.jpg",
+    image: "/images/news/hydropark.webp",
     content: [
       {
         type: "paragraph",
@@ -659,7 +659,7 @@ export const newsData = [
     title: "Наш Центр обрано учасником державного експериментального проєкту з раннього втручання",
     date: "10 Листопада 2025",
     excerpt: "Комунальне некомерційне підприємство «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради повідомляє про важливий крок у розвитку надання послуг...",
-    image: "/images/news/early-help.jpg",
+    image: "/images/news/early-help.webp",
     content: [
       {
         type: "paragraph",
@@ -690,7 +690,7 @@ export const newsData = [
     title: "День ментального здоров'я",
     date: "10 Жовтня 2025",
     excerpt: "10 жовтня, відзначають Всесвітній день ментального здоров'я...",
-    image: "/images/news/mental-health.jpg",
+    image: "/images/news/mental-health.webp",
     content: [
       {
         type: "paragraph",

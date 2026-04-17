@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/app/components/ThemeProvider";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import ScrollToTop from "@/app/components/ScrollToTop";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
 export const metadata: Metadata = {
   title: "Вітрила Життя | Центр медичної реабілітації дітей у Житомирі",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   
   icons: {
-    icon: 'public/icon.png',
+    icon: 'public/icon.webp',
   },
 
   openGraph: {
@@ -60,7 +60,7 @@ export default function RootLayout({
     <html lang="uk" suppressHydrationWarning> 
       {/* 1. Пряма вказівка на іконку */}
       <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
+        <link rel="icon" href="/icon.webp" type="image/png" sizes="any" />
       </head>
       
       <body className={inter.className}>

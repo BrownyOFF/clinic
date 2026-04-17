@@ -39,7 +39,7 @@ export default function RehabilitationArticlePage() {
             
             <div className="flex items-center justify-center gap-4 mt-8 pt-8 border-t border-slate-200 dark:border-slate-800">
               <div className="w-14 h-14 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden relative">
-                <Image src="/images/shevckenko.jpg" alt="Тетяна Шевченко" fill className="object-cover" />
+                <Image src="/images/shevckenko.webp" alt="Тетяна Шевченко" fill className="object-cover" />
               </div>
               <div className="text-left">
                 <p className="font-bold text-slate-900 dark:text-white">Тетяна Шевченко</p>
@@ -148,7 +148,7 @@ export default function RehabilitationArticlePage() {
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur overflow-hidden relative border border-white/30">
-                    <Image src="/images/shevckenko.jpg" alt="Тетяна Шевченко" fill className="object-cover" />
+                    <Image src="/images/shevckenko.webp" alt="Тетяна Шевченко" fill className="object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-lg">Тетяна Шевченко</p>

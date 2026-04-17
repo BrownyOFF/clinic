@@ -45,13 +45,13 @@ export default function Directions() {
                   </Link>
               </div>
               <div className="md:col-span-5 relative min-h-[200px] md:min-h-0 order-first md:order-last">
-                  <Image src="/images/fact4.jpg" alt="Сучасне обладнання" fill className="object-cover object-center" />
+                  <Image src="/images/fact4.webp" alt="Сучасне обладнання" fill className="object-cover object-center" />
               </div>
           </motion.div>
 
           {/* Картка 2 */}
           <motion.div variants={fadeUp} className="bg-white dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-300 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col hover:shadow-lg">
-            <div className="relative h-48 w-full"><Image src="/images/fact5.jpg" alt="Паліативна допомога" fill className="object-cover object-center" /></div>
+            <div className="relative h-48 w-full"><Image src="/images/fact5.webp" alt="Паліативна допомога" fill className="object-cover object-center" /></div>
             <div className="p-8">
               <div className="flex items-center gap-3 mb-4">
                 <HeartHandshake size={20} className="text-emerald-600 dark:text-emerald-400" />
@@ -63,7 +63,7 @@ export default function Directions() {
 
           {/* Картка 3 */}
           <motion.div variants={fadeUp} className="bg-white dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-300 rounded-3xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col hover:shadow-lg">
-            <div className="relative h-48 w-full"><Image src="/images/fact9.jpg" alt="Підтримка родини" fill className="object-cover object-center" /></div>
+            <div className="relative h-48 w-full"><Image src="/images/fact9.webp" alt="Підтримка родини" fill className="object-cover object-center" /></div>
             <div className="p-8">
               <div className="flex items-center gap-3 mb-4">
                 <Users size={20} className="text-purple-600 dark:text-purple-400" />
@@ -76,7 +76,7 @@ export default function Directions() {
           {/* Картка 4 (Залишаємо темною завжди, бо вона і так має темний дизайн) */}
           <motion.div variants={fadeUp} className="lg:col-span-2 bg-slate-900 dark:bg-slate-950 text-white rounded-3xl grid grid-cols-1 md:grid-cols-12 overflow-hidden hover:shadow-2xl transition-all duration-500 shadow-slate-300 dark:shadow-none dark:border dark:border-slate-800">
             <div className="md:col-span-5 relative min-h-[200px] md:min-h-0">
-                <Image src="/images/fact7.jpg" alt="Дружні умови" fill className="object-cover object-center opacity-80" />
+                <Image src="/images/fact7.webp" alt="Дружні умови" fill className="object-cover object-center opacity-80" />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-slate-900 dark:to-slate-950"></div>
             </div>
             <div className="md:col-span-7 p-10 relative z-10 flex flex-col justify-between">
