@@ -15,7 +15,10 @@ export const metadata: Metadata = {
     "паліативна допомога дітям", "логопед Житомир", "дитячий невролог Житомир",
     "фізична терапія для дітей", "ДЦП реабілітація", "раннє втручання Житомир", "ЦМР та ПДД ЖОР"
   ],
-  icons: { icon: 'public/icon.png' }, // Трохи поправив шлях до іконки
+  icons: { 
+    icon: 'icon.png',
+    apple: '/icon.png',
+   },
   openGraph: {
     title: "Вітрила Життя | Центр медичної реабілітації",
     description: "Комплексна медична реабілітація та паліативна допомога дітям у Житомирі.",
@@ -40,9 +43,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk" suppressHydrationWarning> 
-      <head>
-        <link rel="icon" href="/icon.png" type="image/png" sizes="any" />
-      </head>
       
       <body className={inter.className}>
         <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
