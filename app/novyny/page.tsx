@@ -9,7 +9,9 @@ import {
   RefreshCcw, 
   ChevronLeft, 
   ChevronRight, 
-  X
+  X,
+  Search,
+  Filter
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,12 +41,17 @@ const parseUkrDate = (dateStr: string) => {
 export default function NewsPage() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  
+  // Нові стани для фільтрів
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<{type: 'day' | 'month', date: Date} | null>(null);
 
+  // Сортуємо новини за датою (від найновіших)
   const sortedNews = useMemo(() => {
     return [...newsData].sort((a, b) => parseUkrDate(b.date).getTime() - parseUkrDate(a.date).getTime());
   }, []);
 
+  // Допоміжний Set для підсвітки днів у календарі
   const newsDatesSet = useMemo(() => {
     const dates = new Set<string>();
     sortedNews.forEach(news => {
@@ -53,16 +60,46 @@ export default function NewsPage() {
     return dates;
   }, [sortedNews]);
 
-  const displayNews = useMemo(() => {
-    if (selectedDate) {
-      return sortedNews.filter(news => parseUkrDate(news.date).toDateString() === selectedDate.toDateString());
+  // Головна логіка фільтрації (Пошук + Календар)
+  const filteredNews = useMemo(() => {
+    let result = sortedNews;
+
+    // 1. Фільтр за пошуковим запитом
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(news => 
+        news.title.toLowerCase().includes(query) || 
+        news.excerpt.toLowerCase().includes(query)
+      );
     }
-    return sortedNews.slice(0, visibleCount);
-  }, [selectedDate, visibleCount, sortedNews]);
+
+    // 2. Фільтр за календарем (День або Місяць)
+    if (activeFilter) {
+      if (activeFilter.type === 'day') {
+        result = result.filter(news => parseUkrDate(news.date).toDateString() === activeFilter.date.toDateString());
+      } else if (activeFilter.type === 'month') {
+        result = result.filter(news => {
+          const d = parseUkrDate(news.date);
+          return d.getMonth() === activeFilter.date.getMonth() && d.getFullYear() === activeFilter.date.getFullYear();
+        });
+      }
+    }
+
+    return result;
+  }, [sortedNews, searchQuery, activeFilter]);
+
+  // Відрізаємо для пагінації ("Завантажити ще")
+  const displayNews = filteredNews.slice(0, visibleCount);
 
   const loadMore = () => setVisibleCount(prev => prev + 6);
   const prevMonth = () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
   const nextMonth = () => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+
+  // Очищення всіх фільтрів
+  const clearFilters = () => {
+    setActiveFilter(null);
+    setSearchQuery("");
+  };
 
   const generateCalendarDays = () => {
     const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
@@ -77,15 +114,17 @@ export default function NewsPage() {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d);
       const dateStr = date.toDateString();
       const hasNews = newsDatesSet.has(dateStr);
-      const isSelected = selectedDate?.toDateString() === dateStr;
+      
+      const isSelectedDay = activeFilter?.type === 'day' && activeFilter.date.toDateString() === dateStr;
+      const isSelectedMonth = activeFilter?.type === 'month' && activeFilter.date.getMonth() === currentMonth.getMonth() && activeFilter.date.getFullYear() === currentMonth.getFullYear();
 
       days.push(
         <button
           key={d}
-          onClick={() => setSelectedDate(isSelected ? null : date)}
+          onClick={() => setActiveFilter(isSelectedDay ? null : { type: 'day', date })}
           disabled={!hasNews}
           className={`h-9 w-9 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 ${
-            isSelected 
+            isSelectedDay || (isSelectedMonth && hasNews)
               ? 'bg-blue-600 text-white shadow-lg scale-110 z-10' 
               : hasNews 
                 ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 font-bold' 
@@ -93,7 +132,7 @@ export default function NewsPage() {
           }`}
         >
           <span className="text-sm">{d}</span>
-          {hasNews && !isSelected && <span className="absolute bottom-1 w-1 h-1 bg-blue-500 rounded-full"></span>}
+          {hasNews && !isSelectedDay && !isSelectedMonth && <span className="absolute bottom-1 w-1 h-1 bg-blue-500 rounded-full"></span>}
         </button>
       );
     }
@@ -104,6 +143,9 @@ export default function NewsPage() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
+
+  // Перевірка чи активний місяць в календарі зараз обраний як фільтр
+  const isCurrentMonthFiltered = activeFilter?.type === 'month' && activeFilter.date.getMonth() === currentMonth.getMonth() && activeFilter.date.getFullYear() === currentMonth.getFullYear();
 
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-slate-50 transition-colors duration-500">
@@ -131,42 +173,78 @@ export default function NewsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* ЛІВА ЧАСТИНА: СТРІЧКА НОВИН */}
+            {/* ЛІВА ЧАСТИНА: СТРІЧКА НОВИН ТА ПОШУК */}
             <div className="lg:col-span-8 order-2 lg:order-1">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <AnimatePresence mode="popLayout">
-                  {displayNews.map((news) => (
-                    <motion.article 
-                      key={news.slug} 
-                      layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.3 }}
-                      className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[32px] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
-                    >
-                      <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-                        <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                        <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 shadow-lg">
-                          <CalendarIcon size={12} className="text-blue-600 dark:text-blue-400" />
-                          {news.date}
-                        </div>
-                      </div>
-                      <div className="p-7 flex flex-col flex-grow">
-                        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                          <Link href={`/novyny/${news.slug}`}>{news.title}</Link>
-                        </h2>
-                        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">{news.excerpt}</p>
-                        <Link href={`/novyny/${news.slug}`} className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider mt-auto group/btn">
-                          Докладніше <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
-                    </motion.article>
-                  ))}
-                </AnimatePresence>
+              
+              {/* ПОЛЕ ПОШУКУ */}
+              <div className="relative mb-8 group">
+                <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                  <Search size={20} className="text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Шукати в новинах..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-12 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:text-white transition-all"
+                />
+                {searchQuery && (
+                  <button 
+                    onClick={() => setSearchQuery("")}
+                    className="absolute inset-y-0 right-4 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                )}
               </div>
 
-              {!selectedDate && visibleCount < sortedNews.length && (
+              {/* РЕЗУЛЬТАТИ / СІТКА НОВИН */}
+              {displayNews.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <AnimatePresence mode="popLayout">
+                    {displayNews.map((news) => (
+                      <motion.article 
+                        key={news.slug} 
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.3 }}
+                        className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[32px] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
+                      >
+                        <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                          <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                          <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 shadow-lg">
+                            <CalendarIcon size={12} className="text-blue-600 dark:text-blue-400" />
+                            {news.date}
+                          </div>
+                        </div>
+                        <div className="p-7 flex flex-col flex-grow">
+                          <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            <Link href={`/novyny/${news.slug}`}>{news.title}</Link>
+                          </h2>
+                          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">{news.excerpt}</p>
+                          <Link href={`/novyny/${news.slug}`} className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xs uppercase tracking-wider mt-auto group/btn">
+                            Докладніше <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                          </Link>
+                        </div>
+                      </motion.article>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20 bg-white/50 dark:bg-slate-900/50 rounded-[32px] border border-dashed border-slate-300 dark:border-slate-700">
+                  <Filter size={48} className="mx-auto text-slate-300 dark:text-slate-600 mb-4" />
+                  <h3 className="text-xl font-bold text-slate-700 dark:text-slate-300 mb-2">Новин не знайдено</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mb-6">За вашими критеріями пошуку або обраною датою немає публікацій.</p>
+                  <button onClick={clearFilters} className="px-6 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl font-bold hover:bg-blue-100 transition-colors">
+                    Скинути всі фільтри
+                  </button>
+                </motion.div>
+              )}
+
+              {/* КНОПКА ЗАВАНТАЖИТИ ЩЕ */}
+              {visibleCount < filteredNews.length && (
                 <div className="mt-12 flex justify-center">
                   <button onClick={loadMore} className="flex items-center gap-2 px-8 py-4 bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-sm group">
                     <RefreshCcw size={18} className="group-hover:rotate-180 transition-transform duration-500" /> Показати ще
@@ -175,7 +253,7 @@ export default function NewsPage() {
               )}
             </div>
 
-            {/* ПРАВА ЧАСТИНА (SIDEBAR) - ВИПРАВЛЕНО ДЛЯ ТЕЛЕФОНІВ */}
+            {/* ПРАВА ЧАСТИНА (SIDEBAR) */}
             <aside className="lg:col-span-4 order-1 lg:order-2 lg:sticky lg:top-24 space-y-8 h-fit self-start mb-12 lg:mb-0">
               
               {/* КАЛЕНДАР */}
@@ -184,9 +262,20 @@ export default function NewsPage() {
                   <button onClick={prevMonth} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     <ChevronLeft size={18} />
                   </button>
-                  <div className="font-bold text-slate-800 dark:text-white uppercase tracking-widest text-xs">
+                  
+                  {/* КНОПКА ФІЛЬТРУ ЗА МІСЯЦЕМ */}
+                  <button 
+                    onClick={() => setActiveFilter(isCurrentMonthFiltered ? null : { type: 'month', date: currentMonth })}
+                    className={`font-bold uppercase tracking-widest text-xs px-3 py-2 rounded-xl transition-colors ${
+                      isCurrentMonthFiltered 
+                        ? 'bg-blue-600 text-white shadow-md' 
+                        : 'text-slate-800 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }`}
+                    title={isCurrentMonthFiltered ? "Скинути фільтр" : "Показати всі новини за цей місяць"}
+                  >
                     {MONTH_NAMES_UKR[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-                  </div>
+                  </button>
+                  
                   <button onClick={nextMonth} className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     <ChevronRight size={18} />
                   </button>
@@ -204,20 +293,49 @@ export default function NewsPage() {
                   {generateCalendarDays()}
                 </div>
 
-                {selectedDate && (
+                {/* ІНФО-БЛОК АКТИВНОГО ФІЛЬТРА */}
+                {/* ІНФО-БЛОК АКТИВНОГО ФІЛЬТРА */}
+                {(activeFilter || searchQuery) && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <div className="text-[10px] uppercase tracking-widest text-slate-400 mb-3 font-bold text-center">Активні фільтри</div>
+                    
+                    {/* ПЛАШКИ З ФІЛЬТРАМИ */}
+                    <div className="flex flex-col gap-2 mb-4">
+                      {searchQuery && (
+                        <div className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs px-3 py-2.5 rounded-xl flex justify-between items-center border border-slate-100 dark:border-slate-700">
+                          <span className="truncate pr-2"><span className="font-bold text-slate-800 dark:text-slate-100">Пошук:</span> {searchQuery}</span>
+                          <button onClick={() => setSearchQuery("")} className="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0"><X size={14} /></button>
+                        </div>
+                      )}
+                      
+                      {activeFilter?.type === 'day' && (
+                        <div className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs px-3 py-2.5 rounded-xl flex justify-between items-center border border-slate-100 dark:border-slate-700">
+                          <span><span className="font-bold text-slate-800 dark:text-slate-100">Дата:</span> {activeFilter.date.toLocaleDateString('uk-UA')}</span>
+                          <button onClick={() => setActiveFilter(null)} className="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0"><X size={14} /></button>
+                        </div>
+                      )}
+
+                      {activeFilter?.type === 'month' && (
+                        <div className="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs px-3 py-2.5 rounded-xl flex justify-between items-center border border-slate-100 dark:border-slate-700">
+                          <span><span className="font-bold text-slate-800 dark:text-slate-100">Місяць:</span> {MONTH_NAMES_UKR[activeFilter.date.getMonth()]} {activeFilter.date.getFullYear()}</span>
+                          <button onClick={() => setActiveFilter(null)} className="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0"><X size={14} /></button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* ЗАГАЛЬНА КНОПКА СКИНУТИ ВСЕ */}
                     <button 
-                        onClick={() => setSelectedDate(null)}
-                        className="w-full flex items-center justify-center gap-2 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-2xl text-xs font-bold transition-all hover:bg-blue-100"
+                        onClick={clearFilters}
+                        className="w-full flex items-center justify-center gap-2 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl text-xs font-bold transition-all hover:bg-red-100 dark:hover:bg-red-900/40"
                     >
-                        <X size={14} /> Скинути календар
+                        <X size={14} /> Скинути всі
                     </button>
                   </motion.div>
                 )}
               </div>
 
               {/* СОЦМЕРЕЖІ */}
-              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[32px] p-6 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none">
+              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-[32px] p-6 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none hidden lg:block">
                 <h3 className="font-bold text-slate-800 dark:text-white mb-4 text-xs uppercase tracking-widest text-center">Ми у соцмережах</h3>
                 <div className="grid grid-cols-2 gap-3">
                   <a 
