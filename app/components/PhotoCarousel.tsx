@@ -1,15 +1,21 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom"; // ДОДАНО: Портал для вирішення проблеми з z-index
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function PhotoCarousel({ images }: { images: string[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  
-  // Стан для збереження відкритої фотографії
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+  // Стан для перевірки, чи компонент вже змонтовано (необхідно для Порталу в Next.js)
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Блокуємо скрол основної сторінки, коли фото відкрито на весь екран
   useEffect(() => {
@@ -30,6 +36,54 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
   };
 
   if (!images || images.length === 0) return null;
+
+  // Виносимо код модального вікна в окрему змінну
+  const modalContent = (
+    <AnimatePresence>
+      {selectedImage && (
+        // Тепер тут z-[99999] працюватиме ідеально, бо модалка лежить прямо в <body>
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10">
+          
+          {/* Темний фон, клік по якому закриває фото */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setSelectedImage(null)}
+            className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-zoom-out"
+          />
+
+          {/* Контейнер з фотографією */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-6xl aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[32px] overflow-hidden shadow-2xl"
+          >
+            {/* Кнопка закриття (Хрестик) */}
+            <button 
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-black/80 backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
+            >
+              <X size={24} />
+            </button>
+
+            <Image 
+              src={selectedImage} 
+              alt="Збільшене фото" 
+              fill 
+              className="object-contain" 
+              priority
+              unoptimized
+            />
+          </motion.div>
+
+        </div>
+      )}
+    </AnimatePresence>
+  );
 
   return (
     <>
@@ -95,50 +149,9 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
         </div>
       )}
 
-      {/* --- МОДАЛЬНЕ ВІКНО ДЛЯ ЗБІЛЬШЕНОГО ФОТО --- */}
-      <AnimatePresence>
-        {selectedImage && (
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 md:p-10">
-            
-            {/* Темний фон, клік по якому закриває фото */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => setSelectedImage(null)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-md cursor-zoom-out"
-            />
-
-            {/* Контейнер з фотографією */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl aspect-[4/3] md:aspect-video rounded-2xl md:rounded-[32px] overflow-hidden shadow-2xl"
-            >
-              {/* Кнопка закриття (Хрестик) */}
-              <button 
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-black/80 backdrop-blur-sm text-white rounded-full flex items-center justify-center transition-colors shadow-lg"
-              >
-                <X size={24} />
-              </button>
-
-              <Image 
-                src={selectedImage} 
-                alt="Збільшене фото" 
-                fill 
-                className="object-contain" 
-                priority
-                unoptimized
-              />
-            </motion.div>
-
-          </div>
-        )}
-      </AnimatePresence>
+      {/* --- МОДАЛЬНЕ ВІКНО ЧЕРЕЗ ПОРТАЛ --- */}
+      {/* Рендеримо портал тільки після того, як компонент змонтовано на клієнті */}
+      {mounted ? createPortal(modalContent, document.body) : null}
     </>
   );
 }
