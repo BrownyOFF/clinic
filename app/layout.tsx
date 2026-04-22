@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import ScrollToTop from "@/app/components/ScrollToTop";
-import Script from "next/script"; // <-- ДОДАЛИ ІМПОРТ SCRIPT
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
@@ -15,8 +15,15 @@ export const metadata: Metadata = {
     "паліативна допомога дітям", "логопед Житомир", "дитячий невролог Житомир",
     "фізична терапія для дітей", "ДЦП реабілітація", "раннє втручання Житомир", "ЦМР та ПДД ЖОР"
   ],
+  alternates: {
+    canonical: 'https://vitrylazhyttia.com.ua',
+    languages: {
+      'uk-UA': 'https://vitrylazhyttia.com.ua',
+      'en-US': 'https://vitrylazhyttia.com.ua/en',
+    },
+  },
   icons: { 
-    icon: 'icon.png',
+    icon: '/icon.png',
     apple: '/icon.png',
    },
   openGraph: {
@@ -24,6 +31,13 @@ export const metadata: Metadata = {
     description: "Комплексна медична реабілітація та паліативна допомога дітям у Житомирі.",
     url: "https://vitrylazhyttia.com.ua",
     siteName: "Вітрила Життя",
+    images: [
+      {
+        url: '/og-image.png', // Покладіть файл у public/og-image.png
+        width: 1200,
+        height: 630,
+      },
+    ],
     locale: "uk_UA",
     type: "website",
   },
@@ -43,7 +57,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk" suppressHydrationWarning> 
-      
       <body className={inter.className}>
         <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
@@ -55,7 +68,6 @@ export default function RootLayout({
           <ScrollToTop />
         </ThemeProvider>
 
-        {/* ПРАВИЛЬНЕ ЛІНИВЕ ПІДКЛЮЧЕННЯ АНАЛІТИКИ */}
         <Script 
           src="https://www.googletagmanager.com/gtag/js?id=G-RSQEJVSJFQ" 
           strategy="lazyOnload" 
