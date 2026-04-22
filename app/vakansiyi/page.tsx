@@ -11,7 +11,8 @@ const activeVacancies = [
   "Фізичний терапевт",
   "Ерготерапевт",
   "Лікар фізичної та реабілітаційної медицини",
-  "Лікар-педіатр"
+  "Лікар-педіатр",
+  "Асистент ерготерапевта"
 ];
 
 export default function VacancyPage() {
@@ -134,7 +135,7 @@ export default function VacancyPage() {
 
                 {/* 🛡️ HONEYPOT (Пастка для спам-ботів) */}
                 <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
-                
+
                 {/* ПІБ */}
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваше ПІБ *</label>

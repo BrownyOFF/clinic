@@ -23,7 +23,7 @@ const teamMembers = [
   { id: 8, name: "Шадура Світлана", role: "Асистент фізичного терапевта", category: "Фахівці з реабілітації", image: "/images/Shadyra.webp" },
   { id: 9, name: "Михальчук Віта", role: "Асистент ерготерапевта", category: "Фахівці з реабілітації", image: "/images/Muchalchyk.webp" },
   { id: 10, name: "Гераймович Світлана", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Heraimovich.webp" },
-  { id: 11, name: "Бондарчу Олена", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Bondarchyk.webp" },
+  { id: 11, name: "Бондарчук Олена", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Bondarchyk.webp" },
   { id: 12, name: "Дмитрук Алла", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Dmitryk.webp" },
   { id: 13, name: "Чумакевич Оксана", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Chymackevich.webp" },
   { id: 14, name: "Ковальова Ольга", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Kovaloyva.webp" },
