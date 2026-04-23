@@ -11,6 +11,7 @@ import FooterEn from "@/app/components/FooterEn";
 export default function ContactsPageEn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -153,25 +154,66 @@ export default function ContactsPageEn() {
                   <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <CheckCircle2 size={48} />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Form submitted successfully!</h3>
+                  <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
+                    {activeForm === 'appointment' ? 'Form submitted successfully!' : 'Feedback submitted successfully!'}
+                  </h3>
                   <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-md mx-auto">
-                    Thank you for contacting us. Our administrator will get in touch with you shortly to arrange all the details.
+                    {activeForm === 'appointment' 
+                      ? 'Thank you for contacting us. Our administrator will get in touch with you shortly to arrange all the details.'
+                      : 'Thank you for your feedback! Your opinion is very important to us.'}
                   </p>
                   <button 
                     onClick={() => setIsSubmitted(false)} 
                     className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition"
                   >
-                    Submit another form
+                    {activeForm === 'appointment' ? 'Submit another form' : 'Submit another feedback'}
                   </button>
                 </motion.div>
               ) : (
-                // ФОРМА
+                // ФОРМИ
                 <>
-                  <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">Appointment for Rehabilitation</h2>
-                  <p className="text-slate-600 dark:text-slate-400 mb-8">Fill out the form, and our administrator will contact you to arrange the visit.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-6">
+                    <div>
+                      <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
+                        {activeForm === 'appointment' ? 'Appointment for Rehabilitation' : 'Leave Feedback'}
+                      </h2>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        {activeForm === 'appointment' 
+                          ? 'Fill out the form, and our administrator will contact you to arrange the visit.'
+                          : 'Share your impressions of our center.'}
+                      </p>
+                    </div>
+
+                    {/* Перемикач */}
+                    <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 w-fit shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setActiveForm('appointment')}
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                          activeForm === 'appointment'
+                            ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        }`}
+                      >
+                        Appointment
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveForm('feedback')}
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                          activeForm === 'feedback'
+                            ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        }`}
+                      >
+                        Feedback
+                      </button>
+                    </div>
+                  </div>
                   
+                  {activeForm === 'appointment' ? (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    
+                    <input type="hidden" name="Form_Type" value="Appointment" />
                     {/* 🛡️ HONEYPOT */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
@@ -261,6 +303,33 @@ export default function ContactsPageEn() {
                       )}
                     </button>
                   </form>
+                  ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <input type="hidden" name="Form_Type" value="Feedback" />
+                    {/* 🛡️ HONEYPOT */}
+                    <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Your Feedback *</label>
+                      <textarea name="Feedback" required rows={5} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Share your impressions..."></textarea>
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 size={20} className="animate-spin" />
+                      ) : (
+                        <>
+                          <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          Submit feedback
+                        </>
+                      )}
+                    </button>
+                  </form>
+                  )}
                 </>
               )}
 

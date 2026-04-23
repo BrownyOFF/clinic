@@ -9,6 +9,7 @@ import Footer from "@/app/components/Footer";
 export default function ContactsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -155,25 +156,66 @@ export default function ContactsPage() {
                   <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <CheckCircle2 size={48} />
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Анкету успішно відправлено!</h3>
+                  <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">
+                    {activeForm === 'appointment' ? 'Анкету успішно відправлено!' : 'Відгук успішно відправлено!'}
+                  </h3>
                   <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-md mx-auto">
-                    Дякуємо за звернення. Наш адміністратор зв'яжеться з вами найближчим часом для узгодження всіх деталей.
+                    {activeForm === 'appointment' 
+                      ? 'Дякуємо за звернення. Наш адміністратор зв\'яжеться з вами найближчим часом для узгодження всіх деталей.'
+                      : 'Дякуємо за ваш відгук! Ваша думка дуже важлива для нас.'}
                   </p>
                   <button 
                     onClick={() => setIsSubmitted(false)} 
                     className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition"
                   >
-                    Відправити ще одну анкету
+                    {activeForm === 'appointment' ? 'Відправити ще одну анкету' : 'Надіслати ще один відгук'}
                   </button>
                 </motion.div>
               ) : (
-                // ФОРМА
+                // ФОРМИ
                 <>
-                  <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">Запис на реабілітацію</h2>
-                  <p className="text-slate-600 dark:text-slate-400 mb-8">Заповніть анкету, і наш адміністратор зв'яжеться з вами для узгодження візиту.</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-6">
+                    <div>
+                      <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
+                        {activeForm === 'appointment' ? 'Запис на реабілітацію' : 'Залишити відгук'}
+                      </h2>
+                      <p className="text-slate-600 dark:text-slate-400">
+                        {activeForm === 'appointment' 
+                          ? 'Заповніть анкету, і наш адміністратор зв\'яжеться з вами для узгодження візиту.'
+                          : 'Поділіться своїми враженнями від нашого центру.'}
+                      </p>
+                    </div>
+
+                    {/* Перемикач */}
+                    <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 w-fit shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setActiveForm('appointment')}
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                          activeForm === 'appointment'
+                            ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        }`}
+                      >
+                        Запис
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveForm('feedback')}
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                          activeForm === 'feedback'
+                            ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        }`}
+                      >
+                        Відгук
+                      </button>
+                    </div>
+                  </div>
                   
+                  {activeForm === 'appointment' ? (
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    
+                    <input type="hidden" name="Тип_форми" value="Запис на реабілітацію" />
                     {/* 🛡️ HONEYPOT (Пастка для спам-ботів) */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
@@ -263,6 +305,33 @@ export default function ContactsPage() {
                       )}
                     </button>
                   </form>
+                  ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <input type="hidden" name="Тип_форми" value="Відгук" />
+                    {/* 🛡️ HONEYPOT */}
+                    <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
+
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваш відгук *</label>
+                      <textarea name="Відгук" required rows={5} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Поділіться вашими враженнями..."></textarea>
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 size={20} className="animate-spin" />
+                      ) : (
+                        <>
+                          <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          Надіслати відгук
+                        </>
+                      )}
+                    </button>
+                  </form>
+                  )}
                 </>
               )}
 

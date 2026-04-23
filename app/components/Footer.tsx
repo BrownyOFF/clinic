@@ -56,7 +56,7 @@ export default function Footer() {
 
             {/* Для пацієнта */}
             <ul className="space-y-3 text-sm flex-1">
-              <li className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2 ml-6 sm:ml-0">Для пацієнта:</li>
+              <li className="text-white text-xs font-bold uppercase tracking-wider mb-2 ml-6 sm:ml-0">Для пацієнта:</li>
               <li>
                 <Link href="/dlya-patsiyenta/dokumenty" className="flex items-start gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Документи
@@ -98,12 +98,12 @@ export default function Footer() {
               </a>
             </li>
             <li>
-               <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center shrink-0">
-                    <MapPin size={14} />
-                  </div>
-                  <span>м. Житомир,<br/>вул. Корабельна, 8</span>
+              <a href="https://maps.google.com/?q=Житомир,+вул.+Корабельна,+8" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-blue-400 transition group text-sm">
+                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-900/50 transition shrink-0">
+                  <MapPin size={14} />
                 </div>
+                <span>м. Житомир,<br/>вул. Корабельна, 8</span>
+              </a>
             </li>
           </ul>
         </div>
