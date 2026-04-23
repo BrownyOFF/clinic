@@ -1,6 +1,37 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Vaccination week
+  {
+    slug: "vaccination-week-2026",
+    title: "World Immunization Week: Vaccination is Important and Not Scary at All!",
+    date: "23 April 2026",
+    excerpt: "Every year in the last week of April, the world observes World Immunization Week. Our goal is to remind you that vaccines save lives and help build herd immunity.",
+    image: "/images/news/vacination.webp",
+    content: [
+      {
+        type: "paragraph",
+        value: "Every year during the last week of April, the world observes <strong>World Immunization Week</strong>. The goal of this campaign is to highlight the importance of vaccines in protecting people of all ages against vaccine-preventable diseases."
+      },
+      {
+        type: "paragraph",
+        value: "Many parents still feel anxious about vaccinating their children. We want to reassure you: <strong>vaccination is safe and not scary at all!</strong> Modern vaccines undergo multi-stage clinical trials and strict quality control. They act as a kind of 'training' for the immune system: teaching it to recognize dangerous viruses and bacteria so that in case of a real encounter, the body is ready to fight back effectively."
+      },
+      {
+        type: "heading",
+        value: "Why does vaccination concern everyone?"
+      },
+      {
+        type: "paragraph",
+        value: "Vaccination is not only about individual protection but also about caring for society as a whole. When the majority of people are vaccinated, so-called <strong>herd immunity</strong> is formed. Thanks to it, it becomes extremely difficult for infections to spread. Thus, we protect the most vulnerable: infants, the elderly, and those who cannot be vaccinated due to severe medical conditions."
+      },
+      {
+        type: "paragraph",
+        value: "Take a step towards a safe future! Check your child's vaccination schedule, consult with your family doctor or pediatrician, and do not delay your visit. Together, we can protect the health of our children!"
+      }
+    ]
+  },
+
   // Подяка поліссю
   {
     slug: "podyaka-fk-polissya",
