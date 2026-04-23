@@ -14,7 +14,7 @@ import FactsEn from "@/app/components/FactsEn";
 import DirectionsEn from "@/app/components/DirectionsEn";
 import LocationEn from "@/app/components/LocationEn";
 
-import { newsData } from "@/app/data/news"; 
+import { newsDataEn } from "@/app/data/newsEn"; 
 
 export default function HomeEn() {
   const fadeUp: Variants = {
@@ -23,7 +23,7 @@ export default function HomeEn() {
   };
 
   // Беремо останні 3 новини
-  const latestNews = newsData.slice(0, 3);
+  const latestNews = newsDataEn.slice(0, 3);
 
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-slate-50 transition-colors duration-500 overflow-x-hidden">
