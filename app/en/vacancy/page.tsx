@@ -14,7 +14,10 @@ const activeVacancies = [
   "Occupational Therapist",
   "PRM Doctor (Physical and Rehabilitation Medicine)",
   "Pediatrician",
-  "Occupational Therapy Assistant"
+  "Occupational Therapy Assistant",
+  "Medical Receptionist",
+  "Junior Nurse",
+  "Nurse"
 ];
 
 export default function VacancyPageEn() {
