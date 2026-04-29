@@ -1,6 +1,48 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Double happiness
+  {
+    slug: "double-happiness-adoption",
+    title: "Double Happiness: Two Brothers Found Their Loving Family!",
+    date: "28 April 2026",
+    excerpt: "Today a real miracle happened in our center! Two incredible brothers finally found their forever loving family. This story is a warm proof that miracles do happen.",
+    image: "/images/news/parenting1.webp",
+    images: [
+      "/images/news/parenting1.webp",
+      "/images/news/parenting2.webp",
+      "/images/news/parenting3.webp",
+      "/images/news/parenting4.webp",
+      "/images/news/parenting5.webp",
+      "/images/news/parenting6.webp",
+      "/images/news/parenting7.webp",
+      "/images/news/parenting8.webp",
+      "/images/news/parenting9.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "Today a real miracle happened in our center — double happiness! ✨ Two incredible brothers finally found their forever loving family. Their story is another warm proof that miracles happen when there are such open and caring hearts in the world. ❤️‍🩹"
+      },
+      {
+        type: "paragraph",
+        value: "We rejoiced with tears in our eyes, watching how tightly these boys held the hands of their new parents. They have always been inseparable, and the greatest happiness for our entire team was knowing that they will grow up together, in the safety, warmth, and comfort of their own home. 🏡👦👦"
+      },
+      {
+        type: "paragraph",
+        value: "The journey to adoption is not always easy, but it is worth every obstacle overcome. When children find loving parents, their lives change dramatically: there is a sense of security, support, and unconditional love that helps them unlock their true potential."
+      },
+      {
+        type: "paragraph",
+        value: "We thank this wonderful family for their choice, courage, and boundless love. We wish you an ocean of happy moments together, loud children's laughter, and cozy family evenings! 🥰"
+      },
+      {
+        type: "paragraph",
+        value: "We believe that every child will definitely find their home. If you are also considering the possibility of giving a child a family, remember — you can change someone's life forever. 🙏"
+      }
+    ]
+  },
+
   // Vaccination week
   {
     slug: "vaccination-week-2026",
