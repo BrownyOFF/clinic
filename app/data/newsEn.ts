@@ -10,8 +10,7 @@ export const newsDataEn = [
     image: "/images/news/hysak.webp",
     images: [
       "/images/news/hysak.webp",
-      "/images/news/hysak2.webp",
-      "/images/news/hysak3.webp"
+      "/images/news/hysak2.webp"
     ],
     content: [
       {
