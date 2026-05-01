@@ -1,6 +1,33 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // 40 days Husak
+  {
+    slug: "hysak-40-days",
+    title: "Blessed memory: 40 days since the passing of Oleksandr Yakovych Husak",
+    date: "30 April 2026",
+    excerpt: "Today marks 40 days since the passing of Oleksandr Yakovych Husak — Honored Doctor of Ukraine, a man with a big heart and a dedicated professional.",
+    image: "/images/news/hysak.webp",
+    images: [
+      "/images/news/hysak.webp",
+      "/images/news/hysak2.webp",
+      "/images/news/hysak3.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "Today, April 30, marks 40 days since the passing of <strong>Oleksandr Yakovych Husak</strong> — Honored Doctor of Ukraine, Medical Director of our Center, a man with a big heart and boundless dedication to his work."
+      },
+      {
+        type: "paragraph",
+        value: "He left behind not only a significant professional legacy but also fond memories in the hearts of colleagues, patients, and everyone who had the honor to work and communicate with him. His wisdom, prudence, and constant care for people will forever remain an example for us."
+      },
+      {
+        type: "paragraph",
+        value: "We remember Oleksandr Yakovych with deep gratitude and warmth. The bright memory of him will live on in our hearts and in the good deeds he initiated. May the earth be soft as down to him."
+      }
+    ]
+  },
   // Double happiness
   {
     slug: "double-happiness-adoption",
