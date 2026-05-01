@@ -121,6 +121,13 @@ app/
 4. **Коментарі та документація:** Для забезпечення прозорості в команді, коментарі до складної логіки та документація (як цей файл) ведуться українською мовою.
 
 ---
+
+## 📄 Ліцензія та Авторське право
+
+Вихідний код у цьому репозиторії поширюється за ліцензією [MIT License](LICENSE).
+Однак усі елементи брендингу, логотипи, фотографії та специфічний текстовий контент, пов'язаний з Медичним центром "Вітрила", залишаються виключною інтелектуальною власністю організації і не підпадають під дію цієї open-source ліцензії.
+
+---
 ---
 
 # 🏥 Website of the Municipal Non-Profit Enterprise "Center for Medical Rehabilitation and Palliative Care for Children" of the Zhytomyr Regional Council (Medical Center "Vitryla")
@@ -242,3 +249,10 @@ app/
 2. **Tailwind CSS:** All styles (margins, colors, typography, grid) are written exclusively with Tailwind classes. Always ensure correct appearance in dark theme (`dark:` prefix).
 3. **Naming:** Code (variable names, functions, components, files, classes) is written exclusively in English.
 4. **Comments and documentation:** To ensure transparency in the team, comments on complex logic and documentation (like this file) are kept in Ukrainian (and English if necessary).
+
+---
+
+## 📄 License and Copyright
+
+The source code in this repository is licensed under the [MIT License](LICENSE).
+However, all branding elements, logos, photographs, and specific textual content related to the "Sails of Life" (Вітрила Життя) Medical Rehabilitation Center remain the exclusive intellectual property of the organization and are not included under this open-source license.
