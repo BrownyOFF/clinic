@@ -29,10 +29,17 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
+        alt: 'Sails of Life — Children\'s Medical Rehabilitation Center',
       },
     ],
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Sails of Life | Medical Rehabilitation Center",
+    description: "Professional help for children. Rehabilitation and palliative care in Zhytomyr.",
+    images: ['/og-image.png'],
   },
 };
 

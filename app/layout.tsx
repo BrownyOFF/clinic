@@ -33,13 +33,20 @@ export const metadata: Metadata = {
     siteName: "Вітрила Життя",
     images: [
       {
-        url: '/og-image.png', // Покладіть файл у public/og-image.png
+        url: '/og-image.png',
         width: 1200,
         height: 630,
+        alt: 'Вітрила Життя — Центр медичної реабілітації дітей',
       },
     ],
     locale: "uk_UA",
     type: "website",
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Вітрила Життя | Центр медичної реабілітації",
+    description: "Комплексна медична реабілітація та паліативна допомога дітям у Житомирі.",
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
