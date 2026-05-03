@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vitrylazhyttia.com.ua'),
   title: "Sails of Life | Children's Medical Rehabilitation Center in Zhytomyr",
   description: "Comprehensive medical rehabilitation and palliative care for children. Free services under NHSU packages: physical therapy, occupational therapy, speech therapy, psychology, early intervention.",
   keywords: [

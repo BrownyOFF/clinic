@@ -8,6 +8,7 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vitrylazhyttia.com.ua'),
   title: "Вітрила Життя | Центр медичної реабілітації дітей у Житомирі",
   description: "Комплексна медична реабілітація та паліативна допомога дітям у Житомирі. Безкоштовні послуги за пакетами НСЗУ: фізична терапія, ерготерапія, логопед, психолог, раннє втручання.",
   keywords: [
