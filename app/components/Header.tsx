@@ -41,6 +41,9 @@ export default function Header() {
 
   const englishUrl = getEnglishUrl(pathname);
 
+  const isActive = (path: string) => pathname === path;
+  const isDropdownActive = pathname.startsWith('/dlya-patsiyenta');
+
   return (
     <header className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 dark:border-slate-800 transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
@@ -54,24 +57,24 @@ export default function Header() {
 
         {/* Десктопне меню */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
-          <Link href="/pro-nas" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Про нас</Link>
-          <Link href="/novyny" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Новини</Link>
+          <Link href="/pro-nas" className={`transition ${isActive('/pro-nas') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Про нас</Link>
+          <Link href="/novyny" className={`transition ${pathname.startsWith('/novyny') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Новини</Link>
           
           {/* Випадаюче меню */}
           <div className="relative group py-8">
-            <button className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition">
+            <button className={`flex items-center gap-1 transition ${isDropdownActive ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>
               Для пацієнта <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
             </button>
             <div className="absolute top-[70px] left-0 w-64 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-              <Link href="/dlya-patsiyenta/dokumenty" className="block px-5 py-2.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400 transition">Необхідні документи</Link>
-              <Link href="/dlya-patsiyenta/reabilitatsiya" className="block px-5 py-2.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400 transition">Дитяча реабілітація (Стаття)</Link>
-              <Link href="/dlya-patsiyenta/platni-poslugy" className="block px-5 py-2.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400 transition">Платні послуги</Link>
+              <Link href="/dlya-patsiyenta/dokumenty" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/dokumenty') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Необхідні документи</Link>
+              <Link href="/dlya-patsiyenta/reabilitatsiya" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/reabilitatsiya') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Дитяча реабілітація (Стаття)</Link>
+              <Link href="/dlya-patsiyenta/platni-poslugy" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/platni-poslugy') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Платні послуги</Link>
             </div>
           </div>
 
-          <Link href="/napryamky" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
-          <Link href="/komanda" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
-          <Link href="/vakansiyi" className="hover:text-blue-600 dark:hover:text-blue-400 transition">Вакансії</Link>
+          <Link href="/napryamky" className={`transition ${isActive('/napryamky') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Напрямки</Link>
+          <Link href="/komanda" className={`transition ${isActive('/komanda') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Команда</Link>
+          <Link href="/vakansiyi" className={`transition ${isActive('/vakansiyi') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Вакансії</Link>
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
@@ -84,7 +87,7 @@ export default function Header() {
             <Link href={englishUrl} className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-800 dark:hover:text-white font-bold transition">EN</Link>
           </div>
           
-          <Link href="/kontakty" className="hidden md:flex bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+          <Link href="/kontakty" className={`hidden md:flex px-6 py-3 rounded-full text-sm font-semibold transition shadow-lg ${isActive('/kontakty') ? 'bg-blue-700 text-white shadow-blue-700/20' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20'}`}>
             Зв'язатися
           </Link>
           
@@ -102,19 +105,19 @@ export default function Header() {
             className="absolute top-20 left-0 w-full max-h-[calc(100vh-80px)] overflow-y-auto bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 shadow-xl md:hidden flex flex-col px-6 py-6 gap-6"
           >
             <nav className="flex flex-col gap-5 text-lg font-medium text-slate-700 dark:text-slate-200">
-              <Link href="/pro-nas" onClick={closeMenu}>Про нас</Link>
-              <Link href="/novyny" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Новини</Link>
+              <Link href="/pro-nas" onClick={closeMenu} className={isActive('/pro-nas') ? 'text-blue-600 dark:text-blue-400 font-bold' : ''}>Про нас</Link>
+              <Link href="/novyny" onClick={closeMenu} className={`transition ${pathname.startsWith('/novyny') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Новини</Link>
               
               <div className="border-l-2 border-blue-500 pl-4 py-1 flex flex-col gap-4 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
                 <span className="text-sm text-slate-400 uppercase tracking-wider font-bold">Для пацієнта</span>
-                <Link href="/dlya-patsiyenta/dokumenty" onClick={closeMenu} className="text-base text-slate-600 dark:text-slate-300">Необхідні документи</Link>
-                <Link href="/dlya-patsiyenta/reabilitatsiya" onClick={closeMenu} className="text-base text-slate-600 dark:text-slate-300">Дитяча реабілітація</Link>
-                <Link href="/dlya-patsiyenta/platni-poslugy" onClick={closeMenu} className="text-base text-slate-600 dark:text-slate-300">Платні послуги</Link>
+                <Link href="/dlya-patsiyenta/dokumenty" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/dokumenty') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Необхідні документи</Link>
+                <Link href="/dlya-patsiyenta/reabilitatsiya" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/reabilitatsiya') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Дитяча реабілітація</Link>
+                <Link href="/dlya-patsiyenta/platni-poslugy" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/platni-poslugy') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Платні послуги</Link>
               </div>
 
-              <Link href="/napryamky" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Напрямки</Link>
-              <Link href="/komanda" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Команда</Link>
-              <Link href="/vakansiyi" onClick={closeMenu} className="hover:text-blue-600 dark:hover:text-blue-400 transition">Вакансії</Link>
+              <Link href="/napryamky" onClick={closeMenu} className={`transition ${isActive('/napryamky') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Напрямки</Link>
+              <Link href="/komanda" onClick={closeMenu} className={`transition ${isActive('/komanda') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Команда</Link>
+              <Link href="/vakansiyi" onClick={closeMenu} className={`transition ${isActive('/vakansiyi') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Вакансії</Link>
             </nav>
 
             {/* Мобільний перемикач мов */}

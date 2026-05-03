@@ -63,8 +63,50 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "name": "КНП «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради",
+    "alternateName": "Вітрила Життя",
+    "url": "https://vitrylazhyttia.com.ua",
+    "logo": "https://vitrylazhyttia.com.ua/images/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+380674572828",
+      "contactType": "customer service",
+      "areaServed": "UA",
+      "availableLanguage": ["Ukrainian", "English"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "вул. Корабельна, 8",
+      "addressLocality": "Житомир",
+      "postalCode": "10004",
+      "addressCountry": "UA"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "50.2858", 
+      "longitude": "28.6631"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+      ],
+      "opens": "08:00",
+      "closes": "17:00"
+    }
+  };
+
   return (
     <html lang="uk" suppressHydrationWarning> 
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={inter.className}>
         <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>

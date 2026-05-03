@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { motion, Variants } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2 } from "lucide-react";
+import { useState, FormEvent, useRef, useEffect } from "react";
+import { motion, Variants, AnimatePresence } from "framer-motion";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 
@@ -10,6 +10,31 @@ export default function ContactsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
+
+  // Стан для кастомного селекта
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [selectedDirection, setSelectedDirection] = useState("Не вказано");
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  const directions = [
+    "Не вказано",
+    "Стаціонарна медична реабілітація",
+    "Нестаціонарна медична реабілітація",
+    "Стаціонарна паліативна допомога",
+    "Нестаціонарна паліативна допомога",
+    "Без направлення"
+  ];
+
+  // Закриття селекта при кліку зовні
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+        setIsSelectOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -245,14 +270,49 @@ export default function ContactsPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Електронне направлення</label>
-                        <select name="Направлення" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white appearance-none">
-                          <option value="Не вказано">Оберіть тип направлення...</option>
-                          <option value="Стаціонарна медична реабілітація">Стаціонарна медична реабілітація</option>
-                          <option value="Нестаціонарна медична реабілітація">Нестаціонарна медична реабілітація</option>
-                          <option value="Стаціонарна паліативна допомога">Стаціонарна паліативна допомога</option>
-                          <option value="Нестаціонарна паліативна допомога">Нестаціонарна паліативна допомога</option>
-                          <option value="Без направлення">Без направлення</option>
-                        </select>
+                        <div className="relative" ref={selectRef}>
+                          <input type="hidden" name="Направлення" value={selectedDirection} />
+                          <button
+                            type="button"
+                            onClick={() => setIsSelectOpen(!isSelectOpen)}
+                            className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all flex items-center justify-between group"
+                          >
+                            <span className={selectedDirection === "Не вказано" ? "text-slate-400" : "text-slate-900 dark:text-white"}>
+                              {selectedDirection === "Не вказано" ? "Оберіть тип направлення..." : selectedDirection}
+                            </span>
+                            <ChevronDown 
+                              size={18} 
+                              className={`text-slate-400 transition-transform duration-300 ${isSelectOpen ? "rotate-180" : ""}`} 
+                            />
+                          </button>
+
+                          <AnimatePresence>
+                            {isSelectOpen && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl overflow-hidden"
+                              >
+                                {directions.map((dir) => (
+                                  <button
+                                    key={dir}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedDirection(dir);
+                                      setIsSelectOpen(false);
+                                    }}
+                                    className={`w-full px-5 py-3 text-left text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 ${
+                                      selectedDirection === dir ? "text-blue-600 dark:text-blue-400 font-bold bg-blue-50/50 dark:bg-blue-900/20" : "text-slate-700 dark:text-slate-300"
+                                    }`}
+                                  >
+                                    {dir}
+                                  </button>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
                       </div>
                     </div>
 
