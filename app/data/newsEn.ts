@@ -1,6 +1,48 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // IT Company Visit
+  {
+    slug: "it-company-visit",
+    title: "The Magic of Kindness: How Kyiv IT Specialists Organized a Real Holiday for Our Children",
+    date: "2 May 2026",
+    excerpt: "On May 2, our center was filled with sincere children's laughter and real magic! An incredible team — an IT company from Kyiv — visited us, bringing not only gifts but a sea of joy.",
+    image: "/images/news/anim1.webp",
+    images: [
+      "/images/news/anim1.webp",
+      "/images/news/anim2.webp",
+      "/images/news/anim3.webp",
+      "/images/news/anim4.webp",
+      "/images/news/anim5.webp",
+      "/images/news/anim6.webp",
+      "/images/news/anim7.webp",
+      "/images/news/anim8.webp",
+      "/images/news/anim9.webp",
+      "/images/news/anim10.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "<strong>On May 2</strong>, our center was filled with sincere children's laughter and real magic! ✨ An incredible team — an IT company from Kyiv — came to visit us. This visit became a real event for our children, full of warmth and care."
+      },
+      {
+        type: "paragraph",
+        value: "Our guests did not come empty-handed. The team handed over a lot of beautiful and comfortable clothes for the little ones 👗, as well as office equipment that we so much needed. The new equipment will help make the process of education and development of children even more modern and effective. We are sincerely grateful for such a practical and important contribution to the development of our Center."
+      },
+      {
+        type: "paragraph",
+        value: "But the most important gift is, of course, emotions! Together with a team of professional animators, the guests organized an unforgettable holiday for the children. During the day we played exciting games, danced, laughed a lot and just had a great time together. 🥳 Children's smiles and shining eyes became the best confirmation of how important such meetings are."
+      },
+      {
+        type: "paragraph",
+        value: "We sincerely thank our Kyiv friends for their big heart, care and sincere attention to children. You once again prove that the IT field is not only about high technologies and numbers, but above all about humanity, kindness and readiness to help those who need it most! 💛"
+      },
+      {
+        type: "paragraph",
+        value: "📸 <strong>More bright moments of our holiday — see in the photo gallery above.</strong>"
+      }
+    ]
+  },
   // 40 days Husak
   {
     slug: "hysak-40-days",
