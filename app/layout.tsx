@@ -101,13 +101,12 @@ export default function RootLayout({
 
   return (
     <html lang="uk" suppressHydrationWarning> 
-      <head>
+      <body className={inter.className}>
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body className={inter.className}>
         <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
            <div className="absolute left-0 right-0 top-[-10%] -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-500 dark:bg-blue-700 opacity-20 dark:opacity-30 blur-[100px]"></div>
@@ -119,7 +118,7 @@ export default function RootLayout({
         </ThemeProvider>
 
         <Script 
-          src="https://www.googletagmanager.com/gtag/js?id=G-RSQEJVSJFQ" 
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} 
           strategy="lazyOnload" 
         />
         <Script id="google-analytics" strategy="lazyOnload">
@@ -127,7 +126,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-RSQEJVSJFQ', {
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
               page_path: window.location.pathname,
             });
           `}

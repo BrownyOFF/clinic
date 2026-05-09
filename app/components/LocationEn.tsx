@@ -1,4 +1,29 @@
 import { Building } from "lucide-react";
+import GoogleMap from "./GoogleMap";
+
+const EN_CONFIGURATION = {
+  "locations": [
+    {
+      "title": "Municipal Non-Profit Enterprise 'Center for Medical Rehabilitation and Palliative Care for Children' of the Zhytomyr Oblast Council",
+      "address1": "8 Korabelna St",
+      "address2": "Zhytomyr, Zhytomyr Oblast, Ukraine",
+      "coords": { "lat": 50.2826796, "lng": 28.5945396 },
+      "placeId": "ChIJVVWlvUNlLEcRuhSopj_XWj4"
+    }
+  ],
+  "mapOptions": { 
+    "center": { "lat": 50.2826796, "lng": 28.5945396 }, 
+    "fullscreenControl": false, 
+    "mapTypeControl": false, 
+    "streetViewControl": true, 
+    "zoom": 16, 
+    "zoomControl": true, 
+    "maxZoom": 20, 
+    "mapId": "DEMO_MAP_ID" 
+  },
+  "mapsApiKey": process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  "capabilities": { "input": false, "autocomplete": false, "directions": false, "distanceMatrix": false, "details": false, "actions": false }
+};
 
 export default function LocationEn() {
   return (
@@ -19,11 +44,7 @@ export default function LocationEn() {
                 <div className="absolute top-4 left-4 z-10 bg-white/90 dark:bg-slate-900/90 backdrop-blur text-sm font-semibold px-4 py-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-slate-900 dark:text-white">
                   Click "View larger map" to open the app
                 </div>
-                <iframe 
-                  src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=%D0%BC.%20%D0%96%D0%B8%D1%82%D0%BE%D0%BC%D0%B8%D1%80,%20%D0%B2%D1%83%D0%BB.%20%D0%9A%D0%BE%D1%80%D0%B0%D0%B1%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0,%208+(My%20Business%20Name)&t=&z=14&ie=UTF8&iwloc=B&output=embed"
-                  title="Location map"
-                  width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 "
-                ></iframe>
+                <GoogleMap config={EN_CONFIGURATION} />
             </div>
         </div>
     </section>

@@ -5,6 +5,7 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import GoogleMap from "@/app/components/GoogleMap";
 
 export default function ContactsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -163,10 +164,7 @@ export default function ContactsPage() {
             
             {/* Міні-карта */}
             <div className="relative aspect-video rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100 dark:bg-slate-800">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2551.8152438531584!2d28.69466847648316!3d50.24407887154944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x472c64bd2db8b98b%3A0x8683e9b13fb8053!2z0LLRg9C7LiDQmtC-0YDQsNCx0LXQu9GM0L3QsCwgOCwg0JbQuNGC0L7QvNC40YAsINCW0LjRgtC-0LzQuNGA0YHRjNC60LAg0L7QsdC70LDRgdGC0YwsIDEwMDAw!5e0!3m2!1suk!2sua!4v1710000000000!5m2!1suk!2sua" 
-                width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0"
-              ></iframe>
+              <GoogleMap />
             </div>
           </motion.div>
 
