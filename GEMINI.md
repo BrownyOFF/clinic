@@ -17,6 +17,10 @@
    - Всі компоненти дублюються (наприклад, `Header.tsx` та `HeaderEn.tsx`).
    - SEO зв'язок між сторінками реалізовано через `alternates` (canonical та hreflang) у файлах `layout.tsx`.
 2. **Дані:** Замість бази даних використовуються локальні статичні файли (наприклад, `app/data/news.ts` та `app/data/newsEn.ts`).
+3. **Карти:** Використовується сучасний `Google Maps JS API` з `Advanced Markers`. Весь код карти зосереджений у компоненті `GoogleMap.tsx`.
+4. **Змінні оточення:** 
+   - Публічні (префікс `NEXT_PUBLIC_`) додаються в Cloudflare як **Plaintext**.
+   - Секретні (Телеграм, Google Script) додаються як **Secret**.
 
 ## 📝 Правила написання коду (Code Style)
 1. **Server vs Client Components:** За замовчуванням пиши Server Components. Додавай директиву `"use client";` на самому початку файлу ТІЛЬКИ якщо компонент використовує стан (`useState`), ефекти (`useEffect`) або інтерактивність (кліки, анімації Framer Motion).

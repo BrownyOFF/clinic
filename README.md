@@ -74,11 +74,16 @@ npm install
 ```
 
 ### 2. Налаштування змінних оточення
-Створіть файл `.env.local` у корені проекту та додайте ключі для роботи форм:
+Створіть файл `.env.local` у корені проекту та додайте ключі для роботи форм, аналітики та карт:
 ```env
+# Форми (API Edge)
 TELEGRAM_BOT_TOKEN="ваш_токен_бота"
 TELEGRAM_CHAT_ID="id_чату"
 GOOGLE_SCRIPT_URL="url_вашого_google_script"
+
+# Аналітика та Карти (Публічні)
+NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSy..."
 ```
 
 ### 3. Запуск у режимі розробки
@@ -204,11 +209,16 @@ npm install
 ```
 
 ### 2. Setting up environment variables
-Create a `.env.local` file in the root of the project and add keys for form operation:
+Create a `.env.local` file in the root of the project and add keys for form operation, analytics, and maps:
 ```env
+# Forms (API Edge)
 TELEGRAM_BOT_TOKEN="your_bot_token"
 TELEGRAM_CHAT_ID="chat_id"
 GOOGLE_SCRIPT_URL="your_google_script_url"
+
+# Analytics & Maps (Public)
+NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSy..."
 ```
 
 ### 3. Running in development mode

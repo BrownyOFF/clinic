@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Вітрила Життя",
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.png?v=2',
         width: 1200,
         height: 630,
         alt: 'Вітрила Життя — Центр медичної реабілітації дітей',
