@@ -1,101 +1,109 @@
-# 🏥 Сайт КНП «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради (Медичний центр "Вітрила")
+# 🏥 Сайт КНП «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради (Медичний центр "Вітрила життя")
 
-*(🇬🇧 English translation below)*
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.1-black?logo=next.js)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?logo=typescript)](https://www.typescriptlang.org/)
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12-black?logo=framer)](https://www.framer.com/motion/)
+[![Node.js](https://img.shields.io/badge/Node.js-%5E20.18.0-green?logo=node.js)](https://nodejs.org/)
+[![Deployment](https://img.shields.io/badge/Deployment-Cloudflare-orange?logo=cloudflare)](https://pages.cloudflare.com/)
+[![Stars](https://img.shields.io/github/stars/BrownyOFF/clinic?style=social)](https://github.com/BrownyOFF/clinic)
+
+[English version here 🇬🇧](./README.en.md)
+
+---
+
+### 🔗 Посилання
+- **Живий сайт:** [vitrylazhyttia.com.ua](https://vitrylazhyttia.com.ua/)
+- **Розробник:** [Tymur Halas](https://github.com/BrownyOFF)
+
+---
+
+## 📋 Зміст
+1. [Про проект](#про-проект)
+2. [Основні можливості](#основні-можливості)
+3. [Хостинг та Інфраструктура](#хостинг-та-інфраструктура)
+4. [Архітектура та Принцип роботи](#архітектура-та-принцип-роботи)
+5. [Встановлення та Запуск](#встановлення-та-запуск)
+6. [Структура проекту](#структура-проекту)
+7. [Правила розробки](#правила-розробки-code-style)
+8. [Внесок у проект](#внесок-у-проект)
+9. [Ліцензія](#ліцензія-та-авторське-право)
+
+---
 
 ## 📌 Про проект
 
-Цей проект — сучасний, швидкий та багатомовний веб-сайт для **Комунального некомерційного підприємства «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради** (також відомого як Медичний Центр "Вітрила").
+![Main Page Preview](preview.png)
 
-Головна мета проекту — забезпечити пацієнтів та їхні родини зручним доступом до інформації про послуги, спеціалістів, новини та контакти закладу, незалежно від пристрою чи мови. Проект розроблено з акцентом на високу продуктивність, SEO-оптимізацію, доступність та безпеку.
+Цей проект — **офіційний веб-сайт** для **Комунального некомерційного підприємства «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради** (також відомого як Медичний Центр "Вітрила життя").
 
-### 👤 Розробник
-Проект розроблено та підтримується: **[Галас Тимур](https://github.com/BrownyOFF)**
+Сайт вирішує проблему швидкого та зручного доступу пацієнтів та їхніх родин до критичної інформації про реабілітаційні послуги, документи та фахівців закладу. Проект розроблено з акцентом на високу продуктивність, SEO-оптимізацію для медичних запитів та повну адаптивність під будь-які пристрої.
+
+---
+
+## ✨ Основні можливості
+
+- 🌍 **Багатомовність (UA/EN) та SEO:** 100% статичний контент та SSR з незалежним ручним роутингом для максимального контролю над SEO-показниками.
+- ⚡ **Швидкість:** Використання Next.js 16+, Server Components та Edge Runtime забезпечує миттєве завантаження та відмінні показники Core Web Vitals.
+- 📬 **Edge Forms:** Форми запису працюють через Cloudflare Workers, надсилаючи сповіщення в Telegram та дублюючи в Google Sheets/Email.
+- 🛡️ **Захист від спаму:** Вбудована система "Honeypot" для блокування ботів без нав'язливих капч.
+- 🌙 **Темна тема:** Повна підтримка системної та ручної зміни теми (Dark/Light) з плавними переходами.
+- 🗺️ **Інтерактивна карта:** Google Maps API з кастомними Advanced Markers для зручного пошуку закладу.
+- 🎭 **Плавний UI:** Високоякісні анімації інтерфейсу за допомогою Framer Motion.
 
 ---
 
 ## ☁️ Хостинг та Інфраструктура
 
-Сайт розгорнуто та хоститься на платформі **Cloudflare** (Cloudflare Pages / Workers). 
-Це рішення забезпечує:
-- **Глобальну CDN:** Сайт завантажується миттєво з найближчого до користувача сервера.
-- **Edge Runtime:** API-роути виконуються "на краю" (Edge), що гарантує мінімальну затримку при відправці форм.
-- **Безпеку:** Вбудований захист Cloudflare від DDoS-атак та автоматичне управління SSL-сертифікатами.
+Сайт розгорнуто на платформі **Cloudflare** (Cloudflare Pages / Workers). 
+Це забезпечує глобальну CDN, Edge Runtime для API-роутів та автоматичне управління SSL-сертифікатами, що гарантує високу доступність та безпеку.
 
 ---
 
 ## 🏗 Архітектура та Принцип роботи
 
-Сайт побудований на базі сучасного фреймворку **Next.js 16+** з використанням **App Router**.
+Сайт побудований на базі **Next.js 16.2+** з використанням **App Router**.
 
-### 1. Багатомовність (i18n через Ручний роутинг)
-Проект підтримує дві мови: **Українську** (основна) та **Англійську**.
-- Щоб уникнути зайвого навантаження від важких бібліотек локалізації та мати 100% контроль над SEO, реалізовано **ручний роутинг**.
-- Основна (українська) версія знаходиться безпосередньо в кореневій директорії `app/`.
-- Англійська версія є точним дзеркалом і знаходиться в директорії `app/en/`.
-- Компоненти інтерфейсу дублюються (наприклад, `Header.tsx` та `HeaderEn.tsx`), що дозволяє незалежно налаштовувати дизайн та контент для різних мов.
-- SEO-зв'язок (canonical та hreflang) чітко прописаний у файлах `layout.tsx` для правильного індексування пошуковими системами Google.
+### 1. Server-Side Rendering (SSR) та Server Components
+Архітектура дозволяє за замовчуванням рендерити компоненти на сервері, віддаючи клієнту готовий HTML. Це кардинально покращує швидкість завантаження та SEO. Директива `"use client";` використовується строго дозовано лише там, де потрібна інтерактивність.
 
-### 2. Керування контентом (Безбазовий підхід)
-Сайт не використовує традиційну реляційну чи NoSQL базу даних (як MySQL чи MongoDB) або складні CMS.
-- Весь динамічний контент (новини, списки лікарів, послуги, факти) зберігається **локально у статичних TypeScript-файлах** (директорія `app/data/`).
-- Наприклад, дані новин лежать у `app/data/news.ts` та `app/data/newsEn.ts`.
-- **Переваги:** Нульовий час відгуку бази даних, абсолютна стійкість до зламів бази даних, легке версіонування контенту через Git.
+### 2. Багатомовність (i18n)
+Ми використовуємо **ручний роутинг** без важких бібліотек локалізації. Основна версія знаходиться в `app/`, а англійська — в `app/en/`. Компоненти дублюються (`Header.tsx` / `HeaderEn.tsx`) для повного контролю над контентом та дизайном без runtime-накладних витрат.
 
-### 3. Server-Side Rendering (SSR) та Client Components
-- Архітектура Next.js App Router дозволяє за замовчуванням рендерити компоненти на сервері (**Server Components**), віддаючи клієнту готовий HTML. Це кардинально покращує швидкість завантаження (FCP, LCP) та SEO.
-- Директива `"use client";` використовується строго дозовано — лише для тих компонентів, де потрібна інтерактивність користувача (кліки, форми, каруселі) або клієнтський стан (анімації Framer Motion, керування темами).
+### 3. Керування контентом (Databaseless)
+Весь динамічний контент зберігається локально у статичних **TypeScript-файлах** (`app/data/`). Це гарантує нульовий час відгуку бази даних та абсолютну стійкість до зламів бази даних.
 
-### 4. Обробка форм та Сповіщення (API Edge)
-Форми зворотного зв'язку (наприклад, запис на прийом) працюють через захищений API-роут (`app/api/send/route.ts`), який виконується в Edge-середовищі Cloudflare:
-- **Telegram Bot API:** Основний канал. Дані миттєво відправляються в Telegram-чат адміністратора/реєстратури.
-- **Google Apps Script:** Резервний канал. Дані дублюються в Google Script, який пересилає їх на email закладу.
-- **Анти-спам (Honeypot):** У форми вбудовано приховане поле `bot_check`. Якщо спам-бот його заповнює, сервер блокує відправку, повертаючи фейковий успішний статус, щоб бот не намагався обійти захист.
-
-### 5. Дизайн, UI та Анімації
-- **Стилізація:** Використовується **Tailwind CSS v4**. Верстка побудована за принципом **Mobile-first** — інтерфейс ідеально адаптується під екрани мобільних телефонів, планшетів та десктопів.
-- **Темна тема:** Повна підтримка темного режиму через класи `dark:` та керування станом бібліотекою `next-themes`.
-- **Анімації:** Плавні переходи сторінок та поява елементів при скролінгу реалізовані за допомогою **Framer Motion** (`motion`, `AnimatePresence`).
-- **Іконки:** Використовуються легковажні векторні SVG іконки від **Lucide React**.
+### 4. Обробка форм та Анти-спам
+Форми зворотного зв'язку працюють через захищений API-роут на Edge Cloudflare. Вбудована система **Honeypot** (приховане поле `bot_check`) ефективно фільтрує спам-ботів, не створюючи перешкод для реальних користувачів.
 
 ---
 
-## 🚀 Встановлення та Запуск (Для розробників)
+## 🚀 Встановлення та Запуск
 
 ### Попередні вимоги
-- Node.js (рекомендується версія 20+)
-- npm (або yarn / pnpm)
+- Node.js (рекомендується версія `^20.18.0` LTS)
+- npm або **pnpm** (рекомендовано)
 - Обліковий запис Cloudflare (для деплою)
 
 ### 1. Клонування та встановлення залежностей
 ```bash
-git clone <URL_репозиторію>
-cd site
-npm install
+git clone https://github.com/BrownyOFF/clinic.git
+cd clinic
+npm install # або pnpm install
 ```
 
 ### 2. Налаштування змінних оточення
-Створіть файл `.env.local` у корені проекту та додайте ключі для роботи форм, аналітики та карт:
-```env
-# Форми (API Edge)
-TELEGRAM_BOT_TOKEN="ваш_токен_бота"
-TELEGRAM_CHAT_ID="id_чату"
-GOOGLE_SCRIPT_URL="url_вашого_google_script"
-
-# Аналітика та Карти (Публічні)
-NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSy..."
-```
-
-### 3. Запуск у режимі розробки
+Скопіюйте приклад файлу налаштувань та додайте ваші ключі:
 ```bash
-npm run dev
+cp .env.example .env.local
 ```
-Відкрийте [http://localhost:3000](http://localhost:3000) у вашому браузері.
+Відкрийте `.env.local` та заповніть необхідні дані (Telegram Token, Google Maps API Key тощо).
 
-### 4. Збірка для продакшену
+### 3. Запуск
 ```bash
-npm run build
-npm run start
+npm run dev # Розробка
+npm run build # Збірка для продакшену
 ```
 
 ---
@@ -104,165 +112,45 @@ npm run start
 
 ```text
 app/
-├── api/             # Edge API роути (наприклад, /api/send для форм)
-├── components/      # Спільні UI компоненти (Header, Footer, каруселі, кнопки)
-├── data/            # Локальні дані контенту у форматі TypeScript (новини, лікарі)
-├── en/              # Англійська версія сайту (повне дзеркало української структури)
-├── dlya-patsiyenta/ # Розділ "Для пацієнта" (документи, платні послуги, реабілітація)
-├── komanda/         # Розділ "Команда" (профілі спеціалістів)
-├── kontakty/        # Розділ "Контакти" (карта, телефони, форма зв'язку)
-├── napryamky/       # Розділ "Напрямки" (медичні напрямки закладу)
-├── novyny/          # Розділ "Новини" (список новин та динамічні сторінки [slug])
-├── pro-nas/         # Розділ "Про нас" (історія, місія, фотогалерея)
+├── api/             # Edge API роути (форми, Telegram/Google Script)
+├── components/      # UI компоненти (Header, Footer, Hero, Map тощо)
+├── data/            # Локальні дані контенту (news.ts, newsEn.ts)
+├── en/              # Англійська версія сайту (дзеркальний роутинг)
+├── dlya-patsiyenta/ # Розділ "Для пацієнта" (документи, послуги, реабілітація)
+├── komanda/         # Розділ "Команда"
+├── kontakty/        # Розділ "Контакти"
+├── napryamky/       # Розділ "Напрямки"
+├── novyny/          # Розділ "Новини" (динамічний роутинг [slug])
+├── pro-nas/         # Розділ "Про нас"
 ├── vakansiyi/       # Розділ "Вакансії"
-├── layout.tsx       # Головний layout української версії (шрифти, метадані, провайдери)
-└── page.tsx         # Головна (домашня) сторінка української версії
+└── layout.tsx       # Головний макет, метадані та SEO
+public/              # Статичні файли (images, documents)
 ```
 
+---
+
 ## 📝 Правила розробки (Code Style)
-1. **TypeScript:** Строга типізація є обов'язковою. Уникайте використання `any`. Завжди створюйте `interface` або `type` для вхідних даних (props) компонентів та структур даних.
-2. **Tailwind CSS:** Всі стилі (відступи, кольори, типографіка, сітка) пишуться виключно класами Tailwind. Завжди забезпечуйте коректний вигляд у темній темі (префікс `dark:`).
-3. **Іменування:** Код (назви змінних, функцій, компонентів, файлів, класів) пишеться виключно англійською мовою.
-4. **Коментарі та документація:** Для забезпечення прозорості в команді, коментарі до складної логіки та документація (як цей файл) ведуться українською мовою.
+
+1. **TypeScript:** Строга типізація обов'язкова. Уникайте `any`, використовуйте `interface` для пропсів.
+2. **Tailwind CSS:** Використовуйте класи Tailwind v4 для всіх стилів. Обов'язкова підтримка `dark:`.
+3. **i18n Синхронізація:** При зміні структури UA компонента, обов'язково оновіть відповідний EN аналог.
+4. **Naming:** Код пишеться виключно англійською мовою. Коментарі — українською.
+
+---
+
+## 🤝 Внесок у проект
+
+Ми з радістю приймаємо Pull Requests! Якщо ви хочете допомогти:
+- Покращення перекладів (особливо медичної термінології).
+- Виправлення доступності (Accessibility/A11y).
+- Оптимізація продуктивності та SEO.
+- Виправлення знайдених багів.
+
+Основна гілка — `main`. Перед створенням PR, будь ласка, переконайтеся, що проект проходить перевірку лінтером.
 
 ---
 
 ## 📄 Ліцензія та Авторське право
 
-Вихідний код у цьому репозиторії поширюється за ліцензією [MIT License](LICENSE).
-Однак усі елементи брендингу, логотипи, фотографії та специфічний текстовий контент, пов'язаний з Медичним центром "Вітрила", залишаються виключною інтелектуальною власністю організації і не підпадають під дію цієї open-source ліцензії.
-
----
----
-
-# 🏥 Website of the Municipal Non-Profit Enterprise "Center for Medical Rehabilitation and Palliative Care for Children" of the Zhytomyr Regional Council (Medical Center "Vitryla")
-
-## 📌 About the Project
-
-This project is a modern, fast, and multilingual website for the **Municipal Non-Profit Enterprise "Center for Medical Rehabilitation and Palliative Care for Children" of the Zhytomyr Regional Council** (also known as Medical Center "Vitryla").
-
-The main goal of the project is to provide patients and their families with convenient access to information about services, specialists, news, and contact details of the institution, regardless of device or language. The project is designed with a focus on high performance, SEO optimization, accessibility, and security.
-
-### 👤 Developer
-Project developed and maintained by: **[Timur Halas](https://github.com/BrownyOFF)**
-
----
-
-## ☁️ Hosting and Infrastructure
-
-The website is deployed and hosted on the **Cloudflare** platform (Cloudflare Pages / Workers).
-This solution provides:
-- **Global CDN:** The website loads instantly from the server closest to the user.
-- **Edge Runtime:** API routes run "on the edge" (Edge), ensuring minimal latency when submitting forms.
-- **Security:** Built-in Cloudflare protection against DDoS attacks and automated SSL certificate management.
-
----
-
-## 🏗 Architecture and Operation Principle
-
-The website is built on the modern **Next.js 16+** framework using the **App Router**.
-
-### 1. Multilingualism (i18n via Manual Routing)
-The project supports two languages: **Ukrainian** (primary) and **English**.
-- To avoid the overhead of heavy localization libraries and to have 100% control over SEO, **manual routing** is implemented.
-- The primary (Ukrainian) version is located directly in the root directory `app/`.
-- The English version is an exact mirror and is located in the `app/en/` directory.
-- UI components are duplicated (e.g., `Header.tsx` and `HeaderEn.tsx`), allowing independent configuration of design and content for different languages.
-- SEO linking (canonical and hreflang) is explicitly defined in the `layout.tsx` files for proper indexing by Google search engines.
-
-### 2. Content Management (Databaseless Approach)
-The website does not use a traditional relational or NoSQL database (like MySQL or MongoDB) or a complex CMS.
-- All dynamic content (news, lists of doctors, services, facts) is stored **locally in static TypeScript files** (`app/data/` directory).
-- For example, news data is located in `app/data/news.ts` and `app/data/newsEn.ts`.
-- **Advantages:** Zero database response time, absolute resistance to database hacking, easy content versioning via Git.
-
-### 3. Server-Side Rendering (SSR) and Client Components
-- The Next.js App Router architecture allows components to be rendered on the server (**Server Components**) by default, delivering ready-made HTML to the client. This dramatically improves loading speed (FCP, LCP) and SEO.
-- The `"use client";` directive is used strictly minimally — only for components that require user interactivity (clicks, forms, carousels) or client state (Framer Motion animations, theme management).
-
-### 4. Form Processing and Notifications (Edge API)
-Feedback forms (e.g., making an appointment) operate via a secure API route (`app/api/send/route.ts`) that runs in the Cloudflare Edge environment:
-- **Telegram Bot API:** Primary channel. Data is instantly sent to the administrator/registry Telegram chat.
-- **Google Apps Script:** Backup channel. Data is duplicated to a Google Script, which forwards it to the institution's email.
-- **Anti-spam (Honeypot):** A hidden field `bot_check` is built into the forms. If a spambot fills it in, the server blocks the submission, returning a fake success status so the bot doesn't try to bypass the protection.
-
-### 5. Design, UI, and Animations
-- **Styling:** **Tailwind CSS v4** is used. Layout is built on the **Mobile-first** principle — the interface perfectly adapts to screens of mobile phones, tablets, and desktops.
-- **Dark Theme:** Full support for dark mode via `dark:` classes and state management using the `next-themes` library.
-- **Animations:** Smooth page transitions and appearance of elements on scrolling are implemented using **Framer Motion** (`motion`, `AnimatePresence`).
-- **Icons:** Lightweight vector SVG icons from **Lucide React** are used.
-
----
-
-## 🚀 Installation and Launch (For Developers)
-
-### Prerequisites
-- Node.js (version 20+ recommended)
-- npm (or yarn / pnpm)
-- Cloudflare account (for deployment)
-
-### 1. Cloning and installing dependencies
-```bash
-git clone <repository_URL>
-cd site
-npm install
-```
-
-### 2. Setting up environment variables
-Create a `.env.local` file in the root of the project and add keys for form operation, analytics, and maps:
-```env
-# Forms (API Edge)
-TELEGRAM_BOT_TOKEN="your_bot_token"
-TELEGRAM_CHAT_ID="chat_id"
-GOOGLE_SCRIPT_URL="your_google_script_url"
-
-# Analytics & Maps (Public)
-NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="AIzaSy..."
-```
-
-### 3. Running in development mode
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### 4. Building for production
-```bash
-npm run build
-npm run start
-```
-
----
-
-## 📂 Project Structure
-
-```text
-app/
-├── api/             # Edge API routes (e.g., /api/send for forms)
-├── components/      # Shared UI components (Header, Footer, carousels, buttons)
-├── data/            # Local content data in TypeScript format (news, doctors)
-├── en/              # English version of the site (full mirror of Ukrainian structure)
-├── dlya-patsiyenta/ # "For Patient" section (documents, paid services, rehabilitation)
-├── komanda/         # "Team" section (specialist profiles)
-├── kontakty/        # "Contacts" section (map, phones, contact form)
-├── napryamky/       # "Directions" section (medical directions of the institution)
-├── novyny/          # "News" section (list of news and dynamic [slug] pages)
-├── pro-nas/         # "About Us" section (history, mission, photo gallery)
-├── vakansiyi/       # "Vacancies" section
-├── layout.tsx       # Main layout of the Ukrainian version (fonts, metadata, providers)
-└── page.tsx         # Main (home) page of the Ukrainian version
-```
-
-## 📝 Development Rules (Code Style)
-1. **TypeScript:** Strict typing is mandatory. Avoid using `any`. Always create an `interface` or `type` for component input data (props) and data structures.
-2. **Tailwind CSS:** All styles (margins, colors, typography, grid) are written exclusively with Tailwind classes. Always ensure correct appearance in dark theme (`dark:` prefix).
-3. **Naming:** Code (variable names, functions, components, files, classes) is written exclusively in English.
-4. **Comments and documentation:** To ensure transparency in the team, comments on complex logic and documentation (like this file) are kept in Ukrainian (and English if necessary).
-
----
-
-## 📄 License and Copyright
-
-The source code in this repository is licensed under the [MIT License](LICENSE).
-However, all branding elements, logos, photographs, and specific textual content related to the "Sails of Life" (Вітрила Життя) Medical Rehabilitation Center remain the exclusive intellectual property of the organization and are not included under this open-source license.
+- **Код:** Поширюється за ліцензією [MIT License](LICENSE).
+- **Контент:** Усі елементи брендингу, логотипи, фотографії пацієнтів та специфічний контент є інтелектуальною власністю закладу. Використання цих матеріалів без офіційного дозволу заборонено.
