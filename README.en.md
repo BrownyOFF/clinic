@@ -20,15 +20,15 @@
 ---
 
 ## 📋 Table of Contents
-1. [About the Project](#about-the-project)
-2. [Key Features](#key-features)
-3. [Hosting and Infrastructure](#hosting-and-infrastructure)
-4. [Architecture and Operation Principle](#architecture-and-operation-principle)
-5. [Installation and Launch](#installation-and-launch)
-6. [Project Structure](#project-structure)
-7. [Development Rules](#development-rules-code-style)
-8. [Contributing](#contributing)
-9. [License](#license-and-copyright)
+1. [About the Project](#-about-the-project)
+2. [Key Features](#-key-features)
+3. [Hosting and Infrastructure](#-hosting-and-infrastructure)
+4. [Architecture and Operation Principle](#-architecture-and-operation-principle)
+5. [Installation and Launch](#-installation-and-launch)
+6. [Project Structure](#-project-structure)
+7. [Development Rules](#-development-rules-code-style)
+8. [Contributing](#-contributing)
+9. [License](#-license-and-copyright)
 
 ---
 
