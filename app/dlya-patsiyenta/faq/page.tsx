@@ -127,7 +127,7 @@ export default function FAQPage() {
                   setActiveCategory(cat.id);
                   setOpenId(null);
                 }}
-                className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs md:text-sm font-bold transition shadow-sm ${
+                className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs md:text-sm font-bold transition shadow-sm cursor-pointer ${
                   isActive
                     ? "bg-blue-600 text-white"
                     : "bg-white hover:bg-slate-105 dark:bg-slate-900 text-slate-650 dark:text-slate-350 border border-slate-150 dark:border-slate-800"
@@ -159,7 +159,7 @@ export default function FAQPage() {
                     >
                       <button
                         onClick={() => toggleAccordion(item.id)}
-                        className="w-full px-6 py-5 text-left flex justify-between items-center gap-4 focus:outline-none group"
+                        className="w-full px-6 py-5 text-left flex justify-between items-center gap-4 focus:outline-none group cursor-pointer"
                       >
                         <span className="font-bold text-slate-900 dark:text-white text-base md:text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
                           {item.question}

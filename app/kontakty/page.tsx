@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import GoogleMap from "@/app/components/GoogleMap";
+import Input from "@/app/components/core/Input";
+import Textarea from "@/app/components/core/Textarea";
 
 function ContactsContent() {
   const searchParams = useSearchParams();
@@ -328,29 +330,20 @@ function ContactsContent() {
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ПІБ пацієнта *</label>
-                        <input type="text" name="ПІБ_пацієнта" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Іваненко Іван Іванович" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Дата народження *</label>
-                        <input 
-                          type="text" 
-                          name="Дата_народження" 
-                          required 
-                          pattern="\d{2}\.\d{2}\.\d{4}"
-                          title="Будь ласка, введіть дату у форматі ДД.ММ.РРРР (наприклад, 15.03.2020)"
-                          className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
-                          placeholder="ДД.ММ.РРРР" 
-                        />
-                      </div>
+                      <Input label="ПІБ пацієнта *" type="text" name="ПІБ_пацієнта" required placeholder="Іваненко Іван Іванович" />
+                      <Input
+                        label="Дата народження *"
+                        type="text" 
+                        name="Дата_народження" 
+                        required 
+                        pattern="\d{2}\.\d{2}\.\d{4}"
+                        title="Будь ласка, введіть дату у форматі ДД.ММ.РРРР (наприклад, 15.03.2020)"
+                        placeholder="ДД.ММ.РРРР" 
+                      />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Телефон для зв'язку *</label>
-                        <input type="tel" name="Телефон" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="+38 (000) 000-00-00" />
-                      </div>
+                      <Input label="Телефон для зв'язку *" type="tel" name="Телефон" required placeholder="+38 (000) 000-00-00" />
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Електронне направлення</label>
                         <div className="relative" ref={selectRef}>
@@ -399,10 +392,7 @@ function ContactsContent() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Адреса проживання *</label>
-                      <input type="text" name="Адреса" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Область, місто/село, вулиця" />
-                    </div>
+                    <Input label="Адреса проживання *" type="text" name="Адреса" required placeholder="Область, місто/село, вулиця" />
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Потреба в консультації спеціалістів:</label>
@@ -432,29 +422,23 @@ function ContactsContent() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Діагноз (за бажанням)</label>
-                      <input 
-                        type="text" 
-                        name="Діагноз" 
-                        value={diagnosis} 
-                        onChange={(e) => setDiagnosis(e.target.value)} 
-                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
-                        placeholder="Вкажіть діагноз..." 
-                      />
-                    </div>
+                    <Input
+                      label="Діагноз (за бажанням)"
+                      type="text" 
+                      name="Діагноз" 
+                      value={diagnosis} 
+                      onChange={(e) => setDiagnosis(e.target.value)} 
+                      placeholder="Вкажіть діагноз..." 
+                    />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Додаткова інформація</label>
-                      <textarea 
-                        name="Додаткова_інформація" 
-                        value={additionalInfo} 
-                        onChange={(e) => setAdditionalInfo(e.target.value)} 
-                        rows={3} 
-                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" 
-                        placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
-                      ></textarea>
-                    </div>
+                    <Textarea
+                      label="Додаткова інформація"
+                      name="Додаткова_інформація" 
+                      value={additionalInfo} 
+                      onChange={(e) => setAdditionalInfo(e.target.value)} 
+                      rows={3} 
+                      placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
+                    />
 
                     <button 
                       type="submit" 
@@ -477,10 +461,7 @@ function ContactsContent() {
                     {/* 🛡️ HONEYPOT */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваш відгук *</label>
-                      <textarea name="Відгук" required rows={5} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Поділіться вашими враженнями..."></textarea>
-                    </div>
+                    <Textarea label="Ваш відгук *" name="Відгук" required rows={5} placeholder="Поділіться вашими враженнями..." />
 
                     <button 
                       type="submit" 

@@ -124,7 +124,16 @@ export default function ScreeningPageEn() {
 
   const rec = getRecommendation();
 
+  const symptomsLabelMap: Record<string, string> = {
+    pain: "Severe pain syndrome",
+    care: "Need for caregiver assistance",
+    dysphagia: "Swallowing or breathing issues",
+    mobility: "Limited mobility",
+    exhaustion: "High family stress level",
+  };
+
   const handleCopy = () => {
+    const translatedSymptoms = rec.symptoms.map(s => symptomsLabelMap[s] || s);
     const text = `Primary Screening Results - "Sails of Life" Center:
 - Patient: Child
 - Referral: ${
@@ -141,7 +150,7 @@ export default function ScreeningPageEn() {
         ? "Comprehensive Child Rehabilitation"
         : "PRM Doctor / Specialist Consultation"
     }
-- Conditions: ${rec.symptoms.length > 0 ? rec.symptoms.join(", ") : "none specified"}`;
+- Conditions: ${translatedSymptoms.length > 0 ? translatedSymptoms.join(", ") : "none specified"}`;
     
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -218,7 +227,7 @@ export default function ScreeningPageEn() {
                       <button
                         key={option.value}
                         onClick={() => handleSelect(activeQuestion.id, option.value, activeQuestion.type)}
-                        className={`text-left p-5 rounded-2xl border-2 transition-all flex flex-col md:flex-row md:items-center justify-between gap-3 group ${
+                        className={`text-left p-5 rounded-2xl border-2 transition-all flex flex-col md:flex-row md:items-center justify-between gap-3 group cursor-pointer ${
                           isSelected
                             ? "bg-blue-50/50 border-blue-500 dark:bg-blue-950/20 dark:border-blue-400"
                             : "border-slate-100 dark:border-slate-800/60 bg-white/40 dark:bg-slate-900/40 hover:border-slate-300 dark:hover:border-slate-700"
@@ -249,24 +258,23 @@ export default function ScreeningPageEn() {
                 </div>
 
                 <div className="flex justify-between items-center pt-6 border-t border-slate-100 dark:border-slate-800">
-                  <button
-                    onClick={prevStep}
-                    disabled={currentStep === 0}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition ${
-                      currentStep === 0
-                        ? "text-slate-350 dark:text-slate-600 cursor-not-allowed"
-                        : "text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white bg-slate-100 dark:bg-slate-850 hover:bg-slate-200"
-                    }`}
-                  >
-                    <ChevronLeft size={16} /> Back
-                  </button>
+                  {currentStep > 0 ? (
+                    <button
+                      onClick={prevStep}
+                      className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition cursor-pointer text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white bg-slate-100 dark:bg-slate-850 hover:bg-slate-200"
+                    >
+                      <ChevronLeft size={16} /> Back
+                    </button>
+                  ) : (
+                    <div />
+                  )}
                   
                   <button
                     onClick={nextStep}
                     disabled={!isAnswered}
                     className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition shadow-lg ${
                       isAnswered
-                        ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20"
+                        ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20 cursor-pointer"
                         : "bg-slate-200 text-slate-400 dark:bg-slate-800 dark:text-slate-600 cursor-not-allowed shadow-none"
                     }`}
                   >
@@ -370,7 +378,7 @@ export default function ScreeningPageEn() {
                 <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                   <button
                     onClick={handleCopy}
-                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800/50 font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800/50 font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer"
                   >
                     <Clipboard size={16} />
                     {copied ? "Copied!" : "Copy Result"}
@@ -378,14 +386,14 @@ export default function ScreeningPageEn() {
 
                   <a
                     href="/en/for-patient/documents"
-                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-800 dark:text-white font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm"
+                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-800 dark:text-white font-semibold text-sm transition flex items-center justify-center gap-2 shadow-sm cursor-pointer"
                   >
                     <FileText size={16} /> More about documents
                   </a>
 
                   <a
                     href={`/en/contacts?careType=${rec.careType}&referral=${rec.referral}&symptoms=${rec.symptoms.join(",")}&needs=${answers.needs || ""}`}
-                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
+                    className="flex-1 min-w-[200px] py-3.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 cursor-pointer"
                   >
                     <Phone size={16} /> Book appointment
                   </a>
@@ -394,7 +402,7 @@ export default function ScreeningPageEn() {
                 <div className="text-center pt-4">
                   <button
                     onClick={resetScreening}
-                    className="inline-flex items-center gap-2 text-xs font-bold text-slate-450 hover:text-blue-600 dark:hover:text-blue-400 transition"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-slate-450 hover:text-blue-600 dark:hover:text-blue-400 transition cursor-pointer"
                   >
                     <RefreshCw size={12} /> Restart screening
                   </button>

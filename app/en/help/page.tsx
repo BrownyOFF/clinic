@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Copy, Check, Gift, Users, CreditCard, Send, ArrowRight, Loader2 } from "lucide-react";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
+import Input from "@/app/components/core/Input";
+import Select from "@/app/components/core/Select";
+import Textarea from "@/app/components/core/Textarea";
 
 interface BankDetailRow {
   label: string;
@@ -71,6 +74,13 @@ export default function HelpPageEn() {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
+  const handleCopyAll = () => {
+    const textToCopy = bankDetails.map(d => `${d.label}: ${d.value}`).join("\n");
+    navigator.clipboard.writeText(textToCopy);
+    setCopiedField("all");
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
   const handleVolunteerSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -126,7 +136,7 @@ export default function HelpPageEn() {
         <div className="flex justify-center p-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl mx-auto mb-12 shadow-inner">
           <button
             onClick={() => setActiveTab("financial")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === "financial"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
@@ -136,7 +146,7 @@ export default function HelpPageEn() {
           </button>
           <button
             onClick={() => setActiveTab("material")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === "material"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
@@ -146,7 +156,7 @@ export default function HelpPageEn() {
           </button>
           <button
             onClick={() => setActiveTab("volunteer")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 ${
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === "volunteer"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
@@ -179,7 +189,7 @@ export default function HelpPageEn() {
                   </p>
                 </div>
 
-                <div className="space-y-4 max-w-3xl">
+                <div className="space-y-4 max-w-3xl mx-auto">
                   {bankDetails.map((detail) => (
                     <div
                       key={detail.field}
@@ -195,10 +205,10 @@ export default function HelpPageEn() {
                       </div>
                       <button
                         onClick={() => handleCopy(detail.value, detail.field)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 self-start sm:self-auto ${
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 self-start sm:self-auto cursor-pointer ${
                           copiedField === detail.field
                             ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200/50"
-                            : "bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-600 dark:text-slate-350 border border-slate-200 dark:border-slate-700"
+                            : "bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-650 dark:text-slate-350 border border-slate-200 dark:border-slate-700"
                         }`}
                       >
                         {copiedField === detail.field ? (
@@ -213,6 +223,25 @@ export default function HelpPageEn() {
                       </button>
                     </div>
                   ))}
+
+                  <button
+                    onClick={handleCopyAll}
+                    className={`w-full py-3.5 rounded-2xl text-sm font-bold transition flex items-center justify-center gap-2 border shadow-sm cursor-pointer ${
+                      copiedField === "all"
+                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200/50"
+                        : "bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/30 dark:hover:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-blue-200/50 dark:border-blue-900/30"
+                    }`}
+                  >
+                    {copiedField === "all" ? (
+                      <>
+                        <Check size={16} /> All details copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={16} /> Copy all details together
+                      </>
+                    )}
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -283,7 +312,7 @@ export default function HelpPageEn() {
                 </div>
 
                 <div className="p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded-2xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-350">
-                  Before purchasing or sending large batches of items, we recommend contacting the administration at <strong className="text-blue-600 dark:text-blue-400">+38 (067) 123-45-67</strong> to coordinate logistics.
+                  Before purchasing or sending large batches of items, we recommend contacting the administration at <a href="tel:+380671234567" className="text-blue-600 dark:text-blue-400 hover:underline font-bold transition-colors cursor-pointer">+38 (067) 123-45-67</a> to coordinate logistics.
                 </div>
               </motion.div>
             )}
@@ -297,118 +326,127 @@ export default function HelpPageEn() {
                 transition={{ duration: 0.3 }}
                 className="space-y-8"
               >
-                <div>
-                  <h2 className="text-xl md:text-2xl font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                <div className="text-center max-w-2xl mx-auto">
+                  <h2 className="text-2xl md:text-3xl font-black text-slate-950 dark:text-white flex items-center justify-center gap-2.5">
                     <Users className="text-blue-600 dark:text-blue-400" />
                     Join Us as a Volunteer
                   </h2>
-                  <p className="text-sm font-medium text-slate-550 dark:text-slate-400 mt-2">
+                  <p className="text-sm md:text-base font-medium text-slate-550 dark:text-slate-400 mt-3 leading-relaxed">
                     We welcome all kinds of support: conducting art sessions with children, organizing events, landscaping, or providing professional assistance.
                   </p>
                 </div>
 
-                {!formSubmitted ? (
-                  <form onSubmit={handleVolunteerSubmit} className="space-y-5 max-w-2xl">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-450 uppercase tracking-wide">Your Name</label>
-                        <input
+                <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-10 border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-100/50 dark:shadow-none max-w-2xl mx-auto">
+                  {!formSubmitted ? (
+                    <form onSubmit={handleVolunteerSubmit} className="space-y-6">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <Input
+                          label="Your Name"
                           type="text"
                           required
                           value={volunteerForm.name}
                           onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
-                          className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 text-slate-950 dark:text-white text-sm focus:border-blue-500 focus:outline-none transition"
                           placeholder="John Doe"
                         />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-slate-450 uppercase tracking-wide">Phone Number</label>
-                        <input
+                        <Input
+                          label="Phone Number"
                           type="tel"
                           required
                           value={volunteerForm.phone}
                           onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
-                          className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 text-slate-950 dark:text-white text-sm focus:border-blue-500 focus:outline-none transition"
                           placeholder="+380..."
                         />
                       </div>
-                    </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-450 uppercase tracking-wide">Email Address</label>
-                      <input
+                      <Input
+                        label="Email Address"
                         type="email"
                         required
                         value={volunteerForm.email}
                         onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
-                        className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 text-slate-950 dark:text-white text-sm focus:border-blue-500 focus:outline-none transition"
                         placeholder="example@mail.com"
                       />
-                    </div>
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-450 uppercase tracking-wide">Volunteering Direction</label>
-                      <select
-                        value={volunteerForm.direction}
-                        onChange={(e) => setVolunteerForm({ ...volunteerForm, direction: e.target.value })}
-                        className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 text-slate-950 dark:text-white text-sm focus:border-blue-500 focus:outline-none transition"
-                      >
-                        <option value="children">Activities & leisure with children</option>
-                        <option value="events">Charity event organization</option>
-                        <option value="repair">Landscaping & minor repairs</option>
-                        <option value="professional">Professional support (IT, design, legal)</option>
-                        <option value="other">Other (describe in detail below)</option>
-                      </select>
-                    </div>
+                      <Select
+                        label="Volunteering Direction"
+                        value={
+                          volunteerForm.direction === "children"
+                            ? "Activities & leisure with children"
+                            : volunteerForm.direction === "events"
+                            ? "Charity event organization"
+                            : volunteerForm.direction === "repair"
+                            ? "Landscaping & minor repairs"
+                            : volunteerForm.direction === "professional"
+                            ? "Professional support (IT, design, legal)"
+                            : "Other"
+                        }
+                        onChange={(val) => {
+                          const dirMap: Record<string, string> = {
+                            "Activities & leisure with children": "children",
+                            "Charity event organization": "events",
+                            "Landscaping & minor repairs": "repair",
+                            "Professional support (IT, design, legal)": "professional",
+                            "Other": "other",
+                          };
+                          setVolunteerForm({ ...volunteerForm, direction: dirMap[val] || "other" });
+                        }}
+                        options={[
+                          "Activities & leisure with children",
+                          "Charity event organization",
+                          "Landscaping & minor repairs",
+                          "Professional support (IT, design, legal)",
+                          "Other",
+                        ]}
+                      />
 
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-slate-450 uppercase tracking-wide">How exactly would you like to help?</label>
-                      <textarea
+                      <Textarea
+                        label="How exactly would you like to help?"
                         rows={4}
                         value={volunteerForm.message}
                         onChange={(e) => setVolunteerForm({ ...volunteerForm, message: e.target.value })}
-                        className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-950/50 text-slate-950 dark:text-white text-sm focus:border-blue-500 focus:outline-none transition resize-none"
                         placeholder="Tell us about your ideas or skills..."
                       />
-                    </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-4.5 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full py-4 px-6 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 cursor-pointer"
+                      >
+                        {isSubmitting ? (
+                          <Loader2 size={16} className="animate-spin" />
+                        ) : (
+                          <Send size={16} />
+                        )}
+                        Send Volunteer Request
+                      </button>
+                    </form>
+                  ) : (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="text-center py-6 space-y-4"
                     >
-                      {isSubmitting ? (
-                        <Loader2 size={16} className="animate-spin" />
-                      ) : (
-                        <Send size={16} />
-                      )}
-                      Send Volunteer Request
-                    </button>
-                  </form>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="p-8 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 rounded-3xl border border-emerald-100 dark:border-emerald-900/30 text-center max-w-xl mx-auto space-y-4"
-                  >
-                    <Check size={48} className="mx-auto" />
-                    <div>
-                      <h3 className="text-xl font-bold">Request Received!</h3>
-                      <p className="text-sm font-medium mt-2 opacity-95">
-                        Thank you for your generous heart. Our volunteer coordinator will contact you shortly.
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setFormSubmitted(false);
-                        setVolunteerForm({ name: "", phone: "", email: "", direction: "children", message: "" });
-                      }}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:underline dark:text-emerald-450 transition"
-                    >
-                      Fill in again <ArrowRight size={12} />
-                    </button>
-                  </motion.div>
-                )}
+                      <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                        <Check size={32} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white">Request Received!</h3>
+                        <p className="text-sm font-medium text-slate-550 dark:text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
+                          Thank you for your generous heart. Our volunteer coordinator will contact you shortly.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setFormSubmitted(false);
+                          setVolunteerForm({ name: "", phone: "", email: "", direction: "children", message: "" });
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:underline dark:text-emerald-450 transition cursor-pointer"
+                      >
+                        Fill in again <ArrowRight size={12} />
+                      </button>
+                    </motion.div>
+                  )}
+                </div>
               </motion.div>
             )}
 
