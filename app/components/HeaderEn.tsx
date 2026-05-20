@@ -26,9 +26,12 @@ export default function HeaderEn() {
       "/en/directions": "/napryamky",
       "/en/team": "/komanda",
       "/en/vacancy": "/vakansiyi",
+      "/en/help": "/dopomoga",
       "/en/for-patient/documents": "/dlya-patsiyenta/dokumenty",
       "/en/for-patient/rehabilitation": "/dlya-patsiyenta/reabilitatsiya",
       "/en/for-patient/paid-services": "/dlya-patsiyenta/platni-poslugy",
+      "/en/for-patient/screening": "/dlya-patsiyenta/screening",
+      "/en/for-patient/faq": "/dlya-patsiyenta/faq",
     };
 
     // Обробка динамічних новин (наприклад, /en/news/vidkryttya -> /novyny/vidkryttya)
@@ -66,15 +69,18 @@ export default function HeaderEn() {
               For Patients <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
             </button>
             <div className="absolute top-[70px] left-0 w-64 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+              <Link href="/en/for-patient/screening" className={`block px-5 py-2.5 transition ${isActive('/en/for-patient/screening') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Screening Assistant</Link>
               <Link href="/en/for-patient/documents" className={`block px-5 py-2.5 transition ${isActive('/en/for-patient/documents') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Required Documents</Link>
               <Link href="/en/for-patient/rehabilitation" className={`block px-5 py-2.5 transition ${isActive('/en/for-patient/rehabilitation') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Child Rehabilitation</Link>
               <Link href="/en/for-patient/paid-services" className={`block px-5 py-2.5 transition ${isActive('/en/for-patient/paid-services') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Paid Services</Link>
+              <Link href="/en/for-patient/faq" className={`block px-5 py-2.5 transition ${isActive('/en/for-patient/faq') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>FAQ</Link>
             </div>
           </div>
 
           <Link href="/en/directions" className={`transition ${isActive('/en/directions') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Directions</Link>
           <Link href="/en/team" className={`transition ${isActive('/en/team') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Team</Link>
           <Link href="/en/vacancy" className={`transition ${isActive('/en/vacancy') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Vacancies</Link>
+          <Link href="/en/help" className={`transition ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link>
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
@@ -110,14 +116,17 @@ export default function HeaderEn() {
               
               <div className="border-l-2 border-blue-500 pl-4 py-1 flex flex-col gap-4 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
                 <span className="text-sm text-slate-400 uppercase tracking-wider font-bold">For Patients</span>
+                <Link href="/en/for-patient/screening" onClick={closeMenu} className={`text-base transition ${isActive('/en/for-patient/screening') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Screening Assistant</Link>
                 <Link href="/en/for-patient/documents" onClick={closeMenu} className={`text-base transition ${isActive('/en/for-patient/documents') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Required Documents</Link>
                 <Link href="/en/for-patient/rehabilitation" onClick={closeMenu} className={`text-base transition ${isActive('/en/for-patient/rehabilitation') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Child Rehabilitation</Link>
                 <Link href="/en/for-patient/paid-services" onClick={closeMenu} className={`text-base transition ${isActive('/en/for-patient/paid-services') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Paid Services</Link>
+                <Link href="/en/for-patient/faq" onClick={closeMenu} className={`text-base transition ${isActive('/en/for-patient/faq') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>FAQ</Link>
               </div>
 
               <Link href="/en/directions" onClick={closeMenu} className={`transition ${isActive('/en/directions') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Directions</Link>
               <Link href="/en/team" onClick={closeMenu} className={`transition ${isActive('/en/team') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Team</Link>
               <Link href="/en/vacancy" onClick={closeMenu} className={`transition ${isActive('/en/vacancy') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Vacancies</Link>
+              <Link href="/en/help" onClick={closeMenu} className={`transition ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link>
             </nav>
 
             {/* Мобільний перемикач мов */}

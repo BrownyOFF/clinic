@@ -49,6 +49,11 @@ export default function FooterEn() {
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Vacancies
                 </Link>
               </li>
+              <li>
+                <Link href="/en/help" className="flex items-center gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Help Us
+                </Link>
+              </li>
             </ul>
 
             <ul className="space-y-3 text-sm flex-1">
@@ -66,6 +71,16 @@ export default function FooterEn() {
               <li>
                 <Link href="/en/for-patient/paid-services" className="flex items-start gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Paid Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/en/for-patient/screening" className="flex items-start gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Primary Screening
+                </Link>
+              </li>
+              <li>
+                <Link href="/en/for-patient/faq" className="flex items-start gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> FAQ
                 </Link>
               </li>
             </ul>

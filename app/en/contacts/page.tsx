@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 // Імпортуємо англійські компоненти
 import HeaderEn from "@/app/components/HeaderEn";
@@ -33,7 +34,8 @@ const EN_CONFIGURATION = {
   "capabilities": { "input": false, "autocomplete": false, "directions": false, "distanceMatrix": false, "details": false, "actions": false }
 };
 
-export default function ContactsPageEn() {
+function ContactsContentEn() {
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
@@ -43,6 +45,11 @@ export default function ContactsPageEn() {
   const [selectedDirection, setSelectedDirection] = useState("Not specified");
   const selectRef = useRef<HTMLDivElement>(null);
 
+  // State for screening results auto-fill
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+  const [diagnosis, setDiagnosis] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+
   const directions = [
     "Not specified",
     "Inpatient medical rehabilitation",
@@ -51,6 +58,84 @@ export default function ContactsPageEn() {
     "Outpatient palliative care",
     "Without referral"
   ];
+
+  // Read screening results from URL params
+  useEffect(() => {
+    const careType = searchParams.get("careType");
+    const referral = searchParams.get("referral");
+    const symptoms = searchParams.get("symptoms")?.split(",") || [];
+    const needs = searchParams.get("needs");
+
+    if (careType || referral || symptoms.length > 0 || needs) {
+      // 1. Auto-select referral type
+      if (referral === "yes") {
+        if (careType === "palliative") {
+          setSelectedDirection("Inpatient palliative care");
+        } else if (careType === "child_rehab") {
+          setSelectedDirection("Inpatient medical rehabilitation");
+        } else {
+          setSelectedDirection("Outpatient medical rehabilitation");
+        }
+      } else if (referral === "no_idea" || referral === "no") {
+        setSelectedDirection("Without referral");
+      }
+
+      // 2. Auto-select required specialists
+      const docs: string[] = ["PRM Doctor"];
+      if (careType === "palliative") {
+        docs.push("Psychologist");
+        if (symptoms.includes("pain")) {
+          docs.push("Pediatric Neurologist");
+        }
+      }
+      if (needs === "child_neuro") {
+        docs.push("Pediatric Neurologist", "Speech Therapist / Defectologist", "Psychologist");
+      }
+      if (symptoms.includes("mobility")) {
+        docs.push("Physical Therapist", "Occupational Therapist");
+      }
+      if (symptoms.includes("care")) {
+        docs.push("Occupational Therapist");
+      }
+      if (symptoms.includes("exhaustion")) {
+        docs.push("Psychologist");
+      }
+      setSelectedDocs(Array.from(new Set(docs)));
+
+      // 3. Populate diagnosis and additional details
+      if (careType === "palliative") {
+        setDiagnosis("Palliative status (requires symptomatic care)");
+      } else if (careType === "child_rehab") {
+        if (needs === "child_neuro") {
+          setDiagnosis("Neurological disorders / Cerebral Palsy");
+        } else if (needs === "rehab_injury") {
+          setDiagnosis("Consequences of injury or surgery");
+        }
+      }
+
+      let info = "Primary screening results from the website:\n";
+      if (careType === "palliative") {
+        info += "- Recommended: Palliative Medical Care for Children\n";
+      } else if (careType === "child_rehab") {
+        info += "- Recommended: Comprehensive Child Rehabilitation\n";
+      } else {
+        info += "- Recommended: PRM Specialist Consultation\n";
+      }
+
+      const symptomsMap: Record<string, string> = {
+        pain: "Pain",
+        care: "Need for caregiver assistance",
+        dysphagia: "Swallowing/breathing issues",
+        mobility: "Limited mobility",
+        exhaustion: "High family stress level"
+      };
+      const activeSymptoms = symptoms.map(s => symptomsMap[s]).filter(Boolean);
+      if (activeSymptoms.length > 0) {
+        info += `- Detected conditions: ${activeSymptoms.join(", ")}`;
+      }
+      setAdditionalInfo(info);
+    }
+  }, [searchParams]);
 
   // Close select on click outside
   useEffect(() => {
@@ -350,7 +435,16 @@ export default function ContactsPageEn() {
                           "Pediatric Psychiatrist", "Pediatric Orthopedist-Traumatologist"
                         ].map((doc) => (
                           <label key={doc} className="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="Consultation_Needed[]" value={doc} className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <input 
+                              type="checkbox" 
+                              name="Consultation_Needed[]" 
+                              value={doc} 
+                              checked={selectedDocs.includes(doc)}
+                              onChange={() => {
+                                setSelectedDocs(prev => prev.includes(doc) ? prev.filter(d => d !== doc) : [...prev, doc]);
+                              }}
+                              className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                            />
                             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{doc}</span>
                           </label>
                         ))}
@@ -362,12 +456,26 @@ export default function ContactsPageEn() {
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Diagnosis (optional)</label>
-                      <input type="text" name="Diagnosis" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Specify diagnosis..." />
+                      <input 
+                        type="text" 
+                        name="Diagnosis" 
+                        value={diagnosis} 
+                        onChange={(e) => setDiagnosis(e.target.value)} 
+                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
+                        placeholder="Specify diagnosis..." 
+                      />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Additional Information</label>
-                      <textarea name="Additional_Information" rows={3} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Add any information you consider important..."></textarea>
+                      <textarea 
+                        name="Additional_Information" 
+                        value={additionalInfo} 
+                        onChange={(e) => setAdditionalInfo(e.target.value)} 
+                        rows={3} 
+                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" 
+                        placeholder="Add any information you consider important..."
+                      ></textarea>
                     </div>
 
                     <button 
@@ -423,5 +531,17 @@ export default function ContactsPageEn() {
 
       <FooterEn />
     </div>
+  );
+}
+
+export default function ContactsPageEn() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-600 dark:text-blue-400" size={32} />
+      </div>
+    }>
+      <ContactsContentEn />
+    </Suspense>
   );
 }

@@ -52,6 +52,11 @@ export default function Footer() {
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Вакансії
                 </Link>
               </li>
+              <li>
+                <Link href="/dopomoga" className="flex items-center gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Допомогти центру
+                </Link>
+              </li>
             </ul>
 
             {/* Для пацієнта */}
@@ -70,6 +75,16 @@ export default function Footer() {
               <li>
                 <Link href="/dlya-patsiyenta/platni-poslugy" className="flex items-start gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Платні послуги
+                </Link>
+              </li>
+              <li>
+                <Link href="/dlya-patsiyenta/screening" className="flex items-start gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Первинний скринінг
+                </Link>
+              </li>
+              <li>
+                <Link href="/dlya-patsiyenta/faq" className="flex items-start gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Часті запитання (FAQ)
                 </Link>
               </li>
             </ul>

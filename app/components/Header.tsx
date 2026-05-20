@@ -26,9 +26,12 @@ export default function Header() {
       "/napryamky": "/en/directions",
       "/komanda": "/en/team",
       "/vakansiyi": "/en/vacancy",
+      "/dopomoga": "/en/help",
       "/dlya-patsiyenta/dokumenty": "/en/for-patient/documents",
       "/dlya-patsiyenta/reabilitatsiya": "/en/for-patient/rehabilitation",
       "/dlya-patsiyenta/platni-poslugy": "/en/for-patient/paid-services",
+      "/dlya-patsiyenta/screening": "/en/for-patient/screening",
+      "/dlya-patsiyenta/faq": "/en/for-patient/faq",
     };
 
     // Обробка динамічних новин (наприклад, /novyny/vidkryttya -> /en/news/vidkryttya)
@@ -66,15 +69,18 @@ export default function Header() {
               Для пацієнта <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
             </button>
             <div className="absolute top-[70px] left-0 w-64 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-xl rounded-2xl py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+              <Link href="/dlya-patsiyenta/screening" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/screening') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Скринінг-помічник</Link>
               <Link href="/dlya-patsiyenta/dokumenty" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/dokumenty') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Необхідні документи</Link>
               <Link href="/dlya-patsiyenta/reabilitatsiya" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/reabilitatsiya') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Дитяча реабілітація (Стаття)</Link>
               <Link href="/dlya-patsiyenta/platni-poslugy" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/platni-poslugy') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Платні послуги</Link>
+              <Link href="/dlya-patsiyenta/faq" className={`block px-5 py-2.5 transition ${isActive('/dlya-patsiyenta/faq') ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:text-blue-600 dark:hover:text-blue-400'}`}>Часті запитання (FAQ)</Link>
             </div>
           </div>
 
           <Link href="/napryamky" className={`transition ${isActive('/napryamky') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Напрямки</Link>
           <Link href="/komanda" className={`transition ${isActive('/komanda') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Команда</Link>
           <Link href="/vakansiyi" className={`transition ${isActive('/vakansiyi') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Вакансії</Link>
+          <Link href="/dopomoga" className={`transition ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link>
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
@@ -110,14 +116,17 @@ export default function Header() {
               
               <div className="border-l-2 border-blue-500 pl-4 py-1 flex flex-col gap-4 bg-slate-50 dark:bg-slate-800/50 rounded-r-xl">
                 <span className="text-sm text-slate-400 uppercase tracking-wider font-bold">Для пацієнта</span>
+                <Link href="/dlya-patsiyenta/screening" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/screening') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Скринінг-помічник</Link>
                 <Link href="/dlya-patsiyenta/dokumenty" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/dokumenty') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Необхідні документи</Link>
                 <Link href="/dlya-patsiyenta/reabilitatsiya" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/reabilitatsiya') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Дитяча реабілітація</Link>
                 <Link href="/dlya-patsiyenta/platni-poslugy" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/platni-poslugy') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Платні послуги</Link>
+                <Link href="/dlya-patsiyenta/faq" onClick={closeMenu} className={`text-base transition ${isActive('/dlya-patsiyenta/faq') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Часті запитання (FAQ)</Link>
               </div>
 
               <Link href="/napryamky" onClick={closeMenu} className={`transition ${isActive('/napryamky') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Напрямки</Link>
               <Link href="/komanda" onClick={closeMenu} className={`transition ${isActive('/komanda') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Команда</Link>
               <Link href="/vakansiyi" onClick={closeMenu} className={`transition ${isActive('/vakansiyi') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Вакансії</Link>
+              <Link href="/dopomoga" onClick={closeMenu} className={`transition ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link>
             </nav>
 
             {/* Мобільний перемикач мов */}

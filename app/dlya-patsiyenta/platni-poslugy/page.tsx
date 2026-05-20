@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, Variants } from "framer-motion";
-import { Search, Download, FileText, Stethoscope, BookOpen } from "lucide-react";
+import { motion, Variants, AnimatePresence } from "framer-motion";
+import { Search, Download, FileText, Stethoscope, BookOpen, Plus, Minus, Trash2, ShoppingCart, X } from "lucide-react";
 import Header from "@/app/components/Header"; 
 import Footer from "@/app/components/Footer";
 
@@ -169,12 +169,49 @@ const servicesData = [
   { category: "Освітні послуги", code: "96238-00", name: "Обстеження когнітивної та /або поведінкової сфери", price: "460" },
 ];
 
+interface SelectedService {
+  code: string;
+  name: string;
+  price: string;
+  quantity: number;
+}
+
 export default function PaidServicesPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedServices, setSelectedServices] = useState<SelectedService[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
+  const parsePrice = (priceStr: string) => {
+    const clean = priceStr.replace(/[^\d-]/g, "");
+    if (clean.includes("-")) {
+      const parts = clean.split("-");
+      return parseInt(parts[0]) || 0;
+    }
+    return parseInt(clean) || 0;
+  };
+
+  const toggleService = (service: { name: string; code: string; price: string }) => {
+    setSelectedServices(prev => {
+      const exists = prev.find(s => s.name === service.name && s.code === service.code);
+      if (exists) {
+        return prev.filter(s => !(s.name === service.name && s.code === service.code));
+      } else {
+        return [...prev, { name: service.name, code: service.code, price: service.price, quantity: 1 }];
+      }
+    });
+  };
+
+  const updateQuantity = (name: string, code: string, qty: number) => {
+    if (qty <= 0) {
+      setSelectedServices(prev => prev.filter(s => !(s.name === name && s.code === code)));
+      return;
+    }
+    setSelectedServices(prev => prev.map(s => (s.name === name && s.code === code) ? { ...s, quantity: qty } : s));
   };
 
   // Фільтрація послуг за пошуком
@@ -261,6 +298,7 @@ export default function PaidServicesPage() {
                         <th className="px-6 py-4 font-semibold w-24">Код</th>
                         <th className="px-6 py-4 font-semibold">Найменування послуги</th>
                         <th className="px-6 py-4 font-semibold text-right w-32">Вартість (грн)</th>
+                        <th className="px-6 py-4 font-semibold text-right w-28">Дія</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -269,6 +307,18 @@ export default function PaidServicesPage() {
                           <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">{service.code}</td>
                           <td className="px-6 py-4 text-slate-800 dark:text-slate-200 font-medium leading-relaxed">{service.name}</td>
                           <td className="px-6 py-4 text-right font-bold text-slate-900 dark:text-white whitespace-nowrap">{service.price} ₴</td>
+                          <td className="px-6 py-4 text-right whitespace-nowrap">
+                            <button
+                              onClick={() => toggleService(service)}
+                              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                                selectedServices.some(s => s.name === service.name && s.code === service.code)
+                                  ? "bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-950/40 dark:text-red-400"
+                                  : "bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-950/40 dark:text-blue-400"
+                              }`}
+                            >
+                              {selectedServices.some(s => s.name === service.name && s.code === service.code) ? "Видалити" : "Додати"}
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -296,6 +346,7 @@ export default function PaidServicesPage() {
                         <th className="px-6 py-4 font-semibold w-24">Код</th>
                         <th className="px-6 py-4 font-semibold">Найменування послуги</th>
                         <th className="px-6 py-4 font-semibold text-right w-32">Вартість (грн)</th>
+                        <th className="px-6 py-4 font-semibold text-right w-28">Дія</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800/50">
@@ -304,6 +355,18 @@ export default function PaidServicesPage() {
                           <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">{service.code}</td>
                           <td className="px-6 py-4 text-slate-800 dark:text-slate-200 font-medium leading-relaxed">{service.name}</td>
                           <td className="px-6 py-4 text-right font-bold text-slate-900 dark:text-white whitespace-nowrap">{service.price} ₴</td>
+                          <td className="px-6 py-4 text-right whitespace-nowrap">
+                            <button
+                              onClick={() => toggleService(service)}
+                              className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                                selectedServices.some(s => s.name === service.name && s.code === service.code)
+                                  ? "bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-950/40 dark:text-red-400"
+                                  : "bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-950/40 dark:text-blue-400"
+                              }`}
+                            >
+                              {selectedServices.some(s => s.name === service.name && s.code === service.code) ? "Видалити" : "Додати"}
+                            </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -322,6 +385,132 @@ export default function PaidServicesPage() {
 
         </motion.div>
       </main>
+
+      {/* Кнопка плаваючого кошика */}
+      {selectedServices.length > 0 && (
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          onClick={() => setIsCartOpen(true)}
+          className="fixed bottom-24 right-8 z-40 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl flex items-center gap-2 transition"
+        >
+          <ShoppingCart size={24} />
+          <span className="bg-white text-blue-600 font-bold rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-inner">
+            {selectedServices.reduce((sum, s) => sum + s.quantity, 0)}
+          </span>
+        </motion.button>
+      )}
+
+      {/* Панель Кошика (Drawer) */}
+      <AnimatePresence>
+        {isCartOpen && selectedServices.length > 0 && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsCartOpen(false)}
+              className="fixed inset-0 z-45 bg-black/60 backdrop-blur-sm"
+            />
+            
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 z-50 w-full sm:w-[450px] bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-800 flex flex-col transition-colors duration-500"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="text-blue-600 dark:text-blue-400" size={24} />
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">Розрахунок вартості</h3>
+                </div>
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Items List */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                {selectedServices.map((service, idx) => {
+                  const itemPrice = parsePrice(service.price);
+                  return (
+                    <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800/50 flex flex-col gap-3">
+                      <div className="flex justify-between items-start gap-2">
+                        <div className="text-sm font-semibold text-slate-800 dark:text-slate-200 leading-snug">{service.name}</div>
+                        <button
+                          onClick={() => toggleService(service)}
+                          className="text-slate-400 hover:text-red-500 p-1 transition"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                      <div className="flex justify-between items-center mt-1">
+                        <div className="text-xs text-slate-400 font-mono">{service.code}</div>
+                        <div className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-1">
+                          <button
+                            onClick={() => updateQuantity(service.name, service.code, service.quantity - 1)}
+                            className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-500 transition"
+                          >
+                            <Minus size={12} />
+                          </button>
+                          <span className="px-2 text-sm font-semibold text-slate-700 dark:text-slate-300 w-6 text-center">{service.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(service.name, service.code, service.quantity + 1)}
+                            className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-500 transition"
+                          >
+                            <Plus size={12} />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center text-sm font-bold text-slate-800 dark:text-white mt-1 border-t border-dashed border-slate-200 dark:border-slate-800 pt-2">
+                        <span className="text-xs text-slate-400 font-normal">Вартість:</span>
+                        <span>{itemPrice * service.quantity} ₴</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Footer / Total */}
+              <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-4">
+                <div className="flex justify-between items-center font-bold text-lg text-slate-900 dark:text-white">
+                  <span>Загальна сума:</span>
+                  <span className="text-blue-600 dark:text-blue-400 text-2xl">
+                    {selectedServices.reduce((sum, s) => sum + parsePrice(s.price) * s.quantity, 0)} ₴
+                  </span>
+                </div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 italic">
+                  * Зверніть увагу: ціна розрахована орієнтовно. Точну суму розрахує реєстратор після консультації лікаря ФРМ та узгодження плану реабілітації.
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setSelectedServices([]);
+                      setIsCartOpen(false);
+                    }}
+                    className="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold rounded-xl text-sm transition"
+                  >
+                    Очистити
+                  </button>
+                  <a
+                    href="/kontakty"
+                    className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-center font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/20"
+                  >
+                    Записатися
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

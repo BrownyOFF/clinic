@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import GoogleMap from "@/app/components/GoogleMap";
 
-export default function ContactsPage() {
+function ContactsContent() {
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
@@ -17,6 +19,11 @@ export default function ContactsPage() {
   const [selectedDirection, setSelectedDirection] = useState("Не вказано");
   const selectRef = useRef<HTMLDivElement>(null);
 
+  // Стан для пре-філінгу результатів скринінгу
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+  const [diagnosis, setDiagnosis] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+
   const directions = [
     "Не вказано",
     "Стаціонарна медична реабілітація",
@@ -25,6 +32,84 @@ export default function ContactsPage() {
     "Нестаціонарна паліативна допомога",
     "Без направлення"
   ];
+
+  // Зчитування результатів скринінгу з URL параметрів
+  useEffect(() => {
+    const careType = searchParams.get("careType");
+    const referral = searchParams.get("referral");
+    const symptoms = searchParams.get("symptoms")?.split(",") || [];
+    const needs = searchParams.get("needs");
+
+    if (careType || referral || symptoms.length > 0 || needs) {
+      // 1. Автоматично підбираємо тип направлення
+      if (referral === "yes") {
+        if (careType === "palliative") {
+          setSelectedDirection("Стаціонарна паліативна допомога");
+        } else if (careType === "child_rehab") {
+          setSelectedDirection("Стаціонарна медична реабілітація");
+        } else {
+          setSelectedDirection("Нестаціонарна медична реабілітація");
+        }
+      } else if (referral === "no_idea" || referral === "no") {
+        setSelectedDirection("Без направлення");
+      }
+
+      // 2. Автоматично відмічаємо необхідних спеціалістів
+      const docs: string[] = ["Лікар ФРМ"];
+      if (careType === "palliative") {
+        docs.push("Психолог");
+        if (symptoms.includes("pain")) {
+          docs.push("Невролог дитячий");
+        }
+      }
+      if (needs === "child_neuro") {
+        docs.push("Невролог дитячий", "Логопед/дефектолог", "Психолог");
+      }
+      if (symptoms.includes("mobility")) {
+        docs.push("Фізичний терапевт", "Ерготерапевт");
+      }
+      if (symptoms.includes("care")) {
+        docs.push("Ерготерапевт");
+      }
+      if (symptoms.includes("exhaustion")) {
+        docs.push("Психолог");
+      }
+      setSelectedDocs(Array.from(new Set(docs)));
+
+      // 3. Формуємо діагноз та додатковий опис
+      if (careType === "palliative") {
+        setDiagnosis("Паліативний статус (потребує симптоматичної опіки)");
+      } else if (careType === "child_rehab") {
+        if (needs === "child_neuro") {
+          setDiagnosis("Неврологічні розлади / ДЦП");
+        } else if (needs === "rehab_injury") {
+          setDiagnosis("Наслідки травми чи операції");
+        }
+      }
+
+      let info = "Результати первинного скринінгу на сайті:\n";
+      if (careType === "palliative") {
+        info += "- Рекомендовано: Паліативна медична допомога дітям\n";
+      } else if (careType === "child_rehab") {
+        info += "- Рекомендовано: Комплексна дитяча реабілітація\n";
+      } else {
+        info += "- Рекомендовано: Консультація лікаря ФРМ\n";
+      }
+
+      const symptomsMap: Record<string, string> = {
+        pain: "Біль",
+        care: "Потреба у догляді",
+        dysphagia: "Порушення ковтання/дихання",
+        mobility: "Обмежена мобільність",
+        exhaustion: "Високий стрес у родині"
+      };
+      const activeSymptoms = symptoms.map(s => symptomsMap[s]).filter(Boolean);
+      if (activeSymptoms.length > 0) {
+        info += `- Виявлені особливості: ${activeSymptoms.join(", ")}`;
+      }
+      setAdditionalInfo(info);
+    }
+  }, [searchParams]);
 
   // Закриття селекта при кліку зовні
   useEffect(() => {
@@ -328,7 +413,16 @@ export default function ContactsPage() {
                           "Психіатр дитячий", "Ортопед-травматолог дитячий"
                         ].map((doc) => (
                           <label key={doc} className="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="Потрібна_консультація[]" value={doc} className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <input 
+                              type="checkbox" 
+                              name="Потрібна_консультація[]" 
+                              value={doc} 
+                              checked={selectedDocs.includes(doc)}
+                              onChange={() => {
+                                setSelectedDocs(prev => prev.includes(doc) ? prev.filter(d => d !== doc) : [...prev, doc]);
+                              }}
+                              className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                            />
                             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{doc}</span>
                           </label>
                         ))}
@@ -340,12 +434,26 @@ export default function ContactsPage() {
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Діагноз (за бажанням)</label>
-                      <input type="text" name="Діагноз" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Вкажіть діагноз..." />
+                      <input 
+                        type="text" 
+                        name="Діагноз" 
+                        value={diagnosis} 
+                        onChange={(e) => setDiagnosis(e.target.value)} 
+                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
+                        placeholder="Вкажіть діагноз..." 
+                      />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Додаткова інформація</label>
-                      <textarea name="Додаткова_інформація" rows={3} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."></textarea>
+                      <textarea 
+                        name="Додаткова_інформація" 
+                        value={additionalInfo} 
+                        onChange={(e) => setAdditionalInfo(e.target.value)} 
+                        rows={3} 
+                        className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" 
+                        placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
+                      ></textarea>
                     </div>
 
                     <button 
@@ -401,5 +509,17 @@ export default function ContactsPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ContactsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-600 dark:text-blue-400" size={32} />
+      </div>
+    }>
+      <ContactsContent />
+    </Suspense>
   );
 }
