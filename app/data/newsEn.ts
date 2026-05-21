@@ -1,6 +1,45 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Vyshyvanka Day
+  {
+    slug: "vyshyvanka-day-2026",
+    title: "Code of the Nation: Celebrating Vyshyvanka Day in Our Center",
+    date: "21 May 2026",
+    excerpt: "Today our Center shone with thousands of patterns! We celebrate Vyshyvanka Day — a holiday that unites Ukrainians around shared values, traditions, and love for their homeland.",
+    image: "/images/news/visiv1.webp",
+    images: [
+      "/images/news/visiv1.webp",
+      "/images/news/visiv2.webp",
+      "/images/news/visiv3.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "Today, <strong>May 21</strong>, our Center turned into a real kaleidoscope of Ukrainian traditions. The staff and our little wards joined the celebration of <strong>World Vyshyvanka Day</strong> — a holiday that once again reminds us of our identity, strength, and resilience."
+      },
+      {
+        type: "paragraph",
+        value: "The vyshyvanka is not just clothing. It is our genetic code, an amulet that carries deep meaning and the history of many generations. Every pattern, every thread color has its meaning, protecting the one who wears it and giving strength."
+      },
+      {
+        type: "paragraph",
+        value: "On this day, we held interesting activities for the children, introducing them to the magic of Ukrainian ornament. It was extremely pleasant to see the little ones in embroidered shirts — their smiles and shining eyes became the best decoration of the holiday. After all, traditions live as long as we pass them on to our children."
+      },
+      {
+        type: "paragraph",
+        value: "We sincerely congratulate all Ukrainians on the holiday! May the embroidered shirt warm your hearts, give inspiration, and faith in our bright future. May every stitch on your vyshyvanka be filled with peace, love, and health!"
+      },
+      {
+        type: "paragraph",
+        value: "📸 <strong>See a bright photo report of our celebration in the gallery above.</strong>"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Glory to Ukraine!</strong>"
+      }
+    ]
+  },
   // See Know Act Project
   {
     slug: "advocacy-project-see-know-act",
