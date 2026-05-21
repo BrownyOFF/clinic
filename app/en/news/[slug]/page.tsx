@@ -75,20 +75,7 @@ export default async function NewsArticleEn({ params }: { params: Promise<{ slug
                     {newsItem.title}
                 </h1>
 
-                {newsItem.images && newsItem.images.length > 0 ? (
-                    <PhotoCarousel images={newsItem.images} />
-                ) : (
-                    <div className="relative w-full aspect-[21/9] md:aspect-[21/9] rounded-3xl overflow-hidden mb-12 shadow-xl shadow-slate-200 dark:shadow-none border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-                    <Image 
-                        src={newsItem.image} 
-                        alt={newsItem.title} 
-                        fill 
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-                        className="object-cover object-center" 
-                        priority
-                    />
-                    </div>
-                )}
+                <PhotoCarousel images={newsItem.images && newsItem.images.length > 0 ? newsItem.images : [newsItem.image]} />
 
                 <div className="prose prose-lg dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 md:p-12 rounded-[32px] border border-slate-100 dark:border-slate-800 shadow-sm">
                     {newsItem.content.map((block: any, index: number) => {

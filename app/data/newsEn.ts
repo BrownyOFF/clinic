@@ -1,6 +1,83 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // See Know Act Project
+  {
+    slug: "advocacy-project-see-know-act",
+    title: "«See. Know. Act»: helping parents support child development on time",
+    date: "21 May 2026",
+    excerpt: "Our Center is actively joining the «See. Know. Act» advocacy project so that every parent has access to important information about early development and receives early intervention services on time.",
+    image: "/images/news/see-know-act.webp",
+    content: [
+      {
+        type: "paragraph",
+        value: "Every child is unique, and their development in the first years of life is crucial for their entire future. That is why our Center pays special attention to the development of <strong>early intervention</strong> services. It is not just medical assistance, but a comprehensive support for the entire family raising a child from birth to 4 years of age."
+      },
+      {
+        type: "paragraph",
+        value: "We are pleased to announce that we have become part of the important advocacy project <strong>«See. Know. Act»</strong>. Its goal is to make information about early development accessible and understandable for every parent. Together with partners, we have developed special materials that will help notice the smallest changes in a child's development in time and know where to turn for help."
+      },
+      {
+        type: "heading",
+        value: "Why is this important?"
+      },
+      {
+        type: "paragraph",
+        value: "Many parents feel anxious when they notice that their child is developing differently from their peers. The «See. Know. Act» project helps turn this anxiety into a concrete action plan. We have prepared a list of «red flags» (developmental markers) to pay attention to and developed clear routes for obtaining professional help."
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Early intervention service in our Center includes:</strong>"
+      },
+      {
+        type: "list",
+        items: [
+          "Teamwork of doctors, psychologists, speech therapists, and rehabilitation specialists;",
+          "Training parents in methods of supporting the child at home;",
+          "Timely correction of developmental disorders at early stages;",
+          "Psychological support for the entire family."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "Special information stands and brochures have already appeared in the city's polyclinics. We believe that parent awareness is the first and most important step towards successful rehabilitation. Our specialists are always ready to consult you and provide the necessary support."
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Don't wait for a problem to become a diagnosis. Act on time!</strong>"
+      }
+    ]
+  },
+  // Tetiana Shevchenko's Anniversary
+  {
+    slug: "congratulations-tetiana-shevchenko",
+    title: "Happy Anniversary! Congratulating our Director Tetiana Shevchenko",
+    date: "21 May 2026",
+    excerpt: "Today, an incredible person, a wise leader, and a professional in her field — the Acting Director of our Center, Tetiana Viktorivna Shevchenko, celebrates her anniversary.",
+    image: "/images/news/congrats.webp",
+    content: [
+      {
+        type: "paragraph",
+        value: "Today, an incredible person, a wise leader, and a professional in her field — the Acting Director of our Center, <strong>Tetiana Viktorivna Shevchenko</strong>, celebrates her anniversary."
+      },
+      {
+        type: "paragraph",
+        value: "The entire team of the Center sincerely congratulates you on this wonderful holiday! We know you as a purposeful, energetic, and sensitive person who puts her heart and soul into the development of our institution and cares for every little patient."
+      },
+      {
+        type: "paragraph",
+        value: "Your professionalism, dedication, and ability to unite the team are a true example for us. Under your leadership, our Center is developing, implementing new techniques, and becoming better every day."
+      },
+      {
+        type: "paragraph",
+        value: "We wish you good health, inexhaustible energy, inspiration for new achievements, and personal happiness. May every day be filled with smiles, patient gratitude, and the support of loved ones. May harmony always prevail in your home, and spring in your heart!"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Happy Birthday! Many happy returns!</strong>"
+      }
+    ]
+  },
   // IT Company Visit
   {
     slug: "it-company-visit",
