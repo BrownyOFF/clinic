@@ -500,12 +500,17 @@ export default function PaidServicesPageEn() {
                   >
                     Clear
                   </button>
-                  <a
-                    href="/en/contacts"
-                    className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-center font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/20"
+                  <button
+                    onClick={() => {
+                      if (selectedServices.length > 0) {
+                        localStorage.setItem("selected_services", JSON.stringify(selectedServices));
+                      }
+                      window.location.href = "/en/contacts";
+                    }}
+                    className="flex-1 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-center font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/20 cursor-pointer"
                   >
                     Book appointment
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>

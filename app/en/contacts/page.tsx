@@ -15,22 +15,21 @@ function ContactsContentEn() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
 
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const [selectedDirection, setSelectedDirection] = useState("Not specified");
-  const selectRef = useRef<HTMLDivElement>(null);
+  // Стан для наявності електронного направлення
+  const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
+  const [callBack, setCallBack] = useState(false);
+
+  interface SelectedService {
+    code: string;
+    name: string;
+    price: string;
+    quantity: number;
+  }
+  const [preselectedServices, setPreselectedServices] = useState<SelectedService[]>([]);
 
   const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
   const [diagnosis, setDiagnosis] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
-
-  const directions = [
-    "Not specified",
-    "Inpatient medical rehabilitation",
-    "Outpatient medical rehabilitation",
-    "Inpatient palliative care",
-    "Outpatient palliative care",
-    "Without referral"
-  ];
 
   useEffect(() => {
     const careType = searchParams.get("careType");
@@ -40,15 +39,9 @@ function ContactsContentEn() {
 
     if (careType || referral || symptoms.length > 0 || needs) {
       if (referral === "yes") {
-        if (careType === "palliative") {
-          setSelectedDirection("Inpatient palliative care");
-        } else if (careType === "child_rehab") {
-          setSelectedDirection("Inpatient medical rehabilitation");
-        } else {
-          setSelectedDirection("Outpatient medical rehabilitation");
-        }
+        setHasReferral("yes");
       } else if (referral === "no_idea" || referral === "no") {
-        setSelectedDirection("Without referral");
+        setHasReferral("no");
       }
 
       const docs: string[] = ["PRM Doctor"];
@@ -106,14 +99,20 @@ function ContactsContentEn() {
     }
   }, [searchParams]);
 
+  // Read preselected services from localStorage
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsSelectOpen(false);
+    try {
+      const saved = localStorage.getItem("selected_services");
+      if (saved) {
+        const services = JSON.parse(saved);
+        if (Array.isArray(services) && services.length > 0) {
+          setPreselectedServices(services);
+        }
+        localStorage.removeItem("selected_services");
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    } catch (e) {
+      console.error("Error reading selected services:", e);
+    }
   }, []);
 
   const fadeUp: Variants = {
@@ -324,53 +323,71 @@ function ContactsContentEn() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Input label="Contact Phone *" type="tel" name="Phone" required placeholder="+38 (000) 000-00-00" />
+                      <Input label="Email (optional)" type="email" name="Email" placeholder="mail@example.com" />
+                    </div>
+
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Electronic Referral</label>
-                        <div className="relative" ref={selectRef}>
-                          <input type="hidden" name="Referral" value={selectedDirection} />
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                          Do you have an electronic referral from a doctor? *
+                        </label>
+                        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-2xl p-1 w-full sm:w-fit border border-slate-200/50 dark:border-slate-700/50">
                           <button
                             type="button"
-                            onClick={() => setIsSelectOpen(!isSelectOpen)}
-                            className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all flex items-center justify-between group cursor-pointer"
+                            onClick={() => setHasReferral("yes")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "yes"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
                           >
-                            <span className={selectedDirection === "Not specified" ? "text-slate-400" : "text-slate-900 dark:text-white"}>
-                              {selectedDirection === "Not specified" ? "Select referral type..." : selectedDirection}
-                            </span>
-                            <ChevronDown 
-                              size={18} 
-                              className={`text-slate-400 transition-transform duration-300 ${isSelectOpen ? "rotate-180" : ""}`} 
-                            />
+                            Yes, I do
                           </button>
-
-                          <AnimatePresence>
-                            {isSelectOpen && (
-                              <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl overflow-hidden"
-                              >
-                                {directions.map((dir) => (
-                                  <button
-                                    key={dir}
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedDirection(dir);
-                                      setIsSelectOpen(false);
-                                    }}
-                                    className={`w-full px-5 py-3 text-left text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer ${
-                                      selectedDirection === dir ? "text-blue-600 dark:text-blue-400 font-bold bg-blue-50/50 dark:bg-blue-900/20" : "text-slate-700 dark:text-slate-300"
-                                    }`}
-                                  >
-                                    {dir}
-                                  </button>
-                                ))}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          <button
+                            type="button"
+                            onClick={() => setHasReferral("no")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "no"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
+                          >
+                            No, I don&apos;t
+                          </button>
                         </div>
+                        <input type="hidden" name="Referral" value={hasReferral === "yes" ? "Yes" : hasReferral === "no" ? "No" : "Not specified"} />
                       </div>
                     </div>
+
+                    {/* Preselected paid services */}
+                    {preselectedServices.length > 0 && (
+                      <div className="bg-blue-50/50 dark:bg-blue-900/10 p-5 rounded-2xl border border-blue-100 dark:border-blue-900/30 space-y-3">
+                        <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">Selected Services:</h4>
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {preselectedServices.map((service, idx) => (
+                            <div key={idx} className="flex justify-between items-center text-xs">
+                              <span className="text-slate-700 dark:text-slate-300 font-medium">
+                                {service.name} <span className="text-slate-400">({service.code})</span> x{service.quantity}
+                              </span>
+                              <span className="font-bold text-slate-900 dark:text-white">
+                                {parseInt(service.price.replace(/[^\d]/g, "")) * service.quantity} ₴
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-between items-center pt-2 border-t border-dashed border-blue-200 dark:border-blue-900/40 text-sm font-bold text-slate-900 dark:text-white">
+                          <span>Total Amount:</span>
+                          <span className="text-blue-600 dark:text-blue-400">
+                            {preselectedServices.reduce((sum, s) => sum + parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity, 0)} ₴
+                          </span>
+                        </div>
+                        <input 
+                          type="hidden" 
+                          name="Selected_Paid_Services" 
+                          value={preselectedServices.map(s => `${s.name} (${s.code}) x${s.quantity} - ${parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity} UAH`).join("; ")} 
+                        />
+                      </div>
+                    )}
 
                     <Input label="Residential Address *" type="text" name="Address" required placeholder="Region, City/Village, Street" />
 
@@ -419,6 +436,27 @@ function ContactsContentEn() {
                       rows={3} 
                       placeholder="Add any information you consider important..."
                     />
+
+                    {/* Callback checkbox */}
+                    <div className="flex flex-col gap-2 mt-4">
+                      <label className="flex items-start gap-3 cursor-pointer group select-none">
+                        <div className="relative flex items-center justify-center mt-0.5 shrink-0">
+                          <input 
+                            type="checkbox" 
+                            checked={callBack}
+                            onChange={(e) => setCallBack(e.target.checked)}
+                            className="peer appearance-none w-5 h-5 rounded-md border border-slate-300 dark:border-slate-700 checked:border-blue-500 checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer transition-all" 
+                          />
+                          <svg className="absolute w-3.5 h-3.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <span className="text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                          Call me back for confirmation
+                        </span>
+                      </label>
+                      <input type="hidden" name="Call_me_back" value={callBack ? "Yes" : "No"} />
+                    </div>
 
                     <button 
                       type="submit" 
