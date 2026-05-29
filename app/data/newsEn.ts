@@ -1,6 +1,41 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Gratitude to Malinovska L.L.
+  {
+    slug: "malinovska-liubov-retirement",
+    title: "With Sincere Gratitude for Years of Work: Congratulating Malinovska Liubov Leonidivna on Her Retirement",
+    date: "29 May 2026",
+    excerpt: "Today we express our warmest words of gratitude to Malinovska Liubov Leonidivna — a person with a big heart, whose caring hands for many years created comfort and cleanliness in our Center.",
+    image: "/images/news/congratulation1.webp",
+    images: [
+      "/images/news/congratulation1.webp",
+      "/images/news/congratulation2.webp",
+      "/images/news/congratulation3.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "The team of our Center, with a feeling of deep respect and a touch of sadness, sees off <strong>Malinovska Liubov Leonidivna</strong> on her well-deserved retirement. She dedicated many years of her life to tireless work for the benefit of our enterprise."
+      },
+      {
+        type: "paragraph",
+        value: "Liubov Leonidivna is the embodiment of responsiveness and kindness. Her caring hands not only maintained impeccable cleanliness but also created a special atmosphere of home comfort, which is so necessary for our wards. Each child received from her a piece of warmth, understanding, and sincere attention."
+      },
+      {
+        type: "paragraph",
+        value: "We sincerely thank you for your dedication, for every day filled with work and care. You were an important part of our big family, and your contribution to the well-being of the Center is invaluable."
+      },
+      {
+        type: "paragraph",
+        value: "We wish you, dear Liubov Leonidivna, strong health, infinite optimism, and long years of happy life surrounded by family and friends. May your retirement be peaceful and joyful, and may your heart always be warmed by pleasant memories of the years spent with us!"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Happy retirement! Thank you for everything!</strong>"
+      }
+    ]
+  },
   // Vyshyvanka Day
   {
     slug: "vyshyvanka-day-2026",
