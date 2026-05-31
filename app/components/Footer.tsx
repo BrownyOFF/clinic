@@ -78,11 +78,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/dlya-patsiyenta/screening" className="flex items-start gap-2 hover:text-blue-400 transition group">
-                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Первинний скринінг
-                </Link>
-              </li>
-              <li>
                 <Link href="/dlya-patsiyenta/faq" className="flex items-start gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Часті запитання (FAQ)
                 </Link>
@@ -161,6 +156,10 @@ export default function Footer() {
         <p>© {new Date().getFullYear()} КНП «ЦМР та ПДД» ЖОР (Вітрила Життя). Всі права захищені.</p>
         
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+          <Link href="/privacy-policy" className="font-medium text-slate-400 hover:text-white hover:underline underline-offset-4 transition-all duration-300">
+            Політика конфіденційності
+          </Link>
+          <span className="hidden sm:block w-1 h-1 bg-slate-700 rounded-full"></span>
           <p>м. Житомир</p>
           <span className="hidden sm:block w-1 h-1 bg-slate-700 rounded-full"></span>
           <p>

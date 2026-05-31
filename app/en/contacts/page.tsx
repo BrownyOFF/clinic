@@ -17,7 +17,6 @@ function ContactsContentEn() {
 
   // Стан для наявності електронного направлення
   const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
-  const [callBack, setCallBack] = useState(false);
 
   interface SelectedService {
     code: string;
@@ -357,6 +356,22 @@ function ContactsContentEn() {
                         </div>
                         <input type="hidden" name="Referral" value={hasReferral === "yes" ? "Yes" : hasReferral === "no" ? "No" : "Not specified"} />
                       </div>
+
+                      {hasReferral === "yes" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className="mt-4"
+                        >
+                          <Input
+                            label="Electronic Referral Number *"
+                            type="text"
+                            name="Referral_Number"
+                            required
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                          />
+                        </motion.div>
+                      )}
                     </div>
 
                     {/* Preselected paid services */}
@@ -436,27 +451,6 @@ function ContactsContentEn() {
                       rows={3} 
                       placeholder="Add any information you consider important..."
                     />
-
-                    {/* Callback checkbox */}
-                    <div className="flex flex-col gap-2 mt-4">
-                      <label className="flex items-start gap-3 cursor-pointer group select-none">
-                        <div className="relative flex items-center justify-center mt-0.5 shrink-0">
-                          <input 
-                            type="checkbox" 
-                            checked={callBack}
-                            onChange={(e) => setCallBack(e.target.checked)}
-                            className="peer appearance-none w-5 h-5 rounded-md border border-slate-300 dark:border-slate-700 checked:border-blue-500 checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer transition-all" 
-                          />
-                          <svg className="absolute w-3.5 h-3.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                          Call me back for confirmation
-                        </span>
-                      </label>
-                      <input type="hidden" name="Call_me_back" value={callBack ? "Yes" : "No"} />
-                    </div>
 
                     <button 
                       type="submit" 

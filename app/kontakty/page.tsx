@@ -18,7 +18,6 @@ function ContactsContent() {
 
   // Стан для наявності електронного направлення
   const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
-  const [callBack, setCallBack] = useState(false);
 
   interface SelectedService {
     code: string;
@@ -375,6 +374,22 @@ function ContactsContent() {
                         </div>
                         <input type="hidden" name="Направлення" value={hasReferral === "yes" ? "Так" : hasReferral === "no" ? "Ні" : "Не вказано"} />
                       </div>
+
+                      {hasReferral === "yes" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className="mt-4"
+                        >
+                          <Input
+                            label="Номер електронного направлення *"
+                            type="text"
+                            name="Номер_направлення"
+                            required
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                          />
+                        </motion.div>
+                      )}
                     </div>
 
                     {/* Обрані платні послуги */}
@@ -414,8 +429,8 @@ function ContactsContent() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
                         {[
                           "Лікар ФРМ", "Фізичний терапевт", "Ерготерапевт", 
-                          "Логопед/дефектолог", "Психолог", "Невролог дитячий", 
-                          "Психіатр дитячий", "Ортопед-травматолог дитячий"
+                          "Логопед/дефектолог", "Психолог", "Невролог", 
+                          "Терапевт", "Ортопед-травматолог"
                         ].map((doc) => (
                           <label key={doc} className="flex items-center gap-3 cursor-pointer group">
                             <input 
@@ -455,26 +470,6 @@ function ContactsContent() {
                       placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
                     />
 
-                    {/* Галочка передзвонити */}
-                    <div className="flex flex-col gap-2 mt-4">
-                      <label className="flex items-start gap-3 cursor-pointer group select-none">
-                        <div className="relative flex items-center justify-center mt-0.5 shrink-0">
-                          <input 
-                            type="checkbox" 
-                            checked={callBack}
-                            onChange={(e) => setCallBack(e.target.checked)}
-                            className="peer appearance-none w-5 h-5 rounded-md border border-slate-300 dark:border-slate-700 checked:border-blue-500 checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer transition-all" 
-                          />
-                          <svg className="absolute w-3.5 h-3.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                          Передзвоніть мені для підтвердження запису
-                        </span>
-                      </label>
-                      <input type="hidden" name="Передзвонити_мені" value={callBack ? "Так" : "Ні"} />
-                    </div>
 
                     <button 
                       type="submit" 
