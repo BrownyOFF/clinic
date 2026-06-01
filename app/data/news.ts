@@ -1,6 +1,69 @@
 // data/news.ts
 
 export const newsData = [
+  // Подяка БФ "Let's Help"
+  {
+    slug: "gratitude-lets-help",
+    title: "Крок до відновлення: дякуємо БФ «Let's Help» за надсучасне обладнання для наших вихованців",
+    date: "1 червня 2026",
+    excerpt: "Благодійний фонд «Let's Help» передав нашому Центру комплект професійного реабілітаційного обладнання, що відкриває нові можливості для відновлення та розвитку дітей.",
+    image: "/images/news/lets-help1.webp",
+    images: [
+      "/images/news/lets-help1.webp",
+      "/images/news/lets-help2.webp",
+      "/images/news/lets-help3.webp",
+      "/images/news/lets-help4.webp",
+      "/images/news/lets-help5.webp",
+      "/images/news/lets-help6.webp",
+      "/images/news/lets-help7.webp",
+      "/images/news/lets-help8.webp",
+      "/images/news/lets-help9.webp",
+      "/images/news/lets-help10.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "Адміністрація КНП «Центр медичної реабілітації та паліативної допомоги дітям» Житомирської обласної ради висловлює щиру повагу та глибоку вдячність команді <strong>Благодійного фонду «Let's Help»</strong> за неоціненну підтримку та вагомий внесок у майбутнє наших маленьких підопічних."
+      },
+      {
+        type: "paragraph",
+        value: "Завдяки вашій небайдужості наш Центр отримав сучасне медичне обладнання, яке є життєво необхідним для ефективної реабілітації:"
+      },
+      {
+        type: "list",
+        items: [
+          "<strong>Стіл-вертикалізатор</strong> з електричним приводом та можливістю регулювання висоти по горизонталі та вертикалі — незамінний для поступової адаптації дитини до вертикального положення;",
+          "<strong>Система тренування ходи</strong> без навантаження, що дозволяє безпечно відпрацьовувати навички пересування;",
+          "<strong>Електричний підйомник</strong> з механічним регулюванням ширини бази для комфортного та безпечного переміщення пацієнтів;",
+          "<strong>Масажний стіл Войта-бобата</strong> з електроприводом, спеціально розроблений для проведення занять з фізичної терапії."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "Ваша підтримка — це не просто медична техніка. Це шанс для кожної дитини на швидше відновлення функцій організму, кращу соціальну адаптацію та більшу побутову незалежність. Ви допомагаєте нам робити шлях дітей до здоров'я доступнішим та комфортнішим."
+      },
+      {
+        type: "paragraph",
+        value: "Бажаємо всій вашій команді невичерпної енергії, міцного здоров'я та процвітання у всіх ваших добрих справах. Дякуємо, що ви поруч у цей важливий час!"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Дізнатися більше про діяльність фонду та підтримати їхні ініціативи можна за посиланнями:</strong>"
+      },
+      {
+        type: "list",
+        items: [
+          "Офіційний сайт: <a href=\"https://letshelp.com.ua/\" target=\"_blank\" rel=\"noopener noreferrer\">letshelp.com.ua</a>",
+          "Facebook: <a href=\"https://www.facebook.com/letshelp.com.ua\" target=\"_blank\" rel=\"noopener noreferrer\">letshelp.com.ua</a>",
+          "Instagram: <a href=\"https://www.instagram.com/letshelp_together\" target=\"_blank\" rel=\"noopener noreferrer\">@letshelp_together</a>"
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "📸 <strong>Більше фото отриманого обладнання — у галереї вище.</strong>"
+      }
+    ]
+  },
   // Подяка Маліновській Л.Л.
   {
     slug: "malinovska-liubov-retirement",

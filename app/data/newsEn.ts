@@ -1,6 +1,69 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Gratitude to "Let's Help" Foundation
+  {
+    slug: "gratitude-lets-help",
+    title: "A Step Toward Recovery: Thanking the 'Let's Help' Foundation for State-of-the-Art Equipment",
+    date: "June 1, 2026",
+    excerpt: "The 'Let's Help' Charitable Foundation donated a set of professional rehabilitation equipment to our Center, opening new possibilities for children's recovery and development.",
+    image: "/images/news/lets-help1.webp",
+    images: [
+      "/images/news/lets-help1.webp",
+      "/images/news/lets-help2.webp",
+      "/images/news/lets-help3.webp",
+      "/images/news/lets-help4.webp",
+      "/images/news/lets-help5.webp",
+      "/images/news/lets-help6.webp",
+      "/images/news/lets-help7.webp",
+      "/images/news/lets-help8.webp",
+      "/images/news/lets-help9.webp",
+      "/images/news/lets-help10.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "The administration of the 'Center for Medical Rehabilitation and Palliative Care for Children' of the Zhytomyr Regional Council expresses its sincere respect and deep gratitude to the <strong>'Let's Help' Charitable Foundation</strong> team for their invaluable support and significant contribution to the future of our little wards."
+      },
+      {
+        type: "paragraph",
+        value: "Thanks to your kindness, our Center received modern medical equipment that is vital for effective rehabilitation:"
+      },
+      {
+        type: "list",
+        items: [
+          "<strong>Standing table (verticalizer)</strong> with electric drive and horizontal/vertical height adjustment — essential for the gradual adaptation of the child to a vertical position;",
+          "<strong>Gait training system</strong> without loading, allowing for safe practice of movement skills;",
+          "<strong>Electric hoist</strong> with mechanical base width adjustment for comfortable and safe patient transfer;",
+          "<strong>Vojta-Bobath massage table</strong> with electric drive, specially designed for physical therapy sessions."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "Your support is more than just medical technology. It is a chance for every child for faster recovery of body functions, better social adaptation, and greater daily independence. You help us make the children's path to health more accessible and comfortable."
+      },
+      {
+        type: "paragraph",
+        value: "We wish your entire team inexhaustible energy, good health, and prosperity in all your good deeds. Thank you for being by our side at this important time!"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Learn more about the foundation's activities and support their initiatives via the links below:</strong>"
+      },
+      {
+        type: "list",
+        items: [
+          "Official website: <a href=\"https://letshelp.com.ua/\" target=\"_blank\" rel=\"noopener noreferrer\">letshelp.com.ua</a>",
+          "Facebook: <a href=\"https://www.facebook.com/letshelp.com.ua\" target=\"_blank\" rel=\"noopener noreferrer\">letshelp.com.ua</a>",
+          "Instagram: <a href=\"https://www.instagram.com/letshelp_together\" target=\"_blank\" rel=\"noopener noreferrer\">@letshelp_together</a>"
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "📸 <strong>See more photos of the received equipment in the gallery above.</strong>"
+      }
+    ]
+  },
   // Gratitude to Malinovska L.L.
   {
     slug: "malinovska-liubov-retirement",
