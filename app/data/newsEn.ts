@@ -1,6 +1,67 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Webinars for IDPs
+  {
+    slug: "vpo-webinars-2026",
+    title: "Launch of a series of legal educational online webinars for IDPs",
+    date: "3 June 2026",
+    excerpt: "The Ombudsman's Office, together with partners, is launching a series of webinars for IDPs and people returning to Ukraine. Registration is open!",
+    image: "/images/news/vpo1.webp",
+    images: [
+      "/images/news/vpo1.webp",
+      "/images/news/vpo2.webp",
+      "/images/news/vpo3.webp"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "Starting <strong>June 18, 2026</strong>, a series of legal educational online events will begin, aimed at raising awareness among internally displaced persons (IDPs) and people returning to Ukraine."
+      },
+      {
+        type: "paragraph",
+        value: "The initiative is implemented by the NGO «Vidrodzhennia Ukrainy 2022» together with the Ombudsman's Office with the support of the Council of Europe project «Facilitating access to human rights and basic services for internally displaced persons and returnees to Ukraine»."
+      },
+      {
+        type: "heading",
+        value: "What are the webinars about?"
+      },
+      {
+        type: "paragraph",
+        value: "IDPs and citizens returning to Ukraine often face difficulties in processing documents, payments, or restoring their rights. The meetings will cover the following key topics:"
+      },
+      {
+        type: "list",
+        items: [
+          "Processing and restoring pension payments;",
+          "Submitting applications to the Register of Damage;",
+          "Receiving social assistance for IDPs;",
+          "Restoring lost documents;",
+          "Current employment programs."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "Your questions will be answered directly by representatives of the Ombudsman's Office and relevant state bodies and ministries."
+      },
+      {
+        type: "heading",
+        value: "How to join?"
+      },
+      {
+        type: "paragraph",
+        value: "Meetings will be held <strong>every two weeks on Thursdays from 10:00 to 11:30</strong> (from June 18 to October 22, 2026)."
+      },
+      {
+        type: "paragraph",
+        value: "‼️ <strong>Registration is required!</strong> You can choose a topic of interest and register via the link: <a href=\"https://forms.gle/AcqzyYKT3dMKY48M8\" target=\"_blank\" rel=\"noopener noreferrer\">https://forms.gle/AcqzyYKT3dMKY48M8</a>."
+      },
+      {
+        type: "paragraph",
+        value: "Before the start of each event, a detailed program and a link to connect via Zoom will be sent to the email address you specified during registration."
+      }
+    ]
+  },
   // Gratitude to "Let's Help" Foundation
   {
     slug: "gratitude-lets-help",
@@ -61,6 +122,48 @@ export const newsDataEn = [
       {
         type: "paragraph",
         value: "📸 <strong>See more photos of the received equipment in the gallery above.</strong>"
+      }
+    ]
+  },
+  // Inclusion Week
+  {
+    slug: "inclusion-week-2026",
+    title: "National Inclusion Week: Creating an Inclusive Space in Our Center",
+    date: "31 May 2026",
+    excerpt: "From May 25 to 31, Ukraine hosted the National Inclusion Week. Our Center joined the initiative by holding an important seminar on creating an accessible and comfortable workspace for everyone.",
+    image: "/images/news/inclusion-week.webp",
+    content: [
+      {
+        type: "paragraph",
+        value: "From May 25 to 31, a large-scale annual information campaign — <strong>National Inclusion Week</strong> — was held in Ukraine under the slogan «Accessibility is when you can!». This initiative is part of the National Strategy for Creating a Barrier-Free Space until 2030, initiated by First Lady Olena Zelenska."
+      },
+      {
+        type: "paragraph",
+        value: "The campaign covers the removal of restrictions and the creation of equal conditions in 6 key areas: physical, social, economic, educational, digital, and informational. Accessibility begins with understanding human needs and readiness to create conditions in which everyone can realize their potential."
+      },
+      {
+        type: "paragraph",
+        value: "Our Center also actively participated in the week's events. A seminar for employees was held within the walls of the institution, attended by <strong>Volodymyr Ivanovych Pervushyn</strong> — Chief State Labor Inspector of the Labor Issues Department of the Inspection Activity Office in the Zhytomyr Region of the Central-Western Interregional Department of the State Labor Service."
+      },
+      {
+        type: "paragraph",
+        value: "The main topic of the meeting was discussing how to make the workspace as accessible and comfortable as possible for everyone. During the event, participants:"
+      },
+      {
+        type: "list",
+        items: [
+          "Familiarized themselves with legislative norms that guarantee equality of labor rights and prohibit any manifestations of discrimination in the workplace.",
+          "Examined the main types of barriers: physical, informational, and psychological.",
+          "Paid special attention to mental barriers, because they most often become an obstacle on the way to creating a truly inclusive environment."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "The Center's team emphasized that the formation of a barrier-free labor market largely depends on the active position of employers, their readiness to implement the principles of equality, respect, and accessibility in the workplace."
+      },
+      {
+        type: "paragraph",
+        value: "More information on the application of labor legislation, occupational health, and safety can be found on the State Labor portal: <a href=\"https://pratsia.in\" target=\"_blank\" rel=\"noopener noreferrer\">https://pratsia.in</a>."
       }
     ]
   },
