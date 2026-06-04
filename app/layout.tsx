@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import ScrollToTop from "@/app/components/ScrollToTop";
 import Script from "next/script";
+import CookieBanner from "@/app/components/CookieBanner";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
@@ -115,22 +116,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <ScrollToTop />
+          <CookieBanner />
         </ThemeProvider>
-
-        <Script 
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} 
-          strategy="lazyOnload" 
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
       </body>
     </html>
   );

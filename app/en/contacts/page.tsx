@@ -8,6 +8,7 @@ import FooterEn from "@/app/components/FooterEn";
 import GoogleMap from "@/app/components/GoogleMap";
 import Input from "@/app/components/core/Input";
 import Textarea from "@/app/components/core/Textarea";
+import ConsentCheckboxEn from "@/app/components/core/ConsentCheckboxEn";
 
 function ContactsContentEn() {
   const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ function ContactsContentEn() {
 
   // Стан для наявності електронного направлення
   const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
+  const [consent, setConsent] = useState(false);
 
   interface SelectedService {
     code: string;
@@ -153,6 +155,7 @@ function ContactsContentEn() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        setConsent(false);
       } else {
         alert("An error occurred while sending. Please try again.");
       }
@@ -404,7 +407,7 @@ function ContactsContentEn() {
                       </div>
                     )}
 
-                    <Input label="Residential Address *" type="text" name="Address" required placeholder="Region, City/Village, Street" />
+                    <Input label="City of Residence *" type="text" name="Address" required placeholder="e.g., Zhytomyr" />
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Need for specialist consultation:</label>
@@ -451,6 +454,8 @@ function ContactsContentEn() {
                       rows={3} 
                       placeholder="Add any information you consider important..."
                     />
+
+                    <ConsentCheckboxEn checked={consent} onChange={setConsent} />
 
                     <button 
                       type="submit" 

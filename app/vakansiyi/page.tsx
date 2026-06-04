@@ -5,6 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { Briefcase, Send, CheckCircle2, Loader2, Search } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
 
 // 📌 СПИСОК АКТИВНИХ ВАКАНСІЙ (Легко редагувати тут)
 const activeVacancies = [
@@ -22,6 +23,7 @@ export default function VacancyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [experience, setExperience] = useState("");
+  const [consent, setConsent] = useState(false);
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -52,6 +54,7 @@ export default function VacancyPage() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        setConsent(false);
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
@@ -206,6 +209,8 @@ export default function VacancyPage() {
                     <input type="email" name="Email" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="mail@example.com" />
                   </div>
                 </div>
+
+                <ConsentCheckbox checked={consent} onChange={setConsent} />
 
                 <button 
                   type="submit" 

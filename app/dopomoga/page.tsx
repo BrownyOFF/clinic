@@ -8,6 +8,7 @@ import Footer from "@/app/components/Footer";
 import Input from "@/app/components/core/Input";
 import Select from "@/app/components/core/Select";
 import Textarea from "@/app/components/core/Textarea";
+import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
 
 interface BankDetailRow {
   label: string;
@@ -67,6 +68,7 @@ export default function HelpPage() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consent, setConsent] = useState(false);
 
   const handleCopy = (value: string, field: string) => {
     navigator.clipboard.writeText(value);
@@ -103,6 +105,7 @@ export default function HelpPage() {
 
       if (response.ok) {
         setFormSubmitted(true);
+        setConsent(false);
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
@@ -407,6 +410,8 @@ export default function HelpPage() {
                         placeholder="Напишіть кілька слів про свій досвід або ідеї..."
                       />
 
+                      <ConsentCheckbox checked={consent} onChange={setConsent} />
+
                       <button
                         type="submit"
                         disabled={isSubmitting}
@@ -439,6 +444,7 @@ export default function HelpPage() {
                         onClick={() => {
                           setFormSubmitted(false);
                           setVolunteerForm({ name: "", phone: "", email: "", direction: "children", message: "" });
+                          setConsent(false);
                         }}
                         className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:underline dark:text-emerald-450 transition cursor-pointer"
                       >

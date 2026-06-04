@@ -9,6 +9,7 @@ import Footer from "@/app/components/Footer";
 import GoogleMap from "@/app/components/GoogleMap";
 import Input from "@/app/components/core/Input";
 import Textarea from "@/app/components/core/Textarea";
+import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
 
 function ContactsContent() {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ function ContactsContent() {
 
   // Стан для наявності електронного направлення
   const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
+  const [consent, setConsent] = useState(false);
 
   interface SelectedService {
     code: string;
@@ -163,6 +165,7 @@ function ContactsContent() {
 
       if (response.ok) {
         setIsSubmitted(true); // Показуємо повідомлення про успіх
+        setConsent(false);
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
@@ -422,7 +425,7 @@ function ContactsContent() {
                       </div>
                     )}
 
-                    <Input label="Адреса проживання *" type="text" name="Адреса" required placeholder="Область, місто/село, вулиця" />
+                    <Input label="Місто проживання *" type="text" name="Адреса" required placeholder="Наприклад: Житомир" />
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Потреба в консультації спеціалістів:</label>
@@ -470,6 +473,7 @@ function ContactsContent() {
                       placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
                     />
 
+                    <ConsentCheckbox checked={consent} onChange={setConsent} />
 
                     <button 
                       type="submit" 
