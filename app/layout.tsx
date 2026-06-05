@@ -102,6 +102,65 @@ export default function RootLayout({
 
   return (
     <html lang="uk" suppressHydrationWarning> 
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var consent = localStorage.getItem('cookie-consent');
+                  if (consent !== 'accepted') {
+                    var originalGetItem = localStorage.getItem;
+                    var originalSetItem = localStorage.setItem;
+                    var originalRemoveItem = localStorage.removeItem;
+                    
+                    var tempTheme = originalGetItem.call(localStorage, 'theme') || 'system';
+                    
+                    var patch = {
+                      originalGetItem: originalGetItem,
+                      originalSetItem: originalSetItem,
+                      originalRemoveItem: originalRemoveItem,
+                      tempTheme: tempTheme,
+                      restore: function() {
+                        localStorage.getItem = this.originalGetItem;
+                        localStorage.setItem = this.originalSetItem;
+                        localStorage.removeItem = this.originalRemoveItem;
+                        localStorage.setItem('theme', this.tempTheme);
+                        delete window.__themeConsentPatch;
+                      }
+                    };
+                    
+                    window.__themeConsentPatch = patch;
+                    
+                    localStorage.getItem = function(key) {
+                      if (key === 'theme') {
+                        return patch.tempTheme;
+                      }
+                      return originalGetItem.apply(this, arguments);
+                    };
+                    
+                    localStorage.setItem = function(key, val) {
+                      if (key === 'theme') {
+                        patch.tempTheme = val;
+                        return;
+                      }
+                      return originalSetItem.apply(this, arguments);
+                    };
+                    
+                    localStorage.removeItem = function(key) {
+                      if (key === 'theme') {
+                        patch.tempTheme = 'system';
+                        return;
+                      }
+                      return originalRemoveItem.apply(this, arguments);
+                    };
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <script
           type="application/ld+json"

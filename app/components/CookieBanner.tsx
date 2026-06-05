@@ -10,6 +10,9 @@ declare global {
   interface Window {
     gtag?: (...args: any[]) => void;
     dataLayer?: any[];
+    __themeConsentPatch?: {
+      restore: () => void;
+    };
   }
 }
 
@@ -33,6 +36,36 @@ const initGA = (gaId: string) => {
   document.head.appendChild(script2);
 };
 
+const deleteGACookies = () => {
+  if (typeof document === "undefined") return;
+  try {
+    const cookies = document.cookie.split(";");
+    const domain = window.location.hostname;
+    const domainParts = domain.split(".");
+    
+    let mainDomain = "";
+    if (domainParts.length >= 2) {
+      mainDomain = "." + domainParts.slice(-2).join(".");
+    }
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+      
+      if (name.startsWith("_ga") || name.startsWith("_gid")) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        document.cookie = name + `=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${domain}`;
+        if (mainDomain) {
+          document.cookie = name + `=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=${mainDomain}`;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Error deleting GA cookies:", e);
+  }
+};
+
 export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
   const pathname = usePathname();
@@ -42,6 +75,8 @@ export default function CookieBanner() {
     const consent = localStorage.getItem("cookie-consent");
     if (consent === "accepted") {
       initGA(gaId);
+    } else if (consent === "declined") {
+      deleteGACookies();
     } else if (!consent) {
       // Show banner with a small delay for better user experience
       const timer = setTimeout(() => setShowBanner(true), 2000);
@@ -50,6 +85,9 @@ export default function CookieBanner() {
   }, [gaId]);
 
   const handleAccept = () => {
+    if (typeof window !== "undefined" && window.__themeConsentPatch) {
+      window.__themeConsentPatch.restore();
+    }
     localStorage.setItem("cookie-consent", "accepted");
     initGA(gaId);
     setShowBanner(false);
@@ -57,6 +95,7 @@ export default function CookieBanner() {
 
   const handleDecline = () => {
     localStorage.setItem("cookie-consent", "declined");
+    deleteGACookies();
     setShowBanner(false);
   };
 
