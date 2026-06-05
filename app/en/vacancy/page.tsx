@@ -7,6 +7,7 @@ import { Briefcase, Send, CheckCircle2, Loader2, Search } from "lucide-react";
 // Імпортуємо англійські компоненти
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
+import ConsentCheckboxEn from "@/app/components/core/ConsentCheckboxEn";
 
 // 📌 СПИСОК АКТИВНИХ ВАКАНСІЙ (Англійською)
 const activeVacancies = [
@@ -24,6 +25,7 @@ export default function VacancyPageEn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [experience, setExperience] = useState("");
+  const [consent, setConsent] = useState(false);
 
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
@@ -55,6 +57,7 @@ export default function VacancyPageEn() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        setConsent(false);
       } else {
         alert("An error occurred during submission. Please try again.");
       }
@@ -209,6 +212,8 @@ export default function VacancyPageEn() {
                     <input type="email" name="Email" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="mail@example.com" />
                   </div>
                 </div>
+
+                <ConsentCheckboxEn checked={consent} onChange={setConsent} />
 
                 <button 
                   type="submit" 

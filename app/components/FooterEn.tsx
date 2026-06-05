@@ -49,6 +49,13 @@ export default function FooterEn() {
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Vacancies
                 </Link>
               </li>
+              {/* 
+              <li>
+                <Link href="/en/help" className="flex items-center gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Help Us
+                </Link>
+              </li>
+              */}
             </ul>
 
             <ul className="space-y-3 text-sm flex-1">
@@ -66,6 +73,11 @@ export default function FooterEn() {
               <li>
                 <Link href="/en/for-patient/paid-services" className="flex items-start gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> Paid Services
+                </Link>
+              </li>
+              <li>
+                <Link href="/en/for-patient/faq" className="flex items-start gap-2 hover:text-blue-400 transition group">
+                  <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0 mt-0.5" /> FAQ
                 </Link>
               </li>
             </ul>
@@ -139,6 +151,10 @@ export default function FooterEn() {
         <p>© {new Date().getFullYear()} CMR&PDC of Zhytomyr Regional Council. All rights reserved.</p>
         
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+          <Link href="/en/privacy-policy" className="font-medium text-slate-400 hover:text-white hover:underline underline-offset-4 transition-all duration-300">
+            Privacy Policy
+          </Link>
+          <span className="hidden sm:block w-1 h-1 bg-slate-700 rounded-full"></span>
           <p>Zhytomyr</p>
           <span className="hidden sm:block w-1 h-1 bg-slate-700 rounded-full"></span>
           <p>

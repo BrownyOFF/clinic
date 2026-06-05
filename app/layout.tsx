@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import ScrollToTop from "@/app/components/ScrollToTop";
 import Script from "next/script";
+import CookieBanner from "@/app/components/CookieBanner";
+import { AccessibilityPanel } from "@/app/components/AccessibilityPanel";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
@@ -101,6 +103,67 @@ export default function RootLayout({
 
   return (
     <html lang="uk" suppressHydrationWarning> 
+      <head>
+        <script
+          id="theme-consent-patch"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var consent = localStorage.getItem('cookie-consent');
+                  if (consent !== 'accepted') {
+                    var originalGetItem = localStorage.getItem;
+                    var originalSetItem = localStorage.setItem;
+                    var originalRemoveItem = localStorage.removeItem;
+                    
+                    var tempTheme = originalGetItem.call(localStorage, 'theme') || 'system';
+                    
+                    var patch = {
+                      originalGetItem: originalGetItem,
+                      originalSetItem: originalSetItem,
+                      originalRemoveItem: originalRemoveItem,
+                      tempTheme: tempTheme,
+                      restore: function() {
+                        localStorage.getItem = this.originalGetItem;
+                        localStorage.setItem = this.originalSetItem;
+                        localStorage.removeItem = this.originalRemoveItem;
+                        localStorage.setItem('theme', this.tempTheme);
+                        delete window.__themeConsentPatch;
+                      }
+                    };
+                    
+                    window.__themeConsentPatch = patch;
+                    
+                    localStorage.getItem = function(key) {
+                      if (key === 'theme') {
+                        return patch.tempTheme;
+                      }
+                      return originalGetItem.apply(this, arguments);
+                    };
+                    
+                    localStorage.setItem = function(key, val) {
+                      if (key === 'theme') {
+                        patch.tempTheme = val;
+                        return;
+                      }
+                      return originalSetItem.apply(this, arguments);
+                    };
+                    
+                    localStorage.removeItem = function(key) {
+                      if (key === 'theme') {
+                        patch.tempTheme = 'system';
+                        return;
+                      }
+                      return originalRemoveItem.apply(this, arguments);
+                    };
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <script
           type="application/ld+json"
@@ -115,22 +178,9 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <ScrollToTop />
+          <AccessibilityPanel />
+          <CookieBanner />
         </ThemeProvider>
-
-        <Script 
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} 
-          strategy="lazyOnload" 
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
       </body>
     </html>
   );

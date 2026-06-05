@@ -1,66 +1,119 @@
 "use client";
-
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
-
-// Імпортуємо англійські компоненти
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
 import GoogleMap from "@/app/components/GoogleMap";
+import Input from "@/app/components/core/Input";
+import Textarea from "@/app/components/core/Textarea";
+import ConsentCheckboxEn from "@/app/components/core/ConsentCheckboxEn";
 
-const EN_CONFIGURATION = {
-  "locations": [
-    {
-      "title": "Municipal Non-Profit Enterprise 'Center for Medical Rehabilitation and Palliative Care for Children' of the Zhytomyr Oblast Council",
-      "address1": "8 Korabelna St",
-      "address2": "Zhytomyr, Zhytomyr Oblast, Ukraine",
-      "coords": { "lat": 50.2826796, "lng": 28.5945396 },
-      "placeId": "ChIJVVWlvUNlLEcRuhSopj_XWj4"
-    }
-  ],
-  "mapOptions": { 
-    "center": { "lat": 50.2826796, "lng": 28.5945396 }, 
-    "fullscreenControl": false, 
-    "mapTypeControl": false, 
-    "streetViewControl": true, 
-    "zoom": 16, 
-    "zoomControl": true, 
-    "maxZoom": 20, 
-    "mapId": "DEMO_MAP_ID" 
-  },
-  "mapsApiKey": process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-  "capabilities": { "input": false, "autocomplete": false, "directions": false, "distanceMatrix": false, "details": false, "actions": false }
-};
-
-export default function ContactsPageEn() {
+function ContactsContentEn() {
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
 
-  // State for custom select
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const [selectedDirection, setSelectedDirection] = useState("Not specified");
-  const selectRef = useRef<HTMLDivElement>(null);
+  // Стан для наявності електронного направлення
+  const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
+  const [consent, setConsent] = useState(false);
 
-  const directions = [
-    "Not specified",
-    "Inpatient medical rehabilitation",
-    "Outpatient medical rehabilitation",
-    "Inpatient palliative care",
-    "Outpatient palliative care",
-    "Without referral"
-  ];
+  interface SelectedService {
+    code: string;
+    name: string;
+    price: string;
+    quantity: number;
+  }
+  const [preselectedServices, setPreselectedServices] = useState<SelectedService[]>([]);
 
-  // Close select on click outside
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+  const [diagnosis, setDiagnosis] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsSelectOpen(false);
+    const careType = searchParams.get("careType");
+    const referral = searchParams.get("referral");
+    const symptoms = searchParams.get("symptoms")?.split(",") || [];
+    const needs = searchParams.get("needs");
+
+    if (careType || referral || symptoms.length > 0 || needs) {
+      if (referral === "yes") {
+        setHasReferral("yes");
+      } else if (referral === "no_idea" || referral === "no") {
+        setHasReferral("no");
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+      const docs: string[] = ["PRM Doctor"];
+      if (careType === "palliative") {
+        docs.push("Psychologist");
+        if (symptoms.includes("pain")) {
+          docs.push("Pediatric Neurologist");
+        }
+      }
+      if (needs === "child_neuro") {
+        docs.push("Pediatric Neurologist", "Speech Therapist / Defectologist", "Psychologist");
+      }
+      if (symptoms.includes("mobility")) {
+        docs.push("Physical Therapist", "Occupational Therapist");
+      }
+      if (symptoms.includes("care")) {
+        docs.push("Occupational Therapist");
+      }
+      if (symptoms.includes("exhaustion")) {
+        docs.push("Psychologist");
+      }
+      setSelectedDocs(Array.from(new Set(docs)));
+
+      if (careType === "palliative") {
+        setDiagnosis("Palliative status (requires symptomatic care)");
+      } else if (careType === "child_rehab") {
+        if (needs === "child_neuro") {
+          setDiagnosis("Neurological disorders / Cerebral Palsy");
+        } else if (needs === "rehab_injury") {
+          setDiagnosis("Consequences of injury or surgery");
+        }
+      }
+
+      let info = "Primary screening results from the website:\n";
+      if (careType === "palliative") {
+        info += "- Recommended: Palliative Medical Care for Children\n";
+      } else if (careType === "child_rehab") {
+        info += "- Recommended: Comprehensive Child Rehabilitation\n";
+      } else {
+        info += "- Recommended: PRM Specialist Consultation\n";
+      }
+
+      const symptomsMap: Record<string, string> = {
+        pain: "Pain",
+        care: "Need for caregiver assistance",
+        dysphagia: "Swallowing/breathing issues",
+        mobility: "Limited mobility",
+        exhaustion: "High family stress level"
+      };
+      const activeSymptoms = symptoms.map(s => symptomsMap[s]).filter(Boolean);
+      if (activeSymptoms.length > 0) {
+        info += `- Identified conditions: ${activeSymptoms.join(", ")}`;
+      }
+      setAdditionalInfo(info);
+    }
+  }, [searchParams]);
+
+  // Read preselected services from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("selected_services");
+      if (saved) {
+        const services = JSON.parse(saved);
+        if (Array.isArray(services) && services.length > 0) {
+          setPreselectedServices(services);
+        }
+        localStorage.removeItem("selected_services");
+      }
+    } catch (e) {
+      console.error("Error reading selected services:", e);
+    }
   }, []);
 
   const fadeUp: Variants = {
@@ -102,8 +155,9 @@ export default function ContactsPageEn() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        setConsent(false);
       } else {
-        alert("An error occurred during submission. Please try again.");
+        alert("An error occurred while sending. Please try again.");
       }
     } catch (error) {
       alert("Connection error. Please check your internet connection.");
@@ -115,7 +169,6 @@ export default function ContactsPageEn() {
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-slate-50 transition-colors duration-500 overflow-x-hidden">
       
-      {/* АБСТРАКТНИЙ ФОН */}
       <div className="fixed inset-0 -z-50 h-full w-full bg-slate-50 dark:bg-slate-950 transition-colors duration-500">
          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
          <div className="absolute left-0 right-0 top-[-10%] -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-500 dark:bg-blue-700 opacity-20 dark:opacity-30 blur-[100px]"></div>
@@ -127,16 +180,15 @@ export default function ContactsPageEn() {
         
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white">
-            Get in <span className="text-blue-600 dark:text-blue-400">touch</span>
+            Contact <span className="text-blue-600 dark:text-blue-400">Us</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            We are always ready to answer your questions, provide a consultation, or help with the paperwork for your child's rehabilitation.
+            We are always ready to answer your questions, provide consultation, or assist with arranging documents for your child&apos;s rehabilitation.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           
-          {/* ІНФОРМАЦІЯ ТА КАРТА */}
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="lg:col-span-5 space-y-8">
             <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
               <h3 className="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Our Contacts</h3>
@@ -148,7 +200,7 @@ export default function ContactsPageEn() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Address</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Zhytomyr, 8 Korabelna St.</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">8 Korabelna St, Zhytomyr, Ukraine</p>
                   </div>
                 </div>
 
@@ -178,25 +230,67 @@ export default function ContactsPageEn() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Working Hours</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Mon-Fri: 08:00 - 17:00<br/>Sat-Sun: Closed (Inpatient care 24/7)</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Mon-Fri: 08:00 - 17:00<br/>Sat-Sun: Closed (inpatient 24/7)</p>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Міні-карта */}
+            {/* Accessibility & Public Transport */}
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Accessibility className="text-blue-600 dark:text-blue-400" size={24} />
+                  Accessibility & Barrier-Free
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Ramp & barrier-free entrance:</strong> easy access to the building for people in wheelchairs and strollers.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Wheelchair-accessible restroom:</strong> a specially equipped restroom for children using wheelchairs.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Tactile paving:</strong> installed inside the center to assist visually impaired visitors with navigation.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Free parking:</strong> convenient parking spaces located right next to the entrance.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Bus className="text-blue-600 dark:text-blue-400" size={24} />
+                  Public Transport
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚍</span>
+                    <span><strong>Minibus №33:</strong> the &quot;Rehabilitation Center&quot; stop is located directly opposite the entrance.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚎</span>
+                    <span><strong>Trolleybuses №2, 3, 10:</strong> the terminus in the Bohunia direction is situated slightly further away (a few minutes walk).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             <div className="relative aspect-video rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100 dark:bg-slate-800">
-              <GoogleMap config={EN_CONFIGURATION} />
+              <GoogleMap lang="en" />
             </div>
           </motion.div>
 
-          {/* ФОРМА ЗВОРОТНОГО ЗВ'ЯЗКУ */}
           <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ delay: 0.2 }} className="lg:col-span-7">
             <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 md:p-12 rounded-[40px] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-bl-full -z-10 pointer-events-none"></div>
               
               {isSubmitted ? (
-                // СТАН УСПІШНОЇ ВІДПРАВКИ
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                   <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <CheckCircle2 size={48} />
@@ -206,37 +300,35 @@ export default function ContactsPageEn() {
                   </h3>
                   <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-md mx-auto">
                     {activeForm === 'appointment' 
-                      ? 'Thank you for contacting us. Our administrator will get in touch with you shortly to arrange all the details.'
+                      ? 'Thank you for reaching out. Our administrator will contact you shortly to arrange all the details.'
                       : 'Thank you for your feedback! Your opinion is very important to us.'}
                   </p>
                   <button 
                     onClick={() => setIsSubmitted(false)} 
-                    className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+                    className="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-full font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer"
                   >
-                    {activeForm === 'appointment' ? 'Submit another form' : 'Submit another feedback'}
+                    {activeForm === 'appointment' ? 'Submit another form' : 'Send another review'}
                   </button>
                 </motion.div>
               ) : (
-                // ФОРМИ
                 <>
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-6">
                     <div>
                       <h2 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">
-                        {activeForm === 'appointment' ? 'Appointment for Rehabilitation' : 'Leave Feedback'}
+                        {activeForm === 'appointment' ? 'Book Rehabilitation' : 'Leave a Review'}
                       </h2>
                       <p className="text-slate-600 dark:text-slate-400">
                         {activeForm === 'appointment' 
-                          ? 'Fill out the form, and our administrator will contact you to arrange the visit.'
-                          : 'Share your impressions of our center.'}
+                          ? 'Fill out the form and our administrator will contact you to arrange a visit.'
+                          : 'Share your experience with our center.'}
                       </p>
                     </div>
 
-                    {/* Перемикач */}
                     <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 w-fit shrink-0">
                       <button
                         type="button"
                         onClick={() => setActiveForm('appointment')}
-                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
                           activeForm === 'appointment'
                             ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -247,13 +339,13 @@ export default function ContactsPageEn() {
                       <button
                         type="button"
                         onClick={() => setActiveForm('feedback')}
-                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                        className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
                           activeForm === 'feedback'
                             ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm'
                             : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                         }`}
                       >
-                        Feedback
+                        Review
                       </button>
                     </div>
                   </div>
@@ -261,85 +353,106 @@ export default function ContactsPageEn() {
                   {activeForm === 'appointment' ? (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <input type="hidden" name="Form_Type" value="Appointment" />
-                    {/* 🛡️ HONEYPOT */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Patient's Full Name *</label>
-                        <input type="text" name="Patient_Name" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="John Doe" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Date of Birth *</label>
-                        <input 
-                          type="text" 
-                          name="Date_of_Birth" 
-                          required 
-                          pattern="\d{2}\.\d{2}\.\d{4}"
-                          title="Please enter the date in DD.MM.YYYY format (e.g., 15.03.2020)"
-                          className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
-                          placeholder="DD.MM.YYYY" 
-                        />
-                      </div>
+                      <Input label="Patient's Full Name *" type="text" name="Patient_Name" required placeholder="John Doe" />
+                      <Input
+                        label="Date of Birth *"
+                        type="text" 
+                        name="Date_of_Birth" 
+                        required 
+                        pattern="\d{2}\.\d{2}\.\d{4}"
+                        title="Please enter the date in DD.MM.YYYY format (e.g. 15.03.2020)"
+                        placeholder="DD.MM.YYYY" 
+                      />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Input label="Contact Phone *" type="tel" name="Phone" required placeholder="+38 (000) 000-00-00" />
+                      <Input label="Email (optional)" type="email" name="Email" placeholder="mail@example.com" />
+                    </div>
+
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Contact Phone *</label>
-                        <input type="tel" name="Phone" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="+38 (000) 000-00-00" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Electronic Referral</label>
-                        <div className="relative" ref={selectRef}>
-                          <input type="hidden" name="Referral" value={selectedDirection} />
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                          Do you have an electronic referral from a doctor? *
+                        </label>
+                        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-2xl p-1 w-full sm:w-fit border border-slate-200/50 dark:border-slate-700/50">
                           <button
                             type="button"
-                            onClick={() => setIsSelectOpen(!isSelectOpen)}
-                            className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all flex items-center justify-between group"
+                            onClick={() => setHasReferral("yes")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "yes"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
                           >
-                            <span className={selectedDirection === "Not specified" ? "text-slate-400" : "text-slate-900 dark:text-white"}>
-                              {selectedDirection === "Not specified" ? "Select referral type..." : selectedDirection}
-                            </span>
-                            <ChevronDown 
-                              size={18} 
-                              className={`text-slate-400 transition-transform duration-300 ${isSelectOpen ? "rotate-180" : ""}`} 
-                            />
+                            Yes, I do
                           </button>
-
-                          <AnimatePresence>
-                            {isSelectOpen && (
-                              <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl overflow-hidden"
-                              >
-                                {directions.map((dir) => (
-                                  <button
-                                    key={dir}
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedDirection(dir);
-                                      setIsSelectOpen(false);
-                                    }}
-                                    className={`w-full px-5 py-3 text-left text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                                      selectedDirection === dir ? "text-blue-600 dark:text-blue-400 font-bold bg-blue-50/50 dark:bg-blue-900/20" : "text-slate-700 dark:text-slate-300"
-                                    }`}
-                                  >
-                                    {dir}
-                                  </button>
-                                ))}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          <button
+                            type="button"
+                            onClick={() => setHasReferral("no")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "no"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
+                          >
+                            No, I don&apos;t
+                          </button>
                         </div>
+                        <input type="hidden" name="Referral" value={hasReferral === "yes" ? "Yes" : hasReferral === "no" ? "No" : "Not specified"} />
                       </div>
+
+                      {hasReferral === "yes" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className="mt-4"
+                        >
+                          <Input
+                            label="Electronic Referral Number *"
+                            type="text"
+                            name="Referral_Number"
+                            required
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                          />
+                        </motion.div>
+                      )}
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Residential Address *</label>
-                      <input type="text" name="Address" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Region, City/Village, Street" />
-                    </div>
+                    {/* Preselected paid services */}
+                    {preselectedServices.length > 0 && (
+                      <div className="bg-blue-50/50 dark:bg-blue-900/10 p-5 rounded-2xl border border-blue-100 dark:border-blue-900/30 space-y-3">
+                        <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">Selected Services:</h4>
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {preselectedServices.map((service, idx) => (
+                            <div key={idx} className="flex justify-between items-center text-xs">
+                              <span className="text-slate-700 dark:text-slate-300 font-medium">
+                                {service.name} <span className="text-slate-400">({service.code})</span> x{service.quantity}
+                              </span>
+                              <span className="font-bold text-slate-900 dark:text-white">
+                                {parseInt(service.price.replace(/[^\d]/g, "")) * service.quantity} ₴
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-between items-center pt-2 border-t border-dashed border-blue-200 dark:border-blue-900/40 text-sm font-bold text-slate-900 dark:text-white">
+                          <span>Total Amount:</span>
+                          <span className="text-blue-600 dark:text-blue-400">
+                            {preselectedServices.reduce((sum, s) => sum + parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity, 0)} ₴
+                          </span>
+                        </div>
+                        <input 
+                          type="hidden" 
+                          name="Selected_Paid_Services" 
+                          value={preselectedServices.map(s => `${s.name} (${s.code}) x${s.quantity} - ${parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity} UAH`).join("; ")} 
+                        />
+                      </div>
+                    )}
+
+                    <Input label="City of Residence *" type="text" name="Address" required placeholder="e.g., Zhytomyr" />
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Need for specialist consultation:</label>
@@ -350,7 +463,16 @@ export default function ContactsPageEn() {
                           "Pediatric Psychiatrist", "Pediatric Orthopedist-Traumatologist"
                         ].map((doc) => (
                           <label key={doc} className="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="Consultation_Needed[]" value={doc} className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <input 
+                              type="checkbox" 
+                              name="Consultation_Needed[]" 
+                              value={doc} 
+                              checked={selectedDocs.includes(doc)}
+                              onChange={() => {
+                                setSelectedDocs(prev => prev.includes(doc) ? prev.filter(d => d !== doc) : [...prev, doc]);
+                              }}
+                              className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                            />
                             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{doc}</span>
                           </label>
                         ))}
@@ -360,20 +482,30 @@ export default function ContactsPageEn() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Diagnosis (optional)</label>
-                      <input type="text" name="Diagnosis" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Specify diagnosis..." />
-                    </div>
+                    <Input
+                      label="Diagnosis (optional)"
+                      type="text" 
+                      name="Diagnosis" 
+                      value={diagnosis} 
+                      onChange={(e) => setDiagnosis(e.target.value)} 
+                      placeholder="Specify diagnosis..." 
+                    />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Additional Information</label>
-                      <textarea name="Additional_Information" rows={3} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Add any information you consider important..."></textarea>
-                    </div>
+                    <Textarea
+                      label="Additional Information"
+                      name="Additional_Information" 
+                      value={additionalInfo} 
+                      onChange={(e) => setAdditionalInfo(e.target.value)} 
+                      rows={3} 
+                      placeholder="Add any information you consider important..."
+                    />
+
+                    <ConsentCheckboxEn checked={consent} onChange={setConsent} />
 
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8"
+                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <Loader2 size={20} className="animate-spin" />
@@ -388,18 +520,14 @@ export default function ContactsPageEn() {
                   ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <input type="hidden" name="Form_Type" value="Feedback" />
-                    {/* 🛡️ HONEYPOT */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Your Feedback *</label>
-                      <textarea name="Feedback" required rows={5} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Share your impressions..."></textarea>
-                    </div>
+                    <Textarea label="Your Feedback *" name="Feedback" required rows={5} placeholder="Share your impressions..." />
 
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8"
+                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <Loader2 size={20} className="animate-spin" />
@@ -423,5 +551,17 @@ export default function ContactsPageEn() {
 
       <FooterEn />
     </div>
+  );
+}
+
+export default function ContactsPageEn() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-600 dark:text-blue-400" size={32} />
+      </div>
+    }>
+      <ContactsContentEn />
+    </Suspense>
   );
 }

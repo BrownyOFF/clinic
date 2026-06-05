@@ -1,40 +1,125 @@
 "use client";
 
-import { useState, FormEvent, useRef, useEffect } from "react";
+import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import GoogleMap from "@/app/components/GoogleMap";
+import Input from "@/app/components/core/Input";
+import Textarea from "@/app/components/core/Textarea";
+import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
 
-export default function ContactsPage() {
+function ContactsContent() {
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeForm, setActiveForm] = useState<'appointment' | 'feedback'>('appointment');
 
-  // Стан для кастомного селекта
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
-  const [selectedDirection, setSelectedDirection] = useState("Не вказано");
-  const selectRef = useRef<HTMLDivElement>(null);
+  // Стан для наявності електронного направлення
+  const [hasReferral, setHasReferral] = useState<"yes" | "no" | "">("");
+  const [consent, setConsent] = useState(false);
 
-  const directions = [
-    "Не вказано",
-    "Стаціонарна медична реабілітація",
-    "Нестаціонарна медична реабілітація",
-    "Стаціонарна паліативна допомога",
-    "Нестаціонарна паліативна допомога",
-    "Без направлення"
-  ];
+  interface SelectedService {
+    code: string;
+    name: string;
+    price: string;
+    quantity: number;
+  }
+  const [preselectedServices, setPreselectedServices] = useState<SelectedService[]>([]);
 
-  // Закриття селекта при кліку зовні
+  // Стан для пре-філінгу результатів скринінгу
+  const [selectedDocs, setSelectedDocs] = useState<string[]>([]);
+  const [diagnosis, setDiagnosis] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState("");
+
+  // Зчитування результатів скринінгу з URL параметрів
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsSelectOpen(false);
+    const careType = searchParams.get("careType");
+    const referral = searchParams.get("referral");
+    const symptoms = searchParams.get("symptoms")?.split(",") || [];
+    const needs = searchParams.get("needs");
+
+    if (careType || referral || symptoms.length > 0 || needs) {
+      // 1. Автоматично підбираємо тип направлення
+      if (referral === "yes") {
+        setHasReferral("yes");
+      } else if (referral === "no_idea" || referral === "no") {
+        setHasReferral("no");
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+      // 2. Автоматично відмічаємо необхідних спеціалістів
+      const docs: string[] = ["Лікар ФРМ"];
+      if (careType === "palliative") {
+        docs.push("Психолог");
+        if (symptoms.includes("pain")) {
+          docs.push("Невролог дитячий");
+        }
+      }
+      if (needs === "child_neuro") {
+        docs.push("Невролог дитячий", "Логопед/дефектолог", "Психолог");
+      }
+      if (symptoms.includes("mobility")) {
+        docs.push("Фізичний терапевт", "Ерготерапевт");
+      }
+      if (symptoms.includes("care")) {
+        docs.push("Ерготерапевт");
+      }
+      if (symptoms.includes("exhaustion")) {
+        docs.push("Психолог");
+      }
+      setSelectedDocs(Array.from(new Set(docs)));
+
+      // 3. Формуємо діагноз та додатковий опис
+      if (careType === "palliative") {
+        setDiagnosis("Паліативний статус (потребує симптоматичної опіки)");
+      } else if (careType === "child_rehab") {
+        if (needs === "child_neuro") {
+          setDiagnosis("Неврологічні розлади / ДЦП");
+        } else if (needs === "rehab_injury") {
+          setDiagnosis("Наслідки травми чи операції");
+        }
+      }
+
+      let info = "Результати первинного скринінгу на сайті:\n";
+      if (careType === "palliative") {
+        info += "- Рекомендовано: Паліативна медична допомога дітям\n";
+      } else if (careType === "child_rehab") {
+        info += "- Рекомендовано: Комплексна дитяча реабілітація\n";
+      } else {
+        info += "- Рекомендовано: Консультація лікаря ФРМ\n";
+      }
+
+      const symptomsMap: Record<string, string> = {
+        pain: "Біль",
+        care: "Потреба у догляді",
+        dysphagia: "Порушення ковтання/дихання",
+        mobility: "Обмежена мобільність",
+        exhaustion: "Високий стрес у родині"
+      };
+      const activeSymptoms = symptoms.map(s => symptomsMap[s]).filter(Boolean);
+      if (activeSymptoms.length > 0) {
+        info += `- Виявлені особливості: ${activeSymptoms.join(", ")}`;
+      }
+      setAdditionalInfo(info);
+    }
+  }, [searchParams]);
+
+  // Зчитування обраних платних послуг з localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("selected_services");
+      if (saved) {
+        const services = JSON.parse(saved);
+        if (Array.isArray(services) && services.length > 0) {
+          setPreselectedServices(services);
+        }
+        localStorage.removeItem("selected_services");
+      }
+    } catch (e) {
+      console.error("Помилка зчитування обраних послуг:", e);
+    }
   }, []);
 
   const fadeUp: Variants = {
@@ -80,6 +165,7 @@ export default function ContactsPage() {
 
       if (response.ok) {
         setIsSubmitted(true); // Показуємо повідомлення про успіх
+        setConsent(false);
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
@@ -162,9 +248,54 @@ export default function ContactsPage() {
               </div>
             </div>
             
+            {/* Доступність та Громадський транспорт */}
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Accessibility className="text-blue-600 dark:text-blue-400" size={24} />
+                  Доступність та безбар'єрність
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Пандус / безбар'єрний вхід:</strong> вільний доступ до будівлі для осіб з інвалідністю та дитячих візочків.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Вбиральня для дітей на кріслах колісних:</strong> спеціально обладнана та адаптована санітарна кімната.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Тактильна плитка:</strong> укладена в центрі для безпечного та зручного орієнтування осіб з порушеннями зору.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Безкоштовна парковка:</strong> облаштована паркувальна зона безпосередньо біля входу до закладу.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Bus className="text-blue-600 dark:text-blue-400" size={24} />
+                  Громадський транспорт
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚍</span>
+                    <span><strong>Маршрутка №33:</strong> зупинка «Центр реабілітації» розташована безпосередньо навпроти центру.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚎</span>
+                    <span><strong>Тролейбуси №2, 3, 10:</strong> кінцева зупинка тролейбусів у напрямку Богунії знаходиться трохи далі (кілька хвилин пішки).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             {/* Міні-карта */}
             <div className="relative aspect-video rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100 dark:bg-slate-800">
-              <GoogleMap />
+              <GoogleMap lang="uk" />
             </div>
           </motion.div>
 
@@ -243,92 +374,123 @@ export default function ContactsPage() {
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">ПІБ пацієнта *</label>
-                        <input type="text" name="ПІБ_пацієнта" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Іваненко Іван Іванович" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Дата народження *</label>
-                        <input 
-                          type="text" 
-                          name="Дата_народження" 
-                          required 
-                          pattern="\d{2}\.\d{2}\.\d{4}"
-                          title="Будь ласка, введіть дату у форматі ДД.ММ.РРРР (наприклад, 15.03.2020)"
-                          className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" 
-                          placeholder="ДД.ММ.РРРР" 
-                        />
-                      </div>
+                      <Input label="ПІБ пацієнта *" type="text" name="ПІБ_пацієнта" required placeholder="Іваненко Іван Іванович" />
+                      <Input
+                        label="Дата народження *"
+                        type="text" 
+                        name="Дата_народження" 
+                        required 
+                        pattern="\d{2}\.\d{2}\.\d{4}"
+                        title="Будь ласка, введіть дату у форматі ДД.ММ.РРРР (наприклад, 15.03.2020)"
+                        placeholder="ДД.ММ.РРРР" 
+                      />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Input label="Телефон для зв'язку *" type="tel" name="Телефон" required placeholder="+38 (000) 000-00-00" />
+                      <Input label="Електронна пошта (за бажанням)" type="email" name="Email" placeholder="mail@example.com" />
+                    </div>
+
+                    <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Телефон для зв'язку *</label>
-                        <input type="tel" name="Телефон" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="+38 (000) 000-00-00" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Електронне направлення</label>
-                        <div className="relative" ref={selectRef}>
-                          <input type="hidden" name="Направлення" value={selectedDirection} />
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                          Чи є у вас електронне направлення від лікаря? *
+                        </label>
+                        <div className="flex bg-slate-100 dark:bg-slate-800 rounded-2xl p-1 w-full sm:w-fit border border-slate-200/50 dark:border-slate-700/50">
                           <button
                             type="button"
-                            onClick={() => setIsSelectOpen(!isSelectOpen)}
-                            className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all flex items-center justify-between group"
+                            onClick={() => setHasReferral("yes")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "yes"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
                           >
-                            <span className={selectedDirection === "Не вказано" ? "text-slate-400" : "text-slate-900 dark:text-white"}>
-                              {selectedDirection === "Не вказано" ? "Оберіть тип направлення..." : selectedDirection}
-                            </span>
-                            <ChevronDown 
-                              size={18} 
-                              className={`text-slate-400 transition-transform duration-300 ${isSelectOpen ? "rotate-180" : ""}`} 
-                            />
+                            Так, є
                           </button>
-
-                          <AnimatePresence>
-                            {isSelectOpen && (
-                              <motion.div
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                className="absolute z-50 w-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl overflow-hidden"
-                              >
-                                {directions.map((dir) => (
-                                  <button
-                                    key={dir}
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedDirection(dir);
-                                      setIsSelectOpen(false);
-                                    }}
-                                    className={`w-full px-5 py-3 text-left text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 ${
-                                      selectedDirection === dir ? "text-blue-600 dark:text-blue-400 font-bold bg-blue-50/50 dark:bg-blue-900/20" : "text-slate-700 dark:text-slate-300"
-                                    }`}
-                                  >
-                                    {dir}
-                                  </button>
-                                ))}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          <button
+                            type="button"
+                            onClick={() => setHasReferral("no")}
+                            className={`flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                              hasReferral === "no"
+                                ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                            }`}
+                          >
+                            Ні, немає
+                          </button>
                         </div>
+                        <input type="hidden" name="Направлення" value={hasReferral === "yes" ? "Так" : hasReferral === "no" ? "Ні" : "Не вказано"} />
                       </div>
+
+                      {hasReferral === "yes" && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          className="mt-4"
+                        >
+                          <Input
+                            label="Номер електронного направлення *"
+                            type="text"
+                            name="Номер_направлення"
+                            required
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                          />
+                        </motion.div>
+                      )}
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Адреса проживання *</label>
-                      <input type="text" name="Адреса" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Область, місто/село, вулиця" />
-                    </div>
+                    {/* Обрані платні послуги */}
+                    {preselectedServices.length > 0 && (
+                      <div className="bg-blue-50/50 dark:bg-blue-900/10 p-5 rounded-2xl border border-blue-100 dark:border-blue-900/30 space-y-3">
+                        <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200">Обрані послуги:</h4>
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {preselectedServices.map((service, idx) => (
+                            <div key={idx} className="flex justify-between items-center text-xs">
+                              <span className="text-slate-700 dark:text-slate-300 font-medium">
+                                {service.name} <span className="text-slate-400">({service.code})</span> x{service.quantity}
+                              </span>
+                              <span className="font-bold text-slate-900 dark:text-white">
+                                {parseInt(service.price.replace(/[^\d]/g, "")) * service.quantity} ₴
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex justify-between items-center pt-2 border-t border-dashed border-blue-200 dark:border-blue-900/40 text-sm font-bold text-slate-900 dark:text-white">
+                          <span>Загальна сума:</span>
+                          <span className="text-blue-600 dark:text-blue-400">
+                            {preselectedServices.reduce((sum, s) => sum + parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity, 0)} ₴
+                          </span>
+                        </div>
+                        <input 
+                          type="hidden" 
+                          name="Обрані_платні_послуги" 
+                          value={preselectedServices.map(s => `${s.name} (${s.code}) x${s.quantity} - ${parseInt(s.price.replace(/[^\d]/g, "")) * s.quantity} грн`).join("; ")} 
+                        />
+                      </div>
+                    )}
+
+                    <Input label="Місто проживання *" type="text" name="Адреса" required placeholder="Наприклад: Житомир" />
 
                     <div>
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Потреба в консультації спеціалістів:</label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
                         {[
                           "Лікар ФРМ", "Фізичний терапевт", "Ерготерапевт", 
-                          "Логопед/дефектолог", "Психолог", "Невролог дитячий", 
-                          "Психіатр дитячий", "Ортопед-травматолог дитячий"
+                          "Логопед/дефектолог", "Психолог", "Невролог", 
+                          "Терапевт", "Ортопед-травматолог"
                         ].map((doc) => (
                           <label key={doc} className="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" name="Потрібна_консультація[]" value={doc} className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                            <input 
+                              type="checkbox" 
+                              name="Потрібна_консультація[]" 
+                              value={doc} 
+                              checked={selectedDocs.includes(doc)}
+                              onChange={() => {
+                                setSelectedDocs(prev => prev.includes(doc) ? prev.filter(d => d !== doc) : [...prev, doc]);
+                              }}
+                              className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" 
+                            />
                             <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{doc}</span>
                           </label>
                         ))}
@@ -338,20 +500,30 @@ export default function ContactsPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Діагноз (за бажанням)</label>
-                      <input type="text" name="Діагноз" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400" placeholder="Вкажіть діагноз..." />
-                    </div>
+                    <Input
+                      label="Діагноз (за бажанням)"
+                      type="text" 
+                      name="Діагноз" 
+                      value={diagnosis} 
+                      onChange={(e) => setDiagnosis(e.target.value)} 
+                      placeholder="Вкажіть діагноз..." 
+                    />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Додаткова інформація</label>
-                      <textarea name="Додаткова_інформація" rows={3} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."></textarea>
-                    </div>
+                    <Textarea
+                      label="Додаткова інформація"
+                      name="Додаткова_інформація" 
+                      value={additionalInfo} 
+                      onChange={(e) => setAdditionalInfo(e.target.value)} 
+                      rows={3} 
+                      placeholder="Додайте будь-яку інформацію, яку вважаєте важливою..."
+                    />
+
+                    <ConsentCheckbox checked={consent} onChange={setConsent} />
 
                     <button 
                       type="submit" 
                       disabled={isSubmitting}
-                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8"
+                      className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 disabled:bg-blue-400 transition-colors shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group mt-8 cursor-pointer"
                     >
                       {isSubmitting ? (
                         <Loader2 size={20} className="animate-spin" />
@@ -369,10 +541,7 @@ export default function ContactsPage() {
                     {/* 🛡️ HONEYPOT */}
                     <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваш відгук *</label>
-                      <textarea name="Відгук" required rows={5} className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white placeholder:text-slate-400 resize-none" placeholder="Поділіться вашими враженнями..."></textarea>
-                    </div>
+                    <Textarea label="Ваш відгук *" name="Відгук" required rows={5} placeholder="Поділіться вашими враженнями..." />
 
                     <button 
                       type="submit" 
@@ -401,5 +570,17 @@ export default function ContactsPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function ContactsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-600 dark:text-blue-400" size={32} />
+      </div>
+    }>
+      <ContactsContent />
+    </Suspense>
   );
 }
