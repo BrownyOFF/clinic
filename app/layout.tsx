@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/app/components/ThemeProvider";
 import ScrollToTop from "@/app/components/ScrollToTop";
 import Script from "next/script";
 import CookieBanner from "@/app/components/CookieBanner";
+import { AccessibilityPanel } from "@/app/components/AccessibilityPanel";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
@@ -104,6 +105,8 @@ export default function RootLayout({
     <html lang="uk" suppressHydrationWarning> 
       <head>
         <script
+          id="theme-consent-patch"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -175,6 +178,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
           <ScrollToTop />
+          <AccessibilityPanel />
           <CookieBanner />
         </ThemeProvider>
       </body>

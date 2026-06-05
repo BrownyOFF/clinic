@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -248,9 +248,54 @@ function ContactsContent() {
               </div>
             </div>
             
+            {/* Доступність та Громадський транспорт */}
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Accessibility className="text-blue-600 dark:text-blue-400" size={24} />
+                  Доступність та безбар'єрність
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Пандус / безбар'єрний вхід:</strong> вільний доступ до будівлі для осіб з інвалідністю та дитячих візочків.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Вбиральня для дітей на кріслах колісних:</strong> спеціально обладнана та адаптована санітарна кімната.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Тактильна плитка:</strong> укладена в центрі для безпечного та зручного орієнтування осіб з порушеннями зору.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Безкоштовна парковка:</strong> облаштована паркувальна зона безпосередньо біля входу до закладу.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Bus className="text-blue-600 dark:text-blue-400" size={24} />
+                  Громадський транспорт
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚍</span>
+                    <span><strong>Маршрутка №33:</strong> зупинка «Центр реабілітації» розташована безпосередньо навпроти центру.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚎</span>
+                    <span><strong>Тролейбуси №2, 3, 10:</strong> кінцева зупинка тролейбусів у напрямку Богунії знаходиться трохи далі (кілька хвилин пішки).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             {/* Міні-карта */}
             <div className="relative aspect-video rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100 dark:bg-slate-800">
-              <GoogleMap />
+              <GoogleMap lang="uk" />
             </div>
           </motion.div>
 

@@ -29,3 +29,35 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* Accessibility Styles */
+html.ac-font-lg {
+  font-size: 18px !important;
+}
+html.ac-font-xl {
+  font-size: 20px !important;
+}
+
+html.ac-font-readable,
+html.ac-font-readable * {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+html.ac-mono {
+  filter: grayscale(100%) !important;
+}
+
+html.ac-contrast-high {
+  filter: contrast(135%) brightness(95%) !important;
+}
+
+html.ac-invert {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* Вимикаємо тіні для високої контрастності */
+html.ac-contrast-high *,
+html.ac-invert * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}

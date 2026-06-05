@@ -1,7 +1,7 @@
 "use client";
 import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
 import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown } from "lucide-react";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
@@ -236,8 +236,53 @@ function ContactsContentEn() {
               </div>
             </div>
             
+            {/* Accessibility & Public Transport */}
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-6">
+              <div>
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Accessibility className="text-blue-600 dark:text-blue-400" size={24} />
+                  Accessibility & Barrier-Free
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Ramp & barrier-free entrance:</strong> easy access to the building for people in wheelchairs and strollers.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Wheelchair-accessible restroom:</strong> a specially equipped restroom for children using wheelchairs.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Tactile paving:</strong> installed inside the center to assist visually impaired visitors with navigation.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Free parking:</strong> convenient parking spaces located right next to the entrance.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                  <Bus className="text-blue-600 dark:text-blue-400" size={24} />
+                  Public Transport
+                </h3>
+                <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚍</span>
+                    <span><strong>Minibus №33:</strong> the &quot;Rehabilitation Center&quot; stop is located directly opposite the entrance.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-500 shrink-0 font-bold">🚎</span>
+                    <span><strong>Trolleybuses №2, 3, 10:</strong> the terminus in the Bohunia direction is situated slightly further away (a few minutes walk).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             <div className="relative aspect-video rounded-3xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm bg-slate-100 dark:bg-slate-800">
-              <GoogleMap />
+              <GoogleMap lang="en" />
             </div>
           </motion.div>
 
