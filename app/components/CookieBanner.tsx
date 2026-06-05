@@ -109,7 +109,7 @@ export default function CookieBanner() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.95 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 p-6 rounded-3xl shadow-2xl z-[90] text-slate-800 dark:text-slate-250 transition-colors duration-500"
+          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 p-6 rounded-3xl shadow-2xl z-[90] text-slate-800 dark:text-slate-200 transition-colors duration-500"
         >
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
@@ -119,7 +119,7 @@ export default function CookieBanner() {
               <h4 className="font-bold text-slate-900 dark:text-white text-base">
                 {isEnglish ? "Cookie Preferences" : "Ми використовуємо кукі"}
               </h4>
-              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-350 leading-relaxed font-medium">
+              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                 {isEnglish ? (
                   <>
                     This website uses cookies and analytics (Google Analytics) to optimize performance, improve navigation, and analyze traffic. Learn more in our{" "}
@@ -151,7 +151,7 @@ export default function CookieBanner() {
           <div className="mt-5 flex items-center justify-end gap-3">
             <button
               onClick={handleDecline}
-              className="px-4 py-2 border border-slate-200 dark:border-slate-800 text-slate-650 dark:text-slate-300 rounded-xl text-xs md:text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-800 dark:hover:text-white transition cursor-pointer"
+              className="px-4 py-2 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-xs md:text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-800 dark:hover:text-white transition cursor-pointer"
             >
               {isEnglish ? "Decline" : "Відхилити"}
             </button>
