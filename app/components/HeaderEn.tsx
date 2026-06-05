@@ -79,7 +79,7 @@ export default function HeaderEn() {
           </div>
 
           <Link href="/en/news" className={`transition cursor-pointer ${pathname.startsWith('/en/news') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>News</Link>
-          <Link href="/en/help" className={`transition cursor-pointer ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link>
+          {/* <Link href="/en/help" className={`transition cursor-pointer ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link> */}
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
@@ -124,7 +124,7 @@ export default function HeaderEn() {
               </div>
 
               <Link href="/en/news" onClick={closeMenu} className={`transition cursor-pointer ${pathname.startsWith('/en/news') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>News</Link>
-              <Link href="/en/help" onClick={closeMenu} className={`transition cursor-pointer ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link>
+              {/* <Link href="/en/help" onClick={closeMenu} className={`transition cursor-pointer ${isActive('/en/help') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Help Us</Link> */}
             </nav>
 
             <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 mx-auto mt-2 w-max">

@@ -52,11 +52,13 @@ export default function Footer() {
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Вакансії
                 </Link>
               </li>
+              {/* 
               <li>
                 <Link href="/dopomoga" className="flex items-center gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Допомогти центру
                 </Link>
               </li>
+              */}
             </ul>
 
             {/* Для пацієнта */}

@@ -79,7 +79,7 @@ export default function Header() {
           </div>
 
           <Link href="/novyny" className={`transition cursor-pointer ${pathname.startsWith('/novyny') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Новини</Link>
-          <Link href="/dopomoga" className={`transition cursor-pointer ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link>
+          {/* <Link href="/dopomoga" className={`transition cursor-pointer ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link> */}
         </nav>
         
         <div className="flex items-center gap-2 md:gap-4 z-50">
@@ -124,7 +124,7 @@ export default function Header() {
               </div>
 
               <Link href="/novyny" onClick={closeMenu} className={`transition cursor-pointer ${pathname.startsWith('/novyny') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Новини</Link>
-              <Link href="/dopomoga" onClick={closeMenu} className={`transition cursor-pointer ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link>
+              {/* <Link href="/dopomoga" onClick={closeMenu} className={`transition cursor-pointer ${isActive('/dopomoga') ? 'text-blue-600 dark:text-blue-400 font-bold' : 'hover:text-blue-600 dark:hover:text-blue-400'}`}>Допомогти</Link> */}
             </nav>
 
             <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 mx-auto mt-2 w-max">

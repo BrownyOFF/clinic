@@ -57,7 +57,7 @@ const materialNeeds = [
 export default function HelpPageEn() {
   const [activeTab, setActiveTab] = useState<"financial" | "material" | "volunteer">("financial");
   const [copiedField, setCopiedField] = useState<string | null>(null);
-  
+
   // Volunteer Form
   const [volunteerForm, setVolunteerForm] = useState({
     name: "",
@@ -121,7 +121,7 @@ export default function HelpPageEn() {
       <HeaderEn />
 
       <main className="max-w-6xl mx-auto px-4 py-12 md:py-20 relative z-10">
-        
+
         {/* Page Header */}
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30 text-red-650 dark:text-red-455 text-xs font-bold uppercase tracking-wider mb-4 animate-pulse">
@@ -139,31 +139,28 @@ export default function HelpPageEn() {
         <div className="flex justify-center p-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-2xl mx-auto mb-12 shadow-inner">
           <button
             onClick={() => setActiveTab("financial")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "financial"
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${activeTab === "financial"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-            }`}
+              }`}
           >
             <CreditCard size={16} /> Financial Support
           </button>
           <button
             onClick={() => setActiveTab("material")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "material"
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${activeTab === "material"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-            }`}
+              }`}
           >
             <Gift size={16} /> Material Needs
           </button>
           <button
             onClick={() => setActiveTab("volunteer")}
-            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "volunteer"
+            className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${activeTab === "volunteer"
                 ? "bg-white dark:bg-slate-800 text-blue-650 dark:text-blue-400 shadow-sm"
                 : "text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
-            }`}
+              }`}
           >
             <Users size={16} /> Become a Volunteer
           </button>
@@ -172,7 +169,7 @@ export default function HelpPageEn() {
         {/* Tab Content */}
         <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl transition-colors duration-500">
           <AnimatePresence mode="wait">
-            
+
             {activeTab === "financial" && (
               <motion.div
                 key="financial"
@@ -208,11 +205,10 @@ export default function HelpPageEn() {
                       </div>
                       <button
                         onClick={() => handleCopy(detail.value, detail.field)}
-                        className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 self-start sm:self-auto cursor-pointer ${
-                          copiedField === detail.field
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 self-start sm:self-auto cursor-pointer ${copiedField === detail.field
                             ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200/50"
                             : "bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-650 dark:text-slate-350 border border-slate-200 dark:border-slate-700"
-                        }`}
+                          }`}
                       >
                         {copiedField === detail.field ? (
                           <>
@@ -229,11 +225,10 @@ export default function HelpPageEn() {
 
                   <button
                     onClick={handleCopyAll}
-                    className={`w-full py-3.5 rounded-2xl text-sm font-bold transition flex items-center justify-center gap-2 border shadow-sm cursor-pointer ${
-                      copiedField === "all"
+                    className={`w-full py-3.5 rounded-2xl text-sm font-bold transition flex items-center justify-center gap-2 border shadow-sm cursor-pointer ${copiedField === "all"
                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200/50"
                         : "bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/30 dark:hover:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-blue-200/50 dark:border-blue-900/30"
-                    }`}
+                      }`}
                   >
                     {copiedField === "all" ? (
                       <>
@@ -282,13 +277,12 @@ export default function HelpPageEn() {
                           {category.items.map((item, itemIdx) => (
                             <li key={itemIdx} className="flex items-start gap-2.5">
                               <span
-                                className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
-                                  item.status === "critical"
+                                className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${item.status === "critical"
                                     ? "bg-red-500"
                                     : item.status === "always"
-                                    ? "bg-blue-500"
-                                    : "bg-slate-400"
-                                }`}
+                                      ? "bg-blue-500"
+                                      : "bg-slate-400"
+                                  }`}
                               />
                               <div className="space-y-0.5">
                                 <p className="text-sm font-semibold text-slate-850 dark:text-slate-300 leading-tight">
@@ -376,12 +370,12 @@ export default function HelpPageEn() {
                           volunteerForm.direction === "children"
                             ? "Activities & leisure with children"
                             : volunteerForm.direction === "events"
-                            ? "Charity event organization"
-                            : volunteerForm.direction === "repair"
-                            ? "Landscaping & minor repairs"
-                            : volunteerForm.direction === "professional"
-                            ? "Professional support (IT, design, legal)"
-                            : "Other"
+                              ? "Charity event organization"
+                              : volunteerForm.direction === "repair"
+                                ? "Landscaping & minor repairs"
+                                : volunteerForm.direction === "professional"
+                                  ? "Professional support (IT, design, legal)"
+                                  : "Other"
                         }
                         onChange={(val) => {
                           const dirMap: Record<string, string> = {

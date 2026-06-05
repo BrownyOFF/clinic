@@ -49,11 +49,13 @@ export default function FooterEn() {
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Vacancies
                 </Link>
               </li>
+              {/* 
               <li>
                 <Link href="/en/help" className="flex items-center gap-2 hover:text-blue-400 transition group">
                   <ChevronRight size={14} className="text-slate-600 group-hover:text-blue-400 shrink-0" /> Help Us
                 </Link>
               </li>
+              */}
             </ul>
 
             <ul className="space-y-3 text-sm flex-1">
