@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Cookie, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import clarity from "@microsoft/clarity";
 
 declare global {
   interface Window {
@@ -34,6 +35,15 @@ const initGA = (gaId: string) => {
     });
   `;
   document.head.appendChild(script2);
+};
+
+const initClarity = (projectId: string) => {
+  if (typeof window === "undefined" || !projectId) return;
+  try {
+    clarity.init(projectId);
+  } catch (e) {
+    console.error("Clarity initialization error:", e);
+  }
 };
 
 const deleteGACookies = () => {
@@ -70,11 +80,13 @@ export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
   const pathname = usePathname();
   const gaId = process.env.NEXT_PUBLIC_GA_ID || "";
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "";
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
     if (consent === "accepted") {
       initGA(gaId);
+      initClarity(clarityId);
     } else if (consent === "declined") {
       deleteGACookies();
     } else if (!consent) {
@@ -82,7 +94,7 @@ export default function CookieBanner() {
       const timer = setTimeout(() => setShowBanner(true), 2000);
       return () => clearTimeout(timer);
     }
-  }, [gaId]);
+  }, [gaId, clarityId]);
 
   const handleAccept = () => {
     if (typeof window !== "undefined" && window.__themeConsentPatch) {
@@ -90,6 +102,7 @@ export default function CookieBanner() {
     }
     localStorage.setItem("cookie-consent", "accepted");
     initGA(gaId);
+    initClarity(clarityId);
     setShowBanner(false);
   };
 

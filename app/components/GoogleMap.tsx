@@ -93,7 +93,7 @@ export default function GoogleMap({ config, lang = 'uk' }: GoogleMapProps) {
   return (
     <>
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker&v=beta&loading=async`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=maps,marker&v=beta`}
         strategy="afterInteractive"
         onLoad={() => {
           window.dispatchEvent(new Event('google-maps-loaded'));
