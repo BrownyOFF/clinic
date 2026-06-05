@@ -55,7 +55,7 @@ export default function HeroEn() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-6 relative aspect-[4/3] md:aspect-[5/4] rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl shadow-slate-200 dark:shadow-none border-4 border-white dark:border-slate-800 transition-colors w-full">
-          <Image src="/images/fact1.webp" alt="Child with a rehabilitator" className="object-cover object-center" priority fill />
+          <Image src="/images/fact1.webp" alt="Child with a rehabilitator" className="object-cover object-center" priority fill sizes="(max-width: 1024px) 100vw, 50vw" />
         </motion.div>
       </div>
     </section>

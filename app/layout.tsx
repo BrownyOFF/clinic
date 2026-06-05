@@ -104,6 +104,10 @@ export default function RootLayout({
   return (
     <html lang="uk" suppressHydrationWarning> 
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://maps.googleapis.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="anonymous" />
         <script
           id="theme-consent-patch"
           suppressHydrationWarning
