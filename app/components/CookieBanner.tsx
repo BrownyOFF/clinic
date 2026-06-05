@@ -135,7 +135,7 @@ export default function CookieBanner() {
               <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
                 {isEnglish ? (
                   <>
-                    This website uses cookies and analytics (Google Analytics) to optimize performance, improve navigation, and analyze traffic. Learn more in our{" "}
+                    This website uses cookies and analytics (Google Analytics, Microsoft Clarity) to optimize performance, improve navigation, and analyze traffic. Learn more in our{" "}
                     <Link href="/en/privacy-policy" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                       Privacy Policy
                     </Link>
@@ -143,7 +143,7 @@ export default function CookieBanner() {
                   </>
                 ) : (
                   <>
-                    Цей сайт використовує файли cookie та аналітичні системи (Google Analytics) для оптимізації роботи, покращення навігації та аналізу відвідуваності. Детальніше в нашій{" "}
+                    Цей сайт використовує файли cookie та аналітичні системи (Google Analytics, Microsoft Clarity) для оптимізації роботи, покращення навігації та аналізу відвідуваності. Детальніше в нашій{" "}
                     <Link href="/privacy-policy" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                       Політиці конфіденційності
                     </Link>

@@ -30,7 +30,7 @@ export default function PrivacyPolicyPageEn() {
     {
       icon: <Globe className="text-blue-600 dark:text-blue-400" size={24} />,
       title: "3. Automatic Technical Data Collection",
-      content: "When visiting our website, certain technical data is collected automatically using analytical tools. We use Google Analytics and Cloudflare Analytics. The collected information may include your IP address, browser type, interface language, operating system, time spent on the site, and pages viewed. This data is anonymous and is used solely for technical monitoring and improving site performance."
+      content: "When visiting our website, certain technical data is collected automatically using analytical tools. We use Google Analytics, Microsoft Clarity, and Cloudflare Analytics. The collected information may include your IP address, browser type, interface language, operating system, time spent on the site, pages viewed, and user interaction details (clicks, scrolls, mouse movements). This data is anonymous and is used solely for technical monitoring, heat map behavior analysis, and improving site performance."
     },
     {
       icon: <Lock className="text-blue-600 dark:text-blue-400" size={24} />,
@@ -102,7 +102,7 @@ export default function PrivacyPolicyPageEn() {
           ))}
           
           <div className="p-6 bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded-3xl text-sm font-semibold text-slate-700 dark:text-slate-350 text-center">
-            Last updated: May 31, 2026
+            Last updated: June 5, 2026
           </div>
         </div>
 
