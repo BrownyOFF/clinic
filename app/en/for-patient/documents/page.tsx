@@ -1,16 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FileText, CheckCircle, Info, Stethoscope, BriefcaseMedical, 
-  Download, ExternalLink, Scale, Users, TrendingUp, ShieldAlert 
+  Download, ExternalLink, Scale, Users, TrendingUp, ShieldAlert, X, Maximize2 
 } from "lucide-react";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
 
 export default function DocumentsPageEn() {
   const [activeTab, setActiveTab] = useState<"how-to" | "public-info" | "rights">("how-to");
+  const [isStructureOpen, setIsStructureOpen] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [isHoverSupported, setIsHoverSupported] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsHoverSupported(window.matchMedia("(pointer: fine)").matches);
+    }
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPos({ x, y });
+  };
 
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -201,12 +218,13 @@ export default function DocumentsPageEn() {
                     </p>
                   </div>
                   <a
-                    href="/documents/statut.docx"
-                    download
+                    href="/documents/statut.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="mt-6 flex items-center justify-center gap-2 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition cursor-pointer"
                   >
                     <Download size={14} />
-                    Download CHARTER.DOCX
+                    Read CHARTER.PDF
                   </a>
                 </div>
 
@@ -232,36 +250,65 @@ export default function DocumentsPageEn() {
                   </a>
                 </div>
 
-                {/* Leadership and Ownership */}
+                {/* Structure & Ownership */}
                 <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/60 dark:border-slate-800 flex flex-col justify-between shadow-md">
                   <div className="space-y-4">
                     <div className="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                       <Users size={20} />
                     </div>
                     <h3 className="font-bold text-lg">Structure & Ownership</h3>
-                    <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                      <p>
-                        <strong className="text-slate-900 dark:text-white">Head of Enterprise:</strong><br />
-                        Tetiana Shevchenko (Acting Director)
-                      </p>
-                      <p>
-                        <strong className="text-slate-900 dark:text-white">Founder:</strong><br />
-                        Zhytomyr Oblast Council (100% municipal property)
-                      </p>
+                    
+                    {/* Structure thumbnail preview */}
+                    <div 
+                      onClick={() => setIsStructureOpen(true)}
+                      className="relative h-36 rounded-2xl overflow-hidden border border-slate-150 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 cursor-pointer group"
+                    >
+                      <img 
+                        src="/images/structure.png" 
+                        alt="Organizational Structure" 
+                        className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white gap-2">
+                        <Maximize2 size={20} className="transform scale-90 group-hover:scale-100 transition-transform duration-300" />
+                        <span className="text-xs font-semibold">Zoom</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-6 border-t border-slate-100 dark:border-slate-800 pt-3 text-[10px] text-slate-400 dark:text-slate-500 font-medium">
-                    USREOU Code: 05503562
+                  
+                  {/* Actions and USREOU */}
+                  <div className="mt-4 border-t border-slate-100 dark:border-slate-800 pt-4 flex flex-col gap-3">
+                    <a
+                      href="/images/structure.png"
+                      download="Structure_Sails_of_Life.png"
+                      className="flex items-center justify-center gap-2 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+                    >
+                      <Download size={12} />
+                      Download chart (PNG)
+                    </a>
+                    <div className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+                      USREOU Code: 05503562
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* License */}
               <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200/60 dark:border-slate-800 shadow-md">
-                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                  <Stethoscope className="text-blue-600 dark:text-blue-400" size={22} />
-                  Medical Practice License
-                </h3>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                  <h3 className="text-xl font-bold flex items-center gap-2">
+                    <Stethoscope className="text-blue-600 dark:text-blue-400" size={22} />
+                    Medical Practice License
+                  </h3>
+                  <a
+                    href="/documents/medlicense.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs font-bold transition cursor-pointer shadow-md shadow-blue-600/10"
+                  >
+                    <ExternalLink size={14} />
+                    Read Registry Extract (PDF)
+                  </a>
+                </div>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                   Decision of the Ministry of Health of Ukraine on issuing a license copy dated <strong>August 17, 2020</strong> (the branch carries out medical practice at: Zhytomyr Oblast, Zhytomyr, Korabelna St., 8).
                 </p>
@@ -405,6 +452,105 @@ export default function DocumentsPageEn() {
       </main>
 
       <FooterEn />
+
+      {/* Structure Modal */}
+      <AnimatePresence>
+        {isStructureOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsStructureOpen(false)}
+            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl relative border border-slate-200 dark:border-slate-800"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Center&apos;s Organizational Structure</h3>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/images/structure.png"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition"
+                    title="Open in a new tab"
+                  >
+                    <ExternalLink size={20} />
+                  </a>
+                  <a
+                    href="/images/structure.png"
+                    download="Structure_Sails_of_Life.png"
+                    className="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition"
+                    title="Download chart"
+                  >
+                    <Download size={20} />
+                  </a>
+                  <button
+                    onClick={() => setIsStructureOpen(false)}
+                    className="p-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-850 rounded-full transition"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Image container */}
+              <div className="flex-1 overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-950 p-2 flex items-center justify-center border border-slate-100 dark:border-slate-800 relative">
+                {isHoverSupported ? (
+                  <div 
+                    className="w-full h-full flex items-center justify-center cursor-zoom-in"
+                    onMouseEnter={() => setIsZoomed(true)}
+                    onMouseLeave={() => setIsZoomed(false)}
+                    onMouseMove={handleMouseMove}
+                  >
+                    <img
+                      src="/images/structure.png"
+                      alt="Center's Organizational Structure"
+                      className="max-w-full max-h-[60vh] object-contain rounded-lg pointer-events-none"
+                      style={{
+                        transform: isZoomed ? "scale(2.5)" : "scale(1)",
+                        transformOrigin: isZoomed ? `${zoomPos.x}% ${zoomPos.y}%` : "center",
+                        transition: isZoomed 
+                          ? "transform 0.1s ease-out, transform-origin 0.05s ease-out" 
+                          : "transform 0.25s ease-in-out"
+                      }}
+                    />
+                    {!isZoomed && (
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/60 text-white text-[11px] px-3 py-1.5 rounded-full backdrop-blur-md pointer-events-none flex items-center gap-1.5">
+                        <Maximize2 size={12} />
+                        <span>Hover to zoom in</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <a 
+                    href="/images/structure.png" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
+                  >
+                    <img
+                      src="/images/structure.png"
+                      alt="Center's Organizational Structure"
+                      className="max-w-full max-h-[60vh] object-contain rounded-lg"
+                    />
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/60 text-white text-[11px] px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 text-center">
+                      <ExternalLink size={12} />
+                      <span>Tap the scheme to open in a new tab for pinch-to-zoom</span>
+                    </div>
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
