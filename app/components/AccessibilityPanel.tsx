@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Eye, RotateCcw, X, Check, Type, SunMoon } from "lucide-react";
+import { Eye, RotateCcw, X, Check, Type, SunMoon, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAccessibility } from "@/app/components/AccessibilityProvider";
 
 export function AccessibilityPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const [fontSize, setFontSize] = useState<"normal" | "lg" | "xl">("normal");
   const [readable, setReadable] = useState(false);
   const [colorMode, setColorMode] = useState<"normal" | "mono" | "contrast" | "invert">("normal");
+  const { animationsDisabled, setAnimationsDisabled } = useAccessibility();
 
   const pathname = usePathname();
   const isEnglish = pathname.startsWith("/en");
@@ -51,6 +53,7 @@ export function AccessibilityPanel() {
     applyFont("normal");
     applyReadable(false);
     applyColorMode("normal");
+    setAnimationsDisabled(false);
   };
 
   useEffect(() => {
@@ -78,6 +81,9 @@ export function AccessibilityPanel() {
     colorMono: isEnglish ? "Monochrome" : "Чорно-білий (Моно)",
     colorContrast: isEnglish ? "High Contrast" : "Висока контрастність",
     colorInvert: isEnglish ? "Invert Colors" : "Інверсія кольорів",
+    animationsTitle: isEnglish ? "Animations" : "Анімації",
+    animationsEnabled: isEnglish ? "Enabled" : "Увімкнено",
+    animationsDisabled: isEnglish ? "Disabled" : "Вимкнено",
     reset: isEnglish ? "Reset settings" : "Скинути налаштування",
     close: isEnglish ? "Close" : "Закрити",
   };
@@ -85,7 +91,7 @@ export function AccessibilityPanel() {
   return (
     <>
       {/* Floating Toggle Button */}
-      <div className="fixed right-4 bottom-24 md:bottom-auto md:top-1/3 z-[80]">
+      <div className="fixed right-4 bottom-20 md:bottom-auto md:top-1/3 z-[80]">
         <button
           onClick={() => setIsOpen(true)}
           className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all cursor-pointer group"
@@ -114,11 +120,11 @@ export function AccessibilityPanel() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="relative w-full max-w-sm h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl p-6 flex flex-col justify-between z-10 text-slate-850 dark:text-slate-200"
+              className="relative w-full max-w-sm h-full bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl p-6 flex flex-col justify-between z-10 text-slate-850 dark:text-slate-200 overflow-hidden"
             >
-              <div>
+              <div className="flex flex-col flex-1 overflow-hidden">
                 {/* Header */}
-                <div className="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-slate-800 mb-6">
+                <div className="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-slate-800 mb-6 flex-shrink-0">
                   <h3 className="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
                     <Eye size={20} className="text-blue-600 dark:text-blue-400" />
                     {translations.title}
@@ -132,7 +138,8 @@ export function AccessibilityPanel() {
                   </button>
                 </div>
 
-                <div className="space-y-6">
+                {/* Scrollable list of controls */}
+                <div className="flex-1 overflow-y-auto pr-1 -mr-1 space-y-6 pb-6 select-none">
                   {/* Font Size Section */}
                   <div className="space-y-3">
                     <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -221,17 +228,51 @@ export function AccessibilityPanel() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Animations Section */}
+                  <div className="space-y-3">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                      <Sparkles size={14} />
+                      {translations.animationsTitle}
+                    </label>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => setAnimationsDisabled(false)}
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-xl border text-sm font-semibold transition cursor-pointer text-left ${
+                          !animationsDisabled
+                            ? "bg-blue-50 dark:bg-blue-950/30 border-blue-500 text-blue-600 dark:text-blue-400"
+                            : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white"
+                        }`}
+                      >
+                        {translations.animationsEnabled}
+                        {!animationsDisabled && <Check size={16} />}
+                      </button>
+                      <button
+                        onClick={() => setAnimationsDisabled(true)}
+                        className={`flex items-center justify-between px-4 py-2.5 rounded-xl border text-sm font-semibold transition cursor-pointer text-left ${
+                          animationsDisabled
+                            ? "bg-blue-50 dark:bg-blue-950/30 border-blue-500 text-blue-600 dark:text-blue-400"
+                            : "border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white"
+                        }`}
+                      >
+                        {translations.animationsDisabled}
+                        {animationsDisabled && <Check size={16} />}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Reset Controls */}
-              <button
-                onClick={resetAll}
-                className="w-full flex items-center justify-center gap-2 py-3 mt-8 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white rounded-xl text-sm font-bold transition cursor-pointer"
-              >
-                <RotateCcw size={16} />
-                {translations.reset}
-              </button>
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex-shrink-0">
+                <button
+                  onClick={resetAll}
+                  className="w-full flex items-center justify-center gap-2 py-3 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-850 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white rounded-xl text-sm font-bold transition cursor-pointer"
+                >
+                  <RotateCcw size={16} />
+                  {translations.reset}
+                </button>
+              </div>
             </motion.div>
           </div>
         )}
@@ -239,3 +280,4 @@ export function AccessibilityPanel() {
     </>
   );
 }
+

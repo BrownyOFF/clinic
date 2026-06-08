@@ -152,12 +152,12 @@ export default function VacancyPage() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Маєте вищу медичну освіту? *</label>
                   <div className="flex gap-6">
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Вища_медична_освіта" value="Так" required className="w-5 h-5 text-blue-600" />
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Вища_медична_освіта" value="Так" required className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
                       <span className="text-slate-800 dark:text-slate-200 font-medium">Так</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Вища_медична_освіта" value="Ні" required className="w-5 h-5 text-blue-600" />
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Вища_медична_освіта" value="Ні" required className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
                       <span className="text-slate-800 dark:text-slate-200 font-medium">Ні</span>
                     </label>
                   </div>
@@ -173,21 +173,21 @@ export default function VacancyPage() {
                 <div>
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Досвід в медичній сфері *</label>
                   <div className="space-y-3">
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Досвід" value="Більше 2х років" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600" />
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Досвід" value="Більше 2х років" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
                       <span className="text-slate-800 dark:text-slate-200">Більше 2х років</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Досвід" value="До 2х років" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600" />
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Досвід" value="До 2х років" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
                       <span className="text-slate-800 dark:text-slate-200">До 2х років</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Досвід" value="Немає досвіду, але маю бажання навчатися" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600" />
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Досвід" value="Немає досвіду, але маю бажання навчатися" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
                       <span className="text-slate-800 dark:text-slate-200">Немає досвіду, але маю бажання навчатися</span>
                     </label>
-                    <label className="flex items-center gap-3 cursor-pointer">
-                      <input type="radio" name="Досвід" value="Інше" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600" />
-                      <span className="text-slate-800 dark:text-slate-200">Інше</span>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="radio" name="Досвід" value="Інше" required onChange={(e) => setExperience(e.target.value)} className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">Інше</span>
                     </label>
                   </div>
                   

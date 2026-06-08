@@ -6,6 +6,7 @@ import ScrollToTop from "@/app/components/ScrollToTop";
 import Script from "next/script";
 import CookieBanner from "@/app/components/CookieBanner";
 import { AccessibilityPanel } from "@/app/components/AccessibilityPanel";
+import { AccessibilityProvider } from "@/app/components/AccessibilityProvider";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"], display: 'swap', });
 
@@ -180,10 +181,12 @@ export default function RootLayout({
         </div>
 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-          <ScrollToTop />
-          <AccessibilityPanel />
-          <CookieBanner />
+          <AccessibilityProvider>
+            {children}
+            <ScrollToTop />
+            <AccessibilityPanel />
+            <CookieBanner />
+          </AccessibilityProvider>
         </ThemeProvider>
       </body>
     </html>

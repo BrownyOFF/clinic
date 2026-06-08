@@ -175,8 +175,8 @@ export default function AboutPage() {
       <section className="py-20 bg-blue-50/80 dark:bg-slate-900/40 backdrop-blur border-y border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold mb-4">Державні гарантії та ліцензії</h2>
-            <p className="text-slate-600 dark:text-slate-400">
+            <h2 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Державні гарантії та ліцензії</h2>
+            <p className="text-slate-650 dark:text-slate-350">
                 Підприємство є медичним закладом вищого рівня акредитації та надає <span className="font-bold text-blue-600 dark:text-blue-400">безкоштовні</span> послуги за договорами з Національною службою здоров'я України.
             </p>
           </div>
@@ -187,44 +187,45 @@ export default function AboutPage() {
                 <motion.div 
                   key={pkg.id}
                   initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
-                  // 1. Додано relative, group та cursor-help
-                  className="relative group bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex gap-4 items-start hover:shadow-md transition-shadow cursor-help"
+                  className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex flex-col gap-3.5 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300"
                 >
-                  {/* 2. БЛОК ПІДКАЗКИ (Вспливає при наведенні) */}
-                  <div className="absolute z-20 bottom-full left-0 mb-3 w-full bg-slate-800 dark:bg-slate-700 text-white text-xs leading-relaxed p-4 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-xl pointer-events-none">
-                    {pkg.description}
-                    {/* Декоративний трикутник внизу підказки */}
-                    <div className="absolute top-full left-8 border-4 border-transparent border-t-slate-800 dark:border-t-slate-700"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 text-xs font-extrabold px-3 py-1.5 rounded-xl shrink-0">
+                      №{pkg.id}
+                    </div>
+                    <h3 className="text-slate-900 dark:text-white font-bold text-sm leading-snug">{pkg.title}</h3>
                   </div>
-
-                  <div className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-bold px-3 py-1 rounded-lg shrink-0">
-                    №{pkg.id}
-                  </div>
-                  <p className="text-slate-800 dark:text-slate-200 font-medium text-sm leading-snug">{pkg.title}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed pl-1">{pkg.description}</p>
                 </motion.div>
               ))}
             </div>
 
             <div className="lg:col-span-4 space-y-4">
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center gap-4">
-                <Award className="text-yellow-500 shrink-0" size={32} />
+              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-amber-50 dark:bg-amber-950/30 text-amber-500 dark:text-amber-400 rounded-xl flex items-center justify-center shrink-0">
+                  <Award size={24} />
+                </div>
                 <div>
-                  <h4 className="font-bold">Сертифікат ISO 9001:2015</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Відповідає національним стандартам управління якістю.</p>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Сертифікат ISO 9001:2015</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Відповідає національним стандартам управління якістю.</p>
                 </div>
               </div>
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center gap-4">
-                <FileText className="text-blue-500 shrink-0" size={32} />
+              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-blue-50 dark:bg-blue-950/30 text-blue-500 dark:text-blue-400 rounded-xl flex items-center justify-center shrink-0">
+                  <FileText size={24} />
+                </div>
                 <div>
-                  <h4 className="font-bold">Освітня ліцензія</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Організація освітнього процесу (стаціонарно та амбулаторно).</p>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Освітня ліцензія</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Організація освітнього процесу (стаціонарно та амбулаторно).</p>
                 </div>
               </div>
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur p-6 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-center gap-4">
-                <ShieldCheck className="text-emerald-500 shrink-0" size={32} />
+              <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300">
+                <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-500 dark:text-emerald-400 rounded-xl flex items-center justify-center shrink-0">
+                  <ShieldCheck size={24} />
+                </div>
                 <div>
-                  <h4 className="font-bold">Спеціальні ліцензії</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Медична практика, використання джерел іонізуючого випромінювання.</p>
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">Спеціальні ліцензії</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Медична практика, використання джерел іонізуючого випромінювання.</p>
                 </div>
               </div>
             </div>

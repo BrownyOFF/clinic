@@ -61,3 +61,20 @@ html.ac-invert * {
   box-shadow: none !important;
   text-shadow: none !important;
 }
+
+/* Вимикаємо анімації та переходи для інклюзивності */
+html.ac-no-animations,
+html.ac-no-animations *,
+html.ac-no-animations *::before,
+html.ac-no-animations *::after {
+  transition: none !important;
+  animation: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Примусово вимикаємо початкові стани згасання/зсуву Framer Motion для звичайного контенту, крім Гугл Карт */
+html.ac-no-animations *[style*="opacity"]:not([class*="fixed"]):not([class*="absolute"]):not([class*="z-"]):not(.gm-style):not(.gm-style *),
+html.ac-no-animations *[style*="transform"]:not([class*="fixed"]):not([class*="absolute"]):not([class*="z-"]):not(.gm-style):not(.gm-style *) {
+  opacity: 1 !important;
+  transform: none !important;
+}

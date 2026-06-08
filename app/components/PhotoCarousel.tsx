@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useAccessibility } from "@/app/components/AccessibilityProvider";
 
 export default function PhotoCarousel({ images }: { images: string[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -20,6 +21,7 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
 
   const pathname = usePathname();
   const isEnglish = pathname.startsWith("/en");
+  const { animationsDisabled } = useAccessibility();
 
   useEffect(() => {
     setMounted(true);
@@ -118,7 +120,7 @@ export default function PhotoCarousel({ images }: { images: string[] }) {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
       const scrollTo = direction === "left" ? scrollLeft - clientWidth : scrollLeft + clientWidth;
-      scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+      scrollRef.current.scrollTo({ left: scrollTo, behavior: animationsDisabled ? "auto" : "smooth" });
     }
   };
 

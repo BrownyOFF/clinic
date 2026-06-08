@@ -118,6 +118,8 @@ export default function NewsPage() {
       const isSelectedDay = activeFilter?.type === 'day' && activeFilter.date.toDateString() === dateStr;
       const isSelectedMonth = activeFilter?.type === 'month' && activeFilter.date.getMonth() === currentMonth.getMonth() && activeFilter.date.getFullYear() === currentMonth.getFullYear();
 
+      const isToday = new Date().toDateString() === dateStr;
+
       days.push(
         <button
           key={d}
@@ -129,7 +131,7 @@ export default function NewsPage() {
               : hasNews 
                 ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 font-bold' 
                 : 'text-slate-400 dark:text-slate-600 opacity-40'
-          }`}
+          } ${isToday ? 'ring-2 ring-blue-500/70 dark:ring-blue-400/70 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950' : ''}`}
         >
           <span className="text-sm">{d}</span>
           {hasNews && !isSelectedDay && !isSelectedMonth && <span className="absolute bottom-1 w-1 h-1 bg-blue-500 rounded-full"></span>}

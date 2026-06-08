@@ -14,8 +14,8 @@ export default function ConsentCheckboxEn({ checked, onChange, required = true }
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-2 mt-4 select-none">
-      <label className="flex items-start gap-3 cursor-pointer group">
+    <div className="flex flex-col gap-2 mt-4 select-none text-left">
+      <label className="flex items-start gap-3 cursor-pointer group text-left">
         <div className="relative flex items-center justify-center mt-0.5 shrink-0">
           <input
             type="checkbox"
@@ -34,7 +34,7 @@ export default function ConsentCheckboxEn({ checked, onChange, required = true }
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <span className="text-sm text-slate-650 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+        <span className="text-sm text-left text-slate-600 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
           I agree to the{" "}
           <button
             type="button"
@@ -42,7 +42,7 @@ export default function ConsentCheckboxEn({ checked, onChange, required = true }
               e.preventDefault();
               setIsOpen(true);
             }}
-            className="text-blue-600 dark:text-blue-400 hover:underline font-semibold focus:outline-none cursor-pointer"
+            className="inline text-left text-blue-600 dark:text-blue-400 hover:underline font-semibold focus:outline-none cursor-pointer"
           >
             processing of my personal data
           </button>{" "}
@@ -67,7 +67,7 @@ export default function ConsentCheckboxEn({ checked, onChange, required = true }
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl z-10 text-slate-850 dark:text-slate-200"
+              className="relative w-full max-w-2xl max-h-[85vh] md:max-h-[80vh] flex flex-col overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl z-10 text-slate-850 dark:text-slate-200"
             >
               <button
                 type="button"
@@ -78,11 +78,11 @@ export default function ConsentCheckboxEn({ checked, onChange, required = true }
                 <X size={20} />
               </button>
 
-              <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 dark:text-white pr-8">
+              <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 dark:text-white pr-8 flex-shrink-0">
                 Consent to the Processing of Personal Data
               </h3>
 
-              <div className="space-y-4 text-sm md:text-base leading-relaxed text-slate-650 dark:text-slate-300 overflow-y-auto max-h-[calc(80vh-160px)] pr-2">
+              <div className="space-y-4 text-sm md:text-base leading-relaxed text-slate-650 dark:text-slate-300 overflow-y-auto flex-1 pr-2">
                 <p>
                   By providing my personal data through online forms on the Center&apos;s website, I consent to the processing of my personal data and confirm that I am familiar with the purpose of personal data processing and the rights granted to me in accordance with Art. 8 of the Law of Ukraine &quot;On Protection of Personal Data&quot;.
                 </p>
