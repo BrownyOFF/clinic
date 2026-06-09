@@ -10,49 +10,7 @@ import Select from "@/app/components/core/Select";
 import Textarea from "@/app/components/core/Textarea";
 import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
 
-interface BankDetailRow {
-  label: string;
-  value: string;
-  field: string;
-}
-
-const bankDetails: BankDetailRow[] = [
-  { label: "Отримувач", value: "КНП 'Дитячий клінічний центр Вітрила Життя'", field: "recipient" },
-  { label: "Код ЄДРПОУ", value: "12345678", field: "edrpou" },
-  { label: "Банк отримувача", value: "АТ КБ 'ПриватБанк'", field: "bank" },
-  { label: "IBAN рахунку", value: "UA893052990000026001234567890", field: "iban" },
-  { label: "Призначення платежу", value: "Благодійний внесок на статутну діяльність центру", field: "purpose" },
-];
-
-const materialNeeds = [
-  {
-    category: "Засоби догляду та гігієни",
-    items: [
-      { name: "Підгузки дитячі (розміри 4, 5, 6)", status: "critical" },
-      { name: "Вологі серветки гіпоалергенні", status: "always" },
-      { name: "Одноразові пелюшки (60х90 см)", status: "critical" },
-      { name: "Рідке мило та дитячі шампуні", status: "always" },
-    ],
-  },
-  {
-    category: "Реабілітаційні матеріали та іграшки",
-    items: [
-      { name: "Сенсорні м'ячі та балансири", status: "critical" },
-      { name: "Розвиваючі дерев'яні іграшки (пазли, бізіборди)", status: "always" },
-      { name: "Обважнювачі та жилети для сенсорної інтеграції", status: "normal" },
-      { name: "Кінетичний пісок та пластилін", status: "always" },
-    ],
-  },
-  {
-    category: "Витратні реабілітаційні матеріали",
-    items: [
-      { name: "Одноразові простирадла в рулонах для кушеток", status: "critical" },
-      { name: "Масажні дитячі олії та гіпоалергенні креми", status: "always" },
-      { name: "Перев'язувальні матеріали та еластичні пластирі", status: "always" },
-      { name: "Безпечні антисептики для іграшок та поверхонь", status: "always" },
-    ],
-  },
-];
+import { bankDetails, materialNeeds } from "@/app/data/help";
 
 export default function HelpPage() {
   const [activeTab, setActiveTab] = useState<"financial" | "material" | "volunteer">("financial");
@@ -109,7 +67,7 @@ export default function HelpPage() {
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
-    } catch (error) {
+    } catch {
       alert("Помилка з'єднання. Перевірте підключення до інтернету.");
     } finally {
       setIsSubmitting(false);
@@ -431,7 +389,7 @@ export default function HelpPage() {
                       <div>
                         <h3 className="text-xl font-bold text-slate-900 dark:text-white">Заявку прийнято!</h3>
                         <p className="text-sm font-medium text-slate-550 dark:text-slate-400 mt-2 max-w-md mx-auto leading-relaxed">
-                          Дякуємо за ваше велике серце. Наш координатор волонтерів зв'яжеться з вами найближчим часом.
+                          Дякуємо за ваше велике серце. Наш координатор волонтерів зв&apos;яжеться з вами найближчим часом.
                         </p>
                       </div>
                       <button

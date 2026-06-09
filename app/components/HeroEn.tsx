@@ -24,7 +24,7 @@ export default function HeroEn() {
           
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800/50 text-blue-700 dark:text-blue-300 text-xs md:text-sm font-semibold mb-6 md:mb-8 transition-colors">
             <ShieldCheck size={16} />
-            <span className="truncate">State Medical Institution</span>
+            <span className="truncate">Communal Medical Institution</span>
           </motion.div>
           
           <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.15] mb-6 transition-colors">

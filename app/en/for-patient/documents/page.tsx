@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FileText, CheckCircle, Info, Stethoscope, BriefcaseMedical, 
@@ -12,22 +12,6 @@ import FooterEn from "@/app/components/FooterEn";
 export default function DocumentsPageEn() {
   const [activeTab, setActiveTab] = useState<"how-to" | "public-info" | "rights">("how-to");
   const [isStructureOpen, setIsStructureOpen] = useState(false);
-  const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [isHoverSupported, setIsHoverSupported] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsHoverSupported(window.matchMedia("(pointer: fine)").matches);
-    }
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setZoomPos({ x, y });
-  };
 
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
@@ -174,9 +158,9 @@ export default function DocumentsPageEn() {
                       Medical documentation:
                     </h3>
                     <ul className="space-y-3">
-                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Extract from the child's developmental history (anamnesis, pathologies).</span></li>
+                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Extract from the child&apos;s developmental history (anamnesis, pathologies).</span></li>
                       <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Examination results (MRI, CT, Ultrasound, etc.).</span></li>
-                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Child's vaccination records.</span></li>
+                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Child&apos;s vaccination records.</span></li>
                     </ul>
                   </div>
 
@@ -186,7 +170,7 @@ export default function DocumentsPageEn() {
                       Personal documents:
                     </h3>
                     <ul className="space-y-3">
-                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Child's birth certificate.</span></li>
+                      <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Child&apos;s birth certificate.</span></li>
                       <li className="flex items-start gap-3 ml-2"><CheckCircle className="text-blue-500 shrink-0 mt-0.5" size={18} /> <span className="text-slate-700 dark:text-slate-300">Passport and taxpayer identification number of a parent.</span></li>
                     </ul>
                   </div>
@@ -502,50 +486,22 @@ export default function DocumentsPageEn() {
 
               {/* Image container */}
               <div className="flex-1 overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-950 p-2 flex items-center justify-center border border-slate-100 dark:border-slate-800 relative">
-                {isHoverSupported ? (
-                  <div 
-                    className="w-full h-full flex items-center justify-center cursor-zoom-in"
-                    onMouseEnter={() => setIsZoomed(true)}
-                    onMouseLeave={() => setIsZoomed(false)}
-                    onMouseMove={handleMouseMove}
-                  >
-                    <img
-                      src="/images/structure.png"
-                      alt="Center's Organizational Structure"
-                      className="max-w-full max-h-[60vh] object-contain rounded-lg pointer-events-none"
-                      style={{
-                        transform: isZoomed ? "scale(2.5)" : "scale(1)",
-                        transformOrigin: isZoomed ? `${zoomPos.x}% ${zoomPos.y}%` : "center",
-                        transition: isZoomed 
-                          ? "transform 0.1s ease-out, transform-origin 0.05s ease-out" 
-                          : "transform 0.25s ease-in-out"
-                      }}
-                    />
-                    {!isZoomed && (
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/60 text-white text-[11px] px-3 py-1.5 rounded-full backdrop-blur-md pointer-events-none flex items-center gap-1.5">
-                        <Maximize2 size={12} />
-                        <span>Hover to zoom in</span>
-                      </div>
-                    )}
+                <a 
+                  href="/images/structure.png" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full h-full flex flex-col items-center justify-center cursor-pointer group"
+                >
+                  <img
+                    src="/images/structure.png"
+                    alt="Center's Organizational Structure"
+                    className="max-w-full max-h-[60vh] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/60 text-white text-[11px] px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 text-center transition-all duration-300 group-hover:bg-slate-900/80">
+                    <ExternalLink size={12} />
+                    <span>Click the diagram to open in full size</span>
                   </div>
-                ) : (
-                  <a 
-                    href="/images/structure.png" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
-                  >
-                    <img
-                      src="/images/structure.png"
-                      alt="Center's Organizational Structure"
-                      className="max-w-full max-h-[60vh] object-contain rounded-lg"
-                    />
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-slate-900/60 text-white text-[11px] px-4 py-2 rounded-full backdrop-blur-md flex items-center gap-1.5 text-center">
-                      <ExternalLink size={12} />
-                      <span>Tap the scheme to open in a new tab for pinch-to-zoom</span>
-                    </div>
-                  </a>
-                )}
+                </a>
               </div>
             </motion.div>
           </motion.div>

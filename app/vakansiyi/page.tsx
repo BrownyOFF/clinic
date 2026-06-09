@@ -6,18 +6,9 @@ import { Briefcase, Send, CheckCircle2, Loader2, Search } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import ConsentCheckbox from "@/app/components/core/ConsentCheckbox";
+import Input from "@/app/components/core/Input";
 
-// 📌 СПИСОК АКТИВНИХ ВАКАНСІЙ (Легко редагувати тут)
-const activeVacancies = [
-  "Фізичний терапевт",
-  "Ерготерапевт",
-  "Лікар фізичної та реабілітаційної медицини",
-  "Лікар-педіатр",
-  "Асистент ерготерапевта",
-  "Медичний реєстратор",
-  "Молодша медична сестра",
-  "Медична сестра"
-];
+import { activeVacancies } from "@/app/data/vacancies";
 
 export default function VacancyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +26,7 @@ export default function VacancyPage() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, any> = {};
+    const data: Record<string, FormDataEntryValue> = {};
 
     data["ТИП_АНКЕТИ"] = "💼 КАНДИДАТ НА РОБОТУ";
 
@@ -58,7 +49,7 @@ export default function VacancyPage() {
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
-    } catch (error) {
+    } catch {
       alert("Помилка з'єднання. Перевірте підключення до інтернету.");
     } finally {
       setIsSubmitting(false);
@@ -87,7 +78,7 @@ export default function VacancyPage() {
             Робота у <span className="text-blue-600 dark:text-blue-400">Вітрилах Життя</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Заповніть анкету кандидата, і ми обов'язково розглянемо вашу кандидатуру!
+            Заповніть анкету кандидата, і ми обов&apos;язково розглянемо вашу кандидатуру!
           </p>
         </motion.div>
 
@@ -127,7 +118,7 @@ export default function VacancyPage() {
                 </div>
                 <h3 className="text-3xl font-bold mb-4 text-slate-900 dark:text-white">Анкету успішно відправлено!</h3>
                 <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-md mx-auto">
-                  Дякуємо за інтерес до нашого центру. Керівництво розгляне вашу анкету і зв'яжеться з вами.
+                  Дякуємо за інтерес до нашого центру. Керівництво розгляне вашу анкету і зв&apos;яжеться з вами.
                 </p>
                 <button 
                   onClick={() => setIsSubmitted(false)} 
@@ -143,10 +134,7 @@ export default function VacancyPage() {
                 <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
                 {/* ПІБ */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваше ПІБ *</label>
-                  <input type="text" name="ПІБ" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="Іваненко Іван Іванович" />
-                </div>
+                <Input label="Ваше ПІБ *" type="text" name="ПІБ" required placeholder="Іваненко Іван Іванович" />
 
                 {/* Освіта */}
                 <div>
@@ -164,10 +152,7 @@ export default function VacancyPage() {
                 </div>
 
                 {/* Спеціальність */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Спеціальність *</label>
-                  <input type="text" name="Спеціальність" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="Наприклад: Фізичний терапевт, Педіатр..." />
-                </div>
+                <Input label="Спеціальність *" type="text" name="Спеціальність" required placeholder="Наприклад: Фізичний терапевт, Педіатр..." />
 
                 {/* Досвід */}
                 <div>
@@ -193,21 +178,15 @@ export default function VacancyPage() {
                   
                   {experience === "Інше" && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-3">
-                      <input type="text" name="Досвід_Інше" required placeholder="Вкажіть ваш варіант..." className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" />
+                      <Input type="text" name="Досвід_Інше" required placeholder="Вкажіть ваш варіант..." />
                     </motion.div>
                   )}
                 </div>
 
                 {/* Контакти */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Телефон для контактів *</label>
-                    <input type="tel" name="Телефон" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="+38 (000) 000-00-00" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Ваш Email (необов'язково)</label>
-                    <input type="email" name="Email" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="mail@example.com" />
-                  </div>
+                  <Input label="Телефон для контактів *" type="tel" name="Телефон" required placeholder="+38 (000) 000-00-00" />
+                  <Input label="Ваш Email (необов'язково)" type="email" name="Email" placeholder="mail@example.com" />
                 </div>
 
                 <ConsentCheckbox checked={consent} onChange={setConsent} />

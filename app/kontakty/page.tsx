@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
-import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
+import { useState, FormEvent, useEffect, Suspense } from "react";
+import { motion, Variants } from "framer-motion";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, Accessibility, Bus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -133,23 +133,26 @@ function ContactsContent() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, any> = {};
+    const data: Record<string, string | FormDataEntryValue[]> = {};
 
     // 1. Збираємо дані форми
     formData.forEach((value, key) => {
       if (key.endsWith('[]')) {
         const cleanKey = key.replace('[]', '');
-        if (!data[cleanKey]) data[cleanKey] = [];
-        data[cleanKey].push(value);
+        if (!data[cleanKey]) {
+          data[cleanKey] = [];
+        }
+        (data[cleanKey] as FormDataEntryValue[]).push(value);
       } else {
-        data[key] = value;
+        data[key] = value.toString();
       }
     });
 
     // 2. Об'єднуємо масиви (наприклад, обраних лікарів) через кому
     Object.keys(data).forEach((key) => {
-      if (Array.isArray(data[key])) {
-        data[key] = data[key].join(', ');
+      const val = data[key];
+      if (Array.isArray(val)) {
+        data[key] = val.join(', ');
       }
     });
 
@@ -169,7 +172,7 @@ function ContactsContent() {
       } else {
         alert("Сталася помилка при відправці. Спробуйте ще раз.");
       }
-    } catch (error) {
+    } catch {
       alert("Помилка з'єднання. Перевірте підключення до інтернету.");
     } finally {
       setIsSubmitting(false);
@@ -191,7 +194,7 @@ function ContactsContent() {
         
         <motion.div initial="hidden" animate="visible" variants={fadeUp} className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight text-slate-900 dark:text-white">
-            Зв'яжіться з <span className="text-blue-600 dark:text-blue-400">нами</span>
+            Зв&apos;яжіться з <span className="text-blue-600 dark:text-blue-400">нами</span>
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Ми завжди готові відповісти на ваші запитання, надати консультацію або допомогти з оформленням документів для реабілітації вашої дитини.
@@ -242,7 +245,7 @@ function ContactsContent() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Графік роботи</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Пн-Пт: 08:00 - 17:00<br/>Сб-Нд: Вихідні (стаціонар цілодобово)</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Пн-Пт: 08:00 - 17:30<br/>Сб-Нд: Вихідні (стаціонар цілодобово)</p>
                   </div>
                 </div>
               </div>
@@ -253,12 +256,12 @@ function ContactsContent() {
               <div>
                 <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
                   <Accessibility className="text-blue-600 dark:text-blue-400" size={24} />
-                  Доступність та безбар'єрність
+                  Доступність та безбар&apos;єрність
                 </h3>
                 <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
-                    <span><strong>Пандус / безбар'єрний вхід:</strong> вільний доступ до будівлі для осіб з інвалідністю та дитячих візочків.</span>
+                    <span><strong>Пандус / безбар&apos;єрний вхід:</strong> вільний доступ до будівлі для осіб з інвалідністю та дитячих візочків.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
@@ -267,6 +270,14 @@ function ContactsContent() {
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
                     <span><strong>Тактильна плитка:</strong> укладена в центрі для безпечного та зручного орієнтування осіб з порушеннями зору.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Шрифт Брайля:</strong> всі кабінети та вказівники продубльовані табличками зі шрифтом Брайля для незрячих пацієнтів.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Мова жестів:</strong> укладено договір з перекладачами мовою жестів для безперешкодного спілкування та обслуговування глухих пацієнтів.</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
@@ -287,7 +298,7 @@ function ContactsContent() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-500 shrink-0 font-bold">🚎</span>
-                    <span><strong>Тролейбуси №2, 3, 10:</strong> кінцева зупинка тролейбусів у напрямку Богунії знаходиться трохи далі (кілька хвилин пішки).</span>
+                    <span><strong>Тролейбуси №2, 3, 4, 10:</strong> кінцева зупинка тролейбусів у напрямку Богунії знаходиться трохи далі (кілька хвилин пішки).</span>
                   </li>
                 </ul>
               </div>

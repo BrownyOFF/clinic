@@ -8,29 +8,10 @@ import { ArrowRight } from "lucide-react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 
+import { teamMembers } from "@/app/data/team";
+
 // Категорії для фільтрації
 const categories = ["Всі", "Лікарі", "Фахівці з реабілітації", "Психологи та Логопеди"];
-
-// Масив співробітників
-const teamMembers = [
-  { id: 1, name: "Тетяна Шевченко", role: "В.о. директора, дитячий психіатр, дитячий невролог", category: "Лікарі", image: "/images/shevckenko.webp" },
-  { id: 2, name: "Левківська Кароліна", role: "Завідувач паліативним відділенням, лікар-педіатр", category: "Лікарі", image: "/images/Levkivska.webp" },
-  { id: 3, name: "Машталер Тетяна", role: "Лікар - невролог, Лікар - ФРМ", category: "Лікарі", image: "/images/Mashtaler.webp" },
-  { id: 4, name: "Кобилінська Віра", role: "Лікар-психіатр дитячий", category: "Лікарі", image: "/images/Kobulinska.webp" },
-  { id: 5, name: "Шевчук Євгенія", role: "Фізичний терапевт, ерготерапевт", category: "Лікарі", image: "/images/Shevchyk.webp" },
-  { id: 6, name: "Щербак Олександр", role: "Лікар-хірург дитячий", category: "Лікарі", image: "/images/Sherbak.webp" },
-  { id: 7, name: "Фурман Олесандра", role: "Клінічний психолог", category: "Психологи та Логопеди", image: "/images/Furman.webp" },
-  { id: 8, name: "Шадура Світлана", role: "Асистент фізичного терапевта", category: "Фахівці з реабілітації", image: "/images/Shadyra.webp" },
-  { id: 9, name: "Михальчук Віта", role: "Асистент ерготерапевта", category: "Фахівці з реабілітації", image: "/images/Muchalchyk.webp" },
-  { id: 10, name: "Гераймович Світлана", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Heraimovich.webp" },
-  { id: 11, name: "Бондарчук Олена", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Bondarchyk.webp" },
-  { id: 12, name: "Дмитрук Алла", role: "Вихователь", category: "Психологи та Логопеди", image: "/images/Dmitryk.webp" },
-  { id: 13, name: "Чумакевич Оксана", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Chymackevich.webp" },
-  { id: 14, name: "Ковальова Ольга", role: "Логопед", category: "Психологи та Логопеди", image: "/images/Kovaloyva.webp" },
-  { id: 15, name: "Зозуля Світлана", role: "Вчитель - дефектолог", category: "Психологи та Логопеди", image: "/images/Zozyla.webp" },
-  { id: 16, name: "Матвієнко Ганна", role: "Музичний керівник", category: "Психологи та Логопеди", image: "/images/Maatvienko.webp" },
-  { id: 17, name: "Мельничук Дарина", role: "Вчитель - дефектолог", category: "Психологи та Логопеди", image: "/images/Melnichyk.webp" }
-];
 
 export default function TeamPage() {
   const [activeCategory, setActiveCategory] = useState("Всі");
@@ -62,7 +43,7 @@ export default function TeamPage() {
               Наша <span className="text-blue-600 dark:text-blue-400">команда</span>
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-              Мультидисциплінарна команда спеціалістів, які щодня працюють заради здоров'я, розвитку та посмішок наших пацієнтів.
+              Мультидисциплінарна команда спеціалістів, які щодня працюють заради здоров&apos;я, розвитку та посмішок наших пацієнтів.
             </p>
           </motion.div>
         </div>
@@ -127,7 +108,7 @@ export default function TeamPage() {
               Ви молоді і амбітні, готові до навчання?
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
-              Чекаємо Вас в нашій команді! Надішліть свою анкету, і ми зв'яжемося з вами для обговорення кар'єрних можливостей.
+              Чекаємо Вас в нашій команді! Надішліть свою анкету, і ми зв&apos;яжемося з вами для обговорення кар&apos;єрних можливостей.
             </p>
             <Link 
               href="/vakansiyi" 

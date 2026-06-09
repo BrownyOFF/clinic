@@ -72,7 +72,7 @@ The architecture allows components to be rendered on the server by default, deli
 We use **manual routing** without heavy localization libraries. The primary version is in `app/`, and the English version is in `app/en/`. Components are duplicated (`Header.tsx` / `HeaderEn.tsx`) for total control over content and design without runtime overhead.
 
 ### 3. Content Management (Databaseless)
-All dynamic content is stored locally in static **TypeScript files** (`app/data/`). This ensures zero database latency and absolute resistance to database-related vulnerabilities.
+All static content (news, vacancies, team, medical directions, FAQ, paid services, bank details and needs) is stored locally in typed **TypeScript files** (`app/data/`). This guarantees zero database response time, absolute resistance to database breaches, and keeps page code clean.
 
 ### 4. Form Processing & Anti-spam
 Feedback forms operate via a secure API route on Cloudflare Edge. The built-in **Honeypot** system (hidden `bot_check` field) effectively filters out spam bots without bothering real users.
@@ -114,7 +114,7 @@ npm run build # Build for production
 app/
 ├── api/             # Edge API routes (forms, Telegram/Google Script)
 ├── components/      # UI components (Header, Footer, Hero, Map, etc.)
-├── data/            # Local content data (news.ts, newsEn.ts)
+├── data/            # Local content data (news.ts, team.ts, directions.ts, vacancies.ts, faq.ts, services.ts, help.ts)
 ├── en/              # English version (mirrored routing)
 ├── dlya-patsiyenta/ # "For Patient" section (documents, services, rehabilitation)
 ├── komanda/         # "Team" section
@@ -131,10 +131,11 @@ public/              # Static assets (images, documents)
 
 ## 📝 Development Rules (Code Style)
 
-1. **TypeScript:** Strict typing is mandatory. Avoid `any`, use `interface` for props.
+1. **TypeScript:** Strict typing is mandatory. Avoid `any`, use `interface` for props and data models, and use strict types for event handlers (e.g., `FormEvent<HTMLFormElement>`).
 2. **Tailwind CSS:** Use Tailwind v4 classes for all styling. `dark:` support is mandatory.
-3. **i18n Synchronization:** When changing the structure of a UA component, make sure to update its EN counterpart.
+3. **i18n Synchronization:** When changing the structure of a UA component, make sure to update its EN counterpart. Also, synchronize the localization files in `app/data/` (UA files and their counterparts with the `En` suffix).
 4. **Naming:** Code is written exclusively in English. Comments are in Ukrainian.
+5. **Data Extraction:** Static lists and text blocks should not be hardcoded in JSX. Extract them to appropriate modules in `app/data/`.
 
 ---
 

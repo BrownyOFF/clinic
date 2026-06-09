@@ -8,18 +8,9 @@ import { Briefcase, Send, CheckCircle2, Loader2, Search } from "lucide-react";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
 import ConsentCheckboxEn from "@/app/components/core/ConsentCheckboxEn";
+import Input from "@/app/components/core/Input";
 
-// 📌 СПИСОК АКТИВНИХ ВАКАНСІЙ (Англійською)
-const activeVacancies = [
-  "Physical Therapist",
-  "Occupational Therapist",
-  "PRM Doctor (Physical and Rehabilitation Medicine)",
-  "Pediatrician",
-  "Occupational Therapy Assistant",
-  "Medical Receptionist",
-  "Junior Nurse",
-  "Nurse"
-];
+import { activeVacancies } from "@/app/data/vacanciesEn";
 
 export default function VacancyPageEn() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +28,7 @@ export default function VacancyPageEn() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, any> = {};
+    const data: Record<string, FormDataEntryValue> = {};
 
     // Позначка типу форми для англійської версії
     data["FORM_TYPE"] = "💼 JOB CANDIDATE";
@@ -61,7 +52,7 @@ export default function VacancyPageEn() {
       } else {
         alert("An error occurred during submission. Please try again.");
       }
-    } catch (error) {
+    } catch {
       alert("Connection error. Please check your internet connection.");
     } finally {
       setIsSubmitting(false);
@@ -113,7 +104,7 @@ export default function VacancyPageEn() {
                 ))}
               </div>
               <p className="mt-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed border-t border-blue-200/50 dark:border-blue-800/50 pt-4">
-                Didn't find your specialty in the list, but want to work and develop with us? <strong>Fill out the form anyway!</strong> We are always glad to welcome talented specialists and are continuously building our talent pool.
+                Didn&apos;t find your specialty in the list, but want to work and develop with us? <strong>Fill out the form anyway!</strong> We are always glad to welcome talented specialists and are continuously building our talent pool.
               </p>
             </div>
           </motion.div>
@@ -146,10 +137,7 @@ export default function VacancyPageEn() {
                 <input type="text" name="bot_check" className="hidden" autoComplete="off" tabIndex={-1} />
 
                 {/* ПІБ */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Full Name *</label>
-                  <input type="text" name="Full_Name" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="John Doe" />
-                </div>
+                <Input label="Full Name *" type="text" name="Full_Name" required placeholder="John Doe" />
 
                 {/* Освіта */}
                 <div>
@@ -167,10 +155,7 @@ export default function VacancyPageEn() {
                 </div>
 
                 {/* Спеціальність */}
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Specialty *</label>
-                  <input type="text" name="Specialty" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="e.g.: Physical Therapist, Pediatrician..." />
-                </div>
+                <Input label="Specialty *" type="text" name="Specialty" required placeholder="e.g.: Physical Therapist, Pediatrician..." />
 
                 {/* Досвід */}
                 <div>
@@ -196,21 +181,15 @@ export default function VacancyPageEn() {
                   
                   {experience === "Other" && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-3">
-                      <input type="text" name="Experience_Other" required placeholder="Please specify..." className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" />
+                      <Input type="text" name="Experience_Other" required placeholder="Please specify..." />
                     </motion.div>
                   )}
                 </div>
 
                 {/* Контакти */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Contact Phone *</label>
-                    <input type="tel" name="Phone" required className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="+38 (000) 000-00-00" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Your Email (optional)</label>
-                    <input type="email" name="Email" className="w-full px-5 py-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 outline-none transition-all dark:text-white" placeholder="mail@example.com" />
-                  </div>
+                  <Input label="Contact Phone *" type="tel" name="Phone" required placeholder="+38 (000) 000-00-00" />
+                  <Input label="Your Email (optional)" type="email" name="Email" placeholder="mail@example.com" />
                 </div>
 
                 <ConsentCheckboxEn checked={consent} onChange={setConsent} />

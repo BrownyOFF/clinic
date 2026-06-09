@@ -1,7 +1,7 @@
 "use client";
-import { useState, FormEvent, useRef, useEffect, Suspense } from "react";
-import { motion, Variants, AnimatePresence } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, ChevronDown, Accessibility, Bus } from "lucide-react";
+import { useState, FormEvent, useEffect, Suspense } from "react";
+import { motion, Variants } from "framer-motion";
+import { MapPin, PhoneCall, Mail, Clock, Send, CheckCircle2, Loader2, Accessibility, Bus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import HeaderEn from "@/app/components/HeaderEn";
 import FooterEn from "@/app/components/FooterEn";
@@ -126,21 +126,24 @@ function ContactsContentEn() {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data: Record<string, any> = {};
+    const data: Record<string, string | FormDataEntryValue[]> = {};
 
     formData.forEach((value, key) => {
       if (key.endsWith('[]')) {
         const cleanKey = key.replace('[]', '');
-        if (!data[cleanKey]) data[cleanKey] = [];
-        data[cleanKey].push(value);
+        if (!data[cleanKey]) {
+          data[cleanKey] = [];
+        }
+        (data[cleanKey] as FormDataEntryValue[]).push(value);
       } else {
-        data[key] = value;
+        data[key] = value.toString();
       }
     });
 
     Object.keys(data).forEach((key) => {
-      if (Array.isArray(data[key])) {
-        data[key] = data[key].join(', ');
+      const val = data[key];
+      if (Array.isArray(val)) {
+        data[key] = val.join(', ');
       }
     });
 
@@ -159,7 +162,7 @@ function ContactsContentEn() {
       } else {
         alert("An error occurred while sending. Please try again.");
       }
-    } catch (error) {
+    } catch {
       alert("Connection error. Please check your internet connection.");
     } finally {
       setIsSubmitting(false);
@@ -230,7 +233,7 @@ function ContactsContentEn() {
                   </div>
                   <div>
                     <p className="font-semibold text-slate-900 dark:text-white">Working Hours</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Mon-Fri: 08:00 - 17:00<br/>Sat-Sun: Closed (inpatient 24/7)</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Mon-Fri: 08:00 - 17:30<br/>Sat-Sun: Closed (inpatient 24/7)</p>
                   </div>
                 </div>
               </div>
@@ -258,6 +261,14 @@ function ContactsContentEn() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Braille signage:</strong> all offices and navigation signs are duplicated with Braille tactile plates for visually impaired patients.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Sign language:</strong> a cooperation agreement is signed with sign language interpreters to ensure effective communication with deaf patients.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
                     <span><strong>Free parking:</strong> convenient parking spaces located right next to the entrance.</span>
                   </li>
                 </ul>
@@ -275,7 +286,7 @@ function ContactsContentEn() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-blue-500 shrink-0 font-bold">🚎</span>
-                    <span><strong>Trolleybuses №2, 3, 10:</strong> the terminus in the Bohunia direction is situated slightly further away (a few minutes walk).</span>
+                    <span><strong>Trolleybuses №2, 3, 4, 10:</strong> the terminus in the Bohunia direction is situated slightly further away (a few minutes walk).</span>
                   </li>
                 </ul>
               </div>

@@ -143,7 +143,7 @@ export default function AboutPage() {
                      <div className="relative">
                        <div className="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-slate-300 dark:bg-slate-600 border-4 border-slate-50 dark:border-slate-950"></div>
                        <h3 className="font-bold text-lg">1995 - 2025 роки</h3>
-                       <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Директором працює С.В. Урсуленко. Початок реорганізації підприємства відповідно до Національної стратегії реформування.</p>
+                       <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Директором працює С.В. Урсуленко — Заслужений лікар України. Початок реорганізації підприємства відповідно до Національної стратегії реформування.</p>
                      </div>
                    </motion.div>
                  )}
@@ -240,7 +240,7 @@ export default function AboutPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 relative h-80 rounded-3xl overflow-hidden group">
-              <Image src="/images/pro-nas/image2.webp" alt="Команда Реабілітації" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src="/images/news/visiv1.webp" alt="Команда Реабілітації" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <p className="absolute bottom-6 left-6 text-white font-medium text-lg">Наша команда</p>
             </div>
