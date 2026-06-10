@@ -13,7 +13,7 @@ import FooterEn from "@/app/components/FooterEn";
 import { teamMembers } from "@/app/data/teamEn";
 
 // Категорії для фільтрації (Англійською)
-const categories = ["All", "Doctors", "Rehabilitation Specialists", "Psychologists & Speech Therapists"];
+const categories = ["All", "Doctors", "Professionals", "Rehabilitation Specialists", "Psychologists & Speech Therapists", "Pedagogical Staff"];
 
 export default function TeamPageEn() {
   const [activeCategory, setActiveCategory] = useState("All");

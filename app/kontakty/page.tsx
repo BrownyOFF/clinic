@@ -281,6 +281,10 @@ function ContactsContent() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Інклюзивність сайту:</strong> для зручності користувачів на сайті встановлено меню доступності (іконка ока праворуч), яке дозволяє налаштовувати розмір тексту, змінювати стиль шрифту на Arial, застосовувати колірні фільтри (чорно-білий, контрастний, інверсія) та вимикати анімації.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
                     <span><strong>Безкоштовна парковка:</strong> облаштована паркувальна зона безпосередньо біля входу до закладу.</span>
                   </li>
                 </ul>

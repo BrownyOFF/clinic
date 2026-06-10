@@ -31,12 +31,12 @@ export default function AboutPageEn() {
     { 
       id: "25", 
       title: "Medical rehabilitation of infants (up to 3 years)",
-      description: "Early intervention and rehabilitation measures for premature babies or those with congenital pathologies."
+      description: "Early intervention and rehabilitation measures for premature babies or those with congenital/acquired defects."
     },
     { 
       id: "53", 
       title: "Rehabilitation care in inpatient settings",
-      description: "Intensive comprehensive rehabilitation under the 24/7 supervision of a multidisciplinary team of specialists."
+      description: "Intensive comprehensive rehabilitation under the supervision of a multidisciplinary team with 24/7 stay."
     },
     { 
       id: "54", 
@@ -88,11 +88,11 @@ export default function AboutPageEn() {
             <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 space-y-4">
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
-                <p className="text-slate-700 dark:text-slate-300">Children from birth to 3 years old (inclusive) requiring early intervention services.</p>
+                <p className="text-slate-700 dark:text-slate-300">Children from birth to 3 years old (inclusive) requiring early intervention or medical rehabilitation services.</p>
               </div>
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
-                <p className="text-slate-700 dark:text-slate-300">Children up to 14 years old who are at risk of acquiring a disability.</p>
+                <p className="text-slate-700 dark:text-slate-300">Children up to 14 years old who are at risk of acquiring a disability, and children with complex (palliative) diagnoses who require mobile palliative care.</p>
               </div>
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
@@ -218,7 +218,7 @@ export default function AboutPageEn() {
                 </div>
                 <div>
                   <h4 className="font-bold text-sm text-slate-900 dark:text-white">Educational License</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Organization of the educational process (inpatient and outpatient).</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Organization of the educational process.</p>
                 </div>
               </div>
               <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300">

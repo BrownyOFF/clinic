@@ -29,12 +29,12 @@ export default function AboutPage() {
     { 
       id: "25", 
       title: "Медична реабілітація немовлят (до 3 років)",
-      description: "Раннє втручання та реабілітаційні заходи для малюків, які народилися передчасно або мають вроджені патології."
+      description: "Раннє втручання та реабілітаційні заходи для малюків, які народилися передчасно або мають вроджені/набуті вади."
     },
     { 
       id: "53", 
       title: "Реабілітаційна допомога у стаціонарних умовах",
-      description: "Інтенсивна комплексна реабілітація під цілодобовим наглядом мультидисциплінарної команди фахівців."
+      description: "Інтенсивна комплексна реабілітація під спостереженням мультидисциплінарної команди з цілодобовим перебуванням."
     },
     { 
       id: "54", 
@@ -86,11 +86,11 @@ export default function AboutPage() {
             <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 space-y-4">
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
-                <p className="text-slate-700 dark:text-slate-300">Діти від народження до 3 років (включно), які потребують послуг раннього втручання.</p>
+                <p className="text-slate-700 dark:text-slate-300">Діти від народження до 3 років (включно), які потребують послуг раннього втручання або медичної реабілітації.</p>
               </div>
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
-                <p className="text-slate-700 dark:text-slate-300">Діти до 14 років, які належать до груп ризику щодо отримання інвалідності.</p>
+                <p className="text-slate-700 dark:text-slate-300">Діти до 14 років, які належать до груп ризику щодо отримання інвалідності, та діти зі складними (паліативними) діагнозами, які потребують мобільної паліативної допомоги.</p>
               </div>
               <div className="flex gap-4 items-start">
                 <CheckCircle2 className="text-emerald-500 shrink-0 mt-1" size={20} />
@@ -216,7 +216,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-sm text-slate-900 dark:text-white">Освітня ліцензія</h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Організація освітнього процесу (стаціонарно та амбулаторно).</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Організація освітнього процесу.</p>
                 </div>
               </div>
               <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 rounded-[24px] border border-slate-100 dark:border-slate-800 flex items-center gap-4 hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-500/30 transition-all duration-300">

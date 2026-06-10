@@ -11,7 +11,7 @@ import Footer from "@/app/components/Footer";
 import { teamMembers } from "@/app/data/team";
 
 // Категорії для фільтрації
-const categories = ["Всі", "Лікарі", "Фахівці з реабілітації", "Психологи та Логопеди"];
+const categories = ["Всі", "Лікарі", "Професіонали", "Фахівці з реабілітації", "Психологи та Логопеди", "Педагогічний персонал"];
 
 export default function TeamPage() {
   const [activeCategory, setActiveCategory] = useState("Всі");

@@ -3,8 +3,8 @@ export const activeVacancies: string[] = [
   "Occupational Therapist",
   "PRM Doctor (Physical and Rehabilitation Medicine)",
   "Pediatrician",
+  "Physical Therapist Assistant",
   "Occupational Therapy Assistant",
-  "Medical Receptionist",
-  "Junior Nurse",
-  "Nurse"
+  "Speech and Language Therapist",
+  "Junior Nurse"
 ];

@@ -269,6 +269,10 @@ function ContactsContentEn() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                    <span><strong>Website accessibility:</strong> for users&apos; convenience, an accessibility menu is available (eye icon on the right) allowing you to adjust text size, change font to Arial, apply color filters (monochrome, contrast, invert), and disable animations.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-500 font-bold shrink-0">✓</span>
                     <span><strong>Free parking:</strong> convenient parking spaces located right next to the entrance.</span>
                   </li>
                 </ul>
