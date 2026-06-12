@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.31.117'],
+  compiler: {
+    removeConsole: true,
+  },
 };
 
 export default nextConfig;
