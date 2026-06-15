@@ -10,6 +10,7 @@ export const teamMembers: TeamMember[] = [
   { id: 1, name: "Тетяна Шевченко", role: "В.о. директора, лікар ФРМ, лікар-психіатр дитячий, лікар невролог дитячий", category: "Лікарі", image: "/images/shevckenko.webp" },
   { id: 2, name: "Левківська Кароліна", role: "Завідувач відділенням медичної реабілітації передчасно народжених та перших трьох років життя, Лікар ФРМ", category: "Лікарі", image: "/images/Levkivska.webp" },
   { id: 3, name: "Машталер Тетяна", role: "Завідувач відділенням стаціонарної медичної реабілітації, невролог дитячий, лікар ФРМ", category: "Лікарі", image: "/images/Mashtaler.webp" },
+  { id: 18, name: "Глюза Марія", role: "Завідувач стаціонарного відділення з мобільної паліативної медичної допомоги, лікар анестезіолог дитячий", category: "Лікарі", image: "/images/Hruza.webp" },
   { id: 4, name: "Кобилінська Віра", role: "Лікар-психіатр дитячий", category: "Лікарі", image: "/images/Kobulinska.webp" },
   { id: 5, name: "Шевчук Євгенія", role: "Фізичний терапевт, ерготерапевт", category: "Професіонали", image: "/images/Shevchyk.webp" },
   { id: 6, name: "Щербак Олександр", role: "Лікар-хірург дитячий", category: "Лікарі", image: "/images/Sherbak.webp" },

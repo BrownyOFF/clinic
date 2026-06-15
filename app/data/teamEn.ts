@@ -10,6 +10,7 @@ export const teamMembers: TeamMemberEn[] = [
   { id: 1, name: "Tetiana Shevchenko", role: "Acting Director, PRM Doctor, Pediatric Psychiatrist, Pediatric Neurologist", category: "Doctors", image: "/images/shevckenko.webp" },
   { id: 2, name: "Karolina Levkivska", role: "Head of Medical Rehabilitation Department for Premature Infants and the First Three Years of Life, PRM Doctor", category: "Doctors", image: "/images/Levkivska.webp" },
   { id: 3, name: "Tetiana Mashtaler", role: "Head of Inpatient Medical Rehabilitation Department, Pediatric Neurologist, PRM Doctor", category: "Doctors", image: "/images/Mashtaler.webp" },
+  { id: 18, name: "Mariia Hliuza", role: "Head of the Inpatient Mobile Palliative Care Department, Pediatric Anesthesiologist", category: "Doctors", image: "/images/Hruza.webp" },
   { id: 4, name: "Vira Kobylinska", role: "Pediatric Psychiatrist", category: "Doctors", image: "/images/Kobulinska.webp" },
   { id: 5, name: "Yevheniia Shevchuk", role: "Physical Therapist, Occupational Therapist", category: "Professionals", image: "/images/Shevchyk.webp" },
   { id: 6, name: "Oleksandr Shcherbak", role: "Pediatric Surgeon", category: "Doctors", image: "/images/Sherbak.webp" },
