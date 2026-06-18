@@ -41,6 +41,7 @@ const parseUkrDate = (dateStr: string) => {
 export default function NewsPage() {
   const [visibleCount, setVisibleCount] = useState(6);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [hoveredDate, setHoveredDate] = useState<string | null>(null);
   
   // Нові стани для фільтрів
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,6 +59,19 @@ export default function NewsPage() {
       dates.add(parseUkrDate(news.date).toDateString());
     });
     return dates;
+  }, [sortedNews]);
+
+  // Мапа для отримання новин за конкретним днем (для прев'ю при наведенні)
+  const newsByDateMap = useMemo(() => {
+    const map: Record<string, typeof newsData> = {};
+    sortedNews.forEach(news => {
+      const dateKey = parseUkrDate(news.date).toDateString();
+      if (!map[dateKey]) {
+        map[dateKey] = [];
+      }
+      map[dateKey].push(news);
+    });
+    return map;
   }, [sortedNews]);
 
   // Головна логіка фільтрації (Пошук + Календар)
@@ -119,23 +133,91 @@ export default function NewsPage() {
       const isSelectedMonth = activeFilter?.type === 'month' && activeFilter.date.getMonth() === currentMonth.getMonth() && activeFilter.date.getFullYear() === currentMonth.getFullYear();
 
       const isToday = new Date().toDateString() === dateStr;
+      const colIndex = (startDay + d - 1) % 7;
+      const dayNews = hasNews ? newsByDateMap[dateStr] || [] : [];
 
       days.push(
-        <button
-          key={d}
-          onClick={() => setActiveFilter(isSelectedDay ? null : { type: 'day', date })}
-          disabled={!hasNews}
-          className={`h-9 w-9 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 ${
-            isSelectedDay || (isSelectedMonth && hasNews)
-              ? 'bg-blue-600 text-white shadow-lg scale-110 z-10' 
-              : hasNews 
-                ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 font-bold' 
-                : 'text-slate-400 dark:text-slate-600 opacity-40'
-          } ${isToday ? 'ring-2 ring-blue-500/70 dark:ring-blue-400/70 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950' : ''}`}
+        <div 
+          key={d} 
+          className="relative"
+          onMouseEnter={() => hasNews && setHoveredDate(dateStr)}
+          onMouseLeave={() => setHoveredDate(null)}
         >
-          <span className="text-sm">{d}</span>
-          {hasNews && !isSelectedDay && !isSelectedMonth && <span className="absolute bottom-1 w-1 h-1 bg-blue-500 rounded-full"></span>}
-        </button>
+          <button
+            onClick={() => setActiveFilter(isSelectedDay ? null : { type: 'day', date })}
+            disabled={!hasNews}
+            className={`h-9 w-9 rounded-xl flex flex-col items-center justify-center relative transition-all duration-300 ${
+              isSelectedDay || (isSelectedMonth && hasNews)
+                ? 'bg-blue-600 text-white shadow-lg scale-110 z-10' 
+                : hasNews 
+                  ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 font-bold' 
+                  : 'text-slate-400 dark:text-slate-600 opacity-40'
+            } ${isToday ? 'ring-2 ring-blue-500/70 dark:ring-blue-400/70 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950' : ''}`}
+          >
+            <span className="text-sm">{d}</span>
+            {hasNews && !isSelectedDay && !isSelectedMonth && <span className="absolute bottom-1 w-1 h-1 bg-blue-500 rounded-full"></span>}
+          </button>
+
+          <AnimatePresence>
+            {hasNews && hoveredDate === dateStr && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.15 }}
+                className={`absolute bottom-full mb-3.5 z-50 w-72 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-4 text-left ${
+                  colIndex <= 2 
+                    ? 'left-0' 
+                    : colIndex === 3 
+                      ? 'left-1/2 -translate-x-1/2' 
+                      : 'right-0'
+                }`}
+              >
+                {/* Arrow */}
+                <div className={`absolute top-full w-3 h-3 bg-white dark:bg-slate-900 border-r border-b border-slate-100 dark:border-slate-800 rotate-45 -mt-1.5 ${
+                  colIndex <= 2 
+                    ? 'left-3.5' 
+                    : colIndex === 3 
+                      ? 'left-1/2 -translate-x-1/2' 
+                      : 'right-3.5'
+                }`} />
+
+                {/* Content */}
+                <div className="relative z-10 space-y-3">
+                  <div className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                    {date.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </div>
+                  <div className="space-y-2.5 max-h-[200px] overflow-y-auto pr-1">
+                    {dayNews.map((news) => (
+                      <Link 
+                        key={news.slug} 
+                        href={`/novyny/${news.slug}`}
+                        className="flex gap-3 p-1.5 -mx-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors group/item"
+                      >
+                        <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0">
+                          <Image 
+                            src={news.image} 
+                            alt={news.title} 
+                            fill 
+                            className="object-cover group-hover/item:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1 flex flex-col justify-center">
+                          <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 line-clamp-2 group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors leading-tight">
+                            {news.title}
+                          </h4>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 flex items-center gap-1">
+                            Читати далі →
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       );
     }
     return days;

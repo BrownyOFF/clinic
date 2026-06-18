@@ -66,7 +66,7 @@ export const newsDataEn = [
   {
     slug: "gratitude-lets-help",
     title: "A Step Toward Recovery: Thanking the 'Let's Help' Foundation for State-of-the-Art Equipment",
-    date: "June 1, 2026",
+    date: "1 June 2026",
     excerpt: "The 'Let's Help' Charitable Foundation donated a set of professional rehabilitation equipment to our Center, opening new possibilities for children's recovery and development.",
     image: "/images/news/lets-help1.webp",
     images: [
@@ -509,7 +509,7 @@ export const newsDataEn = [
       }
     ]
   },
-  
+
   // Великдень
   {
     slug: "velykden-2026",
