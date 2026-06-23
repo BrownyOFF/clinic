@@ -1,0 +1,335 @@
+/* Контейнер гри на весь екран без скролу */
+.gameContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100dvh; /* dynamic viewport height */
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 1rem;
+}
+
+/* Ігрова сітка (3 стовпчики на 4 рядки) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 480px;
+  height: 60vh;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+/* На горизонтальних екранах (пейзажна орієнтація) міняємо сітку на 4x3 */
+@media (min-aspect-ratio: 1/1) and (max-height: 500px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 60vh;
+    gap: 0.5rem;
+  }
+}
+
+/* 3D Картка */
+.cardContainer {
+  perspective: 1000px;
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.cardFlipped {
+  transform: rotateY(180deg);
+}
+
+.cardSide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Лицьова сторона (сорочка) */
+.cardBack {
+  background: linear-gradient(135deg, #a78bfa, #c084fc);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Темна тема для сорочки */
+:global(.dark) .cardBack {
+  background: linear-gradient(135deg, #6d28d9, #5b21b6);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Зворотна сторона (з емодзі) */
+.cardFront {
+  transform: rotateY(180deg);
+  background: #ffffff;
+  border: 3px solid #e9d5ff;
+}
+
+:global(.dark) .cardFront {
+  background: #1e1b4b;
+  border-color: #312e81;
+}
+
+/* Анімація конфеті з апаратним прискоренням GPU */
+@keyframes fall {
+  0% {
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 105vh, 0) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confettiContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.confettiPiece {
+  position: absolute;
+  top: -20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  animation: fall 3.5s linear forwards;
+  will-change: transform, opacity;
+}
+
+/* --- Головне Меню Вибору Ігор --- */
+.menuGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.menuCard {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+:global(.dark) .menuCard {
+  background: rgba(30, 27, 75, 0.6);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+}
+
+.menuCardEmoji {
+  font-size: 3rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  background: #fdf2f8;
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark) .menuCardEmoji {
+  background: rgba(79, 70, 229, 0.2);
+}
+
+.menuCardText {
+  text-align: left;
+}
+
+.menuCardTitle {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  margin-bottom: 0.25rem;
+}
+
+:global(.dark) .menuCardTitle {
+  color: #ffffff;
+}
+
+.menuCardDesc {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+:global(.dark) .menuCardDesc {
+  color: #94a3b8;
+}
+
+/* --- Гра Bubble Pop --- */
+.bubbleField {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  height: 65vh;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.3);
+  border: 3px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 2.5rem;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+:global(.dark) .bubbleField {
+  background: rgba(15, 23, 42, 0.3);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 70%, rgba(96, 165, 250, 0.4) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), inset -4px -4px 12px rgba(96, 165, 250, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: sway 3s ease-in-out infinite alternate;
+  will-change: transform, top;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+:global(.dark) .bubble {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 70%, rgba(129, 140, 248, 0.3) 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Сяйво всередині бульбашки */
+.bubble::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 25%;
+  height: 25%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.bubbleEmoji {
+  font-size: 2.25rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Ефект лопання частинок */
+@keyframes popOut {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--dx), var(--dy), 0) scale(0);
+    opacity: 0;
+  }
+}
+
+.bubbleParticle {
+  position: absolute;
+  border-radius: 50%;
+  animation: popOut 0.5s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* --- Гра Tic-Tac-Toe --- */
+.tttBoard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 360px;
+  height: 360px;
+  margin: auto;
+}
+
+.tttCell {
+  background: rgba(255, 255, 255, 0.8);
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  font-size: 3.5rem;
+  transition: all 0.2s ease;
+}
+
+:global(.dark) .tttCell {
+  background: rgba(30, 27, 75, 0.6);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: none;
+}
+
+.tttCellActive:active {
+  transform: scale(0.95);
+}
+
+.tttCellWon {
+  background: #d1fae5;
+  border-color: #34d399;
+}
+
+:global(.dark) .tttCellWon {
+  background: rgba(52, 211, 153, 0.2);
+  border-color: #059669;
+}
+
+
