@@ -97,7 +97,7 @@ export default function VacancyPageEn() {
                 {activeVacancies.map((vacancy, idx) => (
                   <span 
                     key={idx} 
-                    className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-semibold text-slate-700 dark:text-slate-200 shadow-sm"
+                    className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-sm font-semibold text-slate-800 dark:text-slate-100 shadow-sm"
                   >
                     {vacancy}
                   </span>

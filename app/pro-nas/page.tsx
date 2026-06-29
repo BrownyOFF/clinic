@@ -59,7 +59,8 @@ export default function AboutPage() {
 
       <Header />
 
-      {/* HERO СЕКЦІЯ */}
+      <main className="relative z-10">
+        {/* HERO СЕКЦІЯ */}
       <section className="pt-20 pb-16 bg-transparent border-b border-slate-200/50 dark:border-slate-800/50 transition-colors">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-3xl">
@@ -267,6 +268,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      </main>
 
       <Footer />
     </div>

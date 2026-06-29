@@ -154,11 +154,11 @@ export default function Footer() {
       </div>
 
       {/* НИЖНЯ ЧАСТИНА (Копірайт та посилання на портфоліо) */}
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between text-sm text-slate-500 gap-4 text-center md:text-left">
+      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between text-sm text-slate-400 gap-4 text-center md:text-left">
         <p>© 2024–{new Date().getFullYear()} КНП «ЦМР та ПДД» ЖОР (Вітрила Життя). Всі права захищені.</p>
         
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
-          <Link href="/privacy-policy" className="font-medium text-slate-400 hover:text-white hover:underline underline-offset-4 transition-all duration-300">
+          <Link href="/privacy-policy" className="font-medium text-slate-350 hover:text-white hover:underline underline-offset-4 transition-all duration-300">
             Політика конфіденційності
           </Link>
           <span className="hidden sm:block w-1 h-1 bg-slate-700 rounded-full"></span>
@@ -170,7 +170,7 @@ export default function Footer() {
               href="https://github.com/BrownyOFF" // ВСТАВТЕ ТУТ ВАШЕ ПОСИЛАННЯ
               target="_blank" 
               rel="noopener noreferrer" 
-              className="font-medium text-slate-400 hover:text-white hover:underline underline-offset-4 transition-all duration-300"
+              className="font-medium text-slate-350 hover:text-white hover:underline underline-offset-4 transition-all duration-300"
             >
               Галас Тимур
             </a>

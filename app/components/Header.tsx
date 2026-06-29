@@ -85,8 +85,8 @@ export default function Header() {
         <div className="flex items-center gap-2 md:gap-4 z-50">
           <ThemeToggle />
           <div className="hidden sm:flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 ml-2">
-            <span className="text-xs px-3 py-1.5 rounded-full bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 font-bold shadow-sm cursor-default">УКР</span>
-            <Link href={englishUrl} className="text-xs px-3 py-1.5 rounded-full text-slate-500 hover:text-slate-800 dark:hover:text-white font-bold transition cursor-pointer">EN</Link>
+            <span className="text-xs px-3 py-1.5 rounded-full bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-200 font-bold shadow-sm cursor-default">УКР</span>
+            <Link href={englishUrl} className="text-xs px-3 py-1.5 rounded-full text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-bold transition cursor-pointer">EN</Link>
           </div>
           
           <Link href="/kontakty" className={`hidden md:flex px-6 py-3 rounded-full text-sm font-semibold transition shadow-lg cursor-pointer ${isActive('/kontakty') ? 'bg-blue-700 text-white shadow-blue-700/20' : 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20'}`}>
@@ -128,8 +128,8 @@ export default function Header() {
             </nav>
 
             <div className="flex bg-slate-100 dark:bg-slate-800 rounded-full p-1 mx-auto mt-2 w-max">
-              <span className="text-sm px-6 py-2 rounded-full bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 font-bold shadow-sm cursor-default">УКР</span>
-              <Link href={englishUrl} className="text-sm px-6 py-2 rounded-full text-slate-500 hover:text-slate-800 dark:hover:text-white font-bold transition cursor-pointer">EN</Link>
+              <span className="text-sm px-6 py-2 rounded-full bg-white dark:bg-slate-700 text-blue-700 dark:text-blue-200 font-bold shadow-sm cursor-default">УКР</span>
+              <Link href={englishUrl} className="text-sm px-6 py-2 rounded-full text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-bold transition cursor-pointer">EN</Link>
             </div>
             
             <Link href="/kontakty" onClick={closeMenu} className="w-full bg-blue-600 text-white px-6 py-4 rounded-xl text-base font-semibold hover:bg-blue-700 transition text-center block mt-2 cursor-pointer">
