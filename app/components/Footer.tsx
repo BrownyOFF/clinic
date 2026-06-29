@@ -22,7 +22,7 @@ export default function Footer() {
 
         {/* КОЛОНКА 2: Швидкі посилання (займає 3 колонки, поділені на 2 списки) */}
         <div className="lg:col-span-3">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Навігація</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Навігація</h3>
           <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
             
             {/* Основні сторінки */}
@@ -91,7 +91,7 @@ export default function Footer() {
 
         {/* КОЛОНКА 3: Контакти (займає 3 колонки) */}
         <div className="lg:col-span-3">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Контакти</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Контакти</h3>
           <ul className="space-y-4">
             <li>
               <a href="tel:+380674572828" className="flex items-center gap-3 hover:text-blue-400 transition group text-sm">
@@ -122,7 +122,7 @@ export default function Footer() {
 
         {/* КОЛОНКА 4: Соцмережі (займає 2 колонки) */}
         <div className="lg:col-span-2">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Ми в мережі</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Ми в мережі</h3>
           
           <div className="flex gap-4">
             <a 

@@ -20,7 +20,7 @@ export default function FooterEn() {
         </div>
 
         <div className="lg:col-span-3">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Navigation</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Navigation</h3>
           <div className="flex flex-col sm:flex-row gap-8 sm:gap-4">
             
             <ul className="space-y-3 text-sm flex-1">
@@ -86,7 +86,7 @@ export default function FooterEn() {
         </div>
 
         <div className="lg:col-span-3">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Contacts</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Contacts</h3>
           <ul className="space-y-4">
             <li>
               <a href="tel:+380674572828" className="flex items-center gap-3 hover:text-blue-400 transition group text-sm">
@@ -116,7 +116,7 @@ export default function FooterEn() {
         </div>
 
         <div className="lg:col-span-2">
-          <h4 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Social Media</h4>
+          <h3 className="text-white font-semibold mb-6 tracking-wide uppercase text-sm">Social Media</h3>
           
           <div className="flex gap-4">
             <a 
