@@ -6,6 +6,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { newsData } from "@/app/data/news";
 import PhotoCarousel from "@/app/components/PhotoCarousel";
+import PdfViewer from "@/app/components/PdfViewer";
 
 export const runtime = 'edge';
 
@@ -96,6 +97,16 @@ export default async function NewsArticle({ params }: { params: Promise<{ slug: 
                             <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
                             ))}
                         </ul>
+                        );
+                    }
+                    if (block.type === "pdf") {
+                        return (
+                            <PdfViewer
+                                key={index}
+                                url={block.value}
+                                title={block.title}
+                                height={block.height}
+                            />
                         );
                     }
                     return null;

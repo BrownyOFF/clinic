@@ -1,6 +1,111 @@
 // data/newsEn.ts
 
 export const newsDataEn = [
+  // Constitution Day
+  {
+    slug: "constitution-day-2026",
+    title: "The Constitution of Ukraine — the Safeguard of Our Freedom and Guarantee of Every Child's Rights",
+    date: "28 June 2026",
+    excerpt: "On June 28, Ukraine celebrates Constitution Day. The Basic Law of our state enshrines human rights and freedoms, protects childhood under special state care, and declares human life and health as the highest social value.",
+    image: "/images/news/Зі статті 10.jpg",
+    images: [
+      "/images/news/Зі статті 10.jpg",
+      "/images/news/стаття 3.jpg",
+      "/images/news/Стаття 7.jpg",
+      "/images/news/Стаття 12.jpg",
+      "/images/news/Зі статті 13.jpg",
+      "/images/news/Зі статті 17.jpg",
+      "/images/news/Зі статті 20.jpg",
+      "/images/news/Стаття 23.jpg",
+      "/images/news/Зі статті 24.jpg",
+      "/images/news/Зі статті 45.jpg",
+      "/images/news/Стаття 51.jpg",
+      "/images/news/Зі статті 52.jpg",
+      "/images/news/Зі статті 65.jpg",
+      "/images/news/Стаття 75.jpg",
+      "/images/news/Стаття 161.jpg"
+    ],
+    content: [
+      {
+        type: "paragraph",
+        value: "<strong>On June 28</strong>, Ukraine celebrates Constitution Day — the holiday of the Basic Law that lays the foundation of our independence, democracy, and equality. For our Center, this holiday holds special significance, as the Constitution of Ukraine clearly defines the human being, their life, health, honor, dignity, inviolability, and safety as the highest social value of our state."
+      },
+      {
+        type: "paragraph",
+        value: "The rights of the child, their comprehensive development, healthcare, and social protection are among the key priorities declared in the Basic Law. We work daily to bring these constitutional guarantees to life, providing every child in need with high-quality rehabilitation, professional medical care, and sincere human support."
+      },
+      {
+        type: "heading",
+        value: "Constitutional Rights of Children and State Duties"
+      },
+      {
+        type: "paragraph",
+        value: "The Constitution of Ukraine contains a number of important articles directly relating to human rights and the protection of childhood:"
+      },
+      {
+        type: "list",
+        items: [
+          "<strong>Article 3:</strong> The human being, their life and health, honor and dignity, inviolability and security are recognized in Ukraine as the highest social value.",
+          "<strong>Article 24:</strong> Citizens have equal constitutional rights and freedoms and are equal before the law.",
+          "<strong>Article 51:</strong> Family, childhood, motherhood, and fatherhood are protected by the state.",
+          "<strong>Article 52:</strong> Children are equal in their rights regardless of their origin, and whether they are born in or out of wedlock. Any violence against a child and their exploitation shall be prosecuted by law."
+        ]
+      },
+      {
+        type: "paragraph",
+        value: "On this festive day, we prepared educational materials and creative classes for our children, dedicated to state symbols, the language, and the fundamental rights of Ukrainian citizens. You can review the key provisions of the Constitution in the form of bright illustrations in our gallery above."
+      },
+      {
+        type: "paragraph",
+        value: "We wish all of us peace, harmony, strong health, and faith in the bright European future of our Motherland. May the democratic principles declared in the Constitution be a real guide in our daily life, and may every citizen feel protected and equal."
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Happy Constitution Day of Ukraine! Glory to Ukraine!</strong> 🇺🇦"
+      }
+    ]
+  },
+  // Cyber Digest MOH
+  {
+    slug: "cyber-digest-may-2026",
+    title: "Cybersecurity in Medicine: May Issue of the Cyber Digest of the Ministry of Health of Ukraine",
+    date: "24 June 2026",
+    excerpt: "The Ministry of Health of Ukraine has released the May 2026 issue of the 'Cyber Digest' containing analytics of current threats and recommendations for strengthening cyber resilience.",
+    image: "/images/news/cyber-digest.png",
+    content: [
+      {
+        type: "paragraph",
+        value: "Dear colleagues! With the aim of strengthening the cyber resilience of the healthcare sector, we are sharing with you the May 2026 issue of the <strong>«Cyber Digest of the Ministry of Health of Ukraine»</strong>. This material gathers analysis of current cyber threats targeting Ukrainian state and medical sectors, as well as practical recommendations for strengthening the resilience of information and communication systems (ICS) in accordance with the requirements of relevant regulators."
+      },
+      {
+        type: "pdf",
+        value: "/documents/CyberDigest_compressed.pdf",
+        title: "Cyber Digest of the Ministry of Health of Ukraine — May 2026",
+        height: 600
+      },
+
+      {
+        type: "heading",
+        value: "Practical Recommendations for the Facility"
+      },
+      {
+        type: "paragraph",
+        value: "<strong>For heads of healthcare facilities and state institutions:</strong> we recommend taking into account analytical assessments of business continuity risks. Particular attention should be paid to the need to revise contracts with external IT contractors, provide organizational support for the implementation of the Zero Trust architecture, and conduct planned cyber hygiene training for the institution's staff."
+      },
+      {
+        type: "paragraph",
+        value: "<strong>For IT departments and Information Security & Cyber Protection units:</strong> it is advisable to study in detail the technical recommendations and instructions provided in the materials. It is necessary to implement preventive measures at the Group Policy Object (GPO) level, in particular regarding the restriction of unauthorized scripts, configure corporate conditional access rules for unmanaged devices, ensure timely patch management of infrastructure services, and integrate fresh indicators of compromise (IoC) into local monitoring systems."
+      },
+      {
+        type: "paragraph",
+        value: "If you have any questions regarding the implementation of the recommendations, specialists from the Department of Digital Transformations and Innovations in Healthcare are always ready to provide methodological support."
+      },
+      {
+        type: "paragraph",
+        value: "<strong>Cybersecurity is an ongoing process and our shared responsibility.</strong> Thank you for your daily work in protecting data and infrastructure!"
+      }
+    ]
+  },
   // Webinars for IDPs
   {
     slug: "vpo-webinars-2026",
