@@ -7,23 +7,23 @@ export const newsDataEn = [
     title: "The Constitution of Ukraine — the Safeguard of Our Freedom and Guarantee of Every Child's Rights",
     date: "28 June 2026",
     excerpt: "On June 28, Ukraine celebrates Constitution Day. The Basic Law of our state enshrines human rights and freedoms, protects childhood under special state care, and declares human life and health as the highest social value.",
-    image: "/images/news/Зі статті 10.jpg",
+    image: "/images/news/article-10.jpg",
     images: [
-      "/images/news/Зі статті 10.jpg",
-      "/images/news/стаття 3.jpg",
-      "/images/news/Стаття 7.jpg",
-      "/images/news/Стаття 12.jpg",
-      "/images/news/Зі статті 13.jpg",
-      "/images/news/Зі статті 17.jpg",
-      "/images/news/Зі статті 20.jpg",
-      "/images/news/Стаття 23.jpg",
-      "/images/news/Зі статті 24.jpg",
-      "/images/news/Зі статті 45.jpg",
-      "/images/news/Стаття 51.jpg",
-      "/images/news/Зі статті 52.jpg",
-      "/images/news/Зі статті 65.jpg",
-      "/images/news/Стаття 75.jpg",
-      "/images/news/Стаття 161.jpg"
+      "/images/news/article-10.jpg",
+      "/images/news/article-3.jpg",
+      "/images/news/article-7.jpg",
+      "/images/news/article-12.jpg",
+      "/images/news/article-13.jpg",
+      "/images/news/article-17.jpg",
+      "/images/news/article-20.jpg",
+      "/images/news/article-23.jpg",
+      "/images/news/article-24.jpg",
+      "/images/news/article-45.jpg",
+      "/images/news/article-51.jpg",
+      "/images/news/article-52.jpg",
+      "/images/news/article-65.jpg",
+      "/images/news/article-75.jpg",
+      "/images/news/article-161.jpg"
     ],
     content: [
       {
@@ -71,7 +71,7 @@ export const newsDataEn = [
     title: "Cybersecurity in Medicine: May Issue of the Cyber Digest of the Ministry of Health of Ukraine",
     date: "24 June 2026",
     excerpt: "The Ministry of Health of Ukraine has released the May 2026 issue of the 'Cyber Digest' containing analytics of current threats and recommendations for strengthening cyber resilience.",
-    image: "/images/news/cyber-digest.png",
+    image: "/images/news/cyber-digest-cover.png",
     content: [
       {
         type: "paragraph",

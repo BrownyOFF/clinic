@@ -7,23 +7,23 @@ export const newsData = [
     title: "Конституція України — оберіг нашої свободи та гарант прав кожної дитини",
     date: "28 червня 2026",
     excerpt: "28 червня Україна відзначає День Конституції. Основний Закон нашої держави закріплює права і свободи людини, визначає дитинство під особливою охороною, а саму людину, її життя та здоров'я — найвищою соціальною цінністю.",
-    image: "/images/news/Зі статті 10.jpg",
+    image: "/images/news/article-10.jpg",
     images: [
-      "/images/news/Зі статті 10.jpg",
-      "/images/news/стаття 3.jpg",
-      "/images/news/Стаття 7.jpg",
-      "/images/news/Стаття 12.jpg",
-      "/images/news/Зі статті 13.jpg",
-      "/images/news/Зі статті 17.jpg",
-      "/images/news/Зі статті 20.jpg",
-      "/images/news/Стаття 23.jpg",
-      "/images/news/Зі статті 24.jpg",
-      "/images/news/Зі статті 45.jpg",
-      "/images/news/Стаття 51.jpg",
-      "/images/news/Зі статті 52.jpg",
-      "/images/news/Зі статті 65.jpg",
-      "/images/news/Стаття 75.jpg",
-      "/images/news/Стаття 161.jpg"
+      "/images/news/article-10.jpg",
+      "/images/news/article-3.jpg",
+      "/images/news/article-7.jpg",
+      "/images/news/article-12.jpg",
+      "/images/news/article-13.jpg",
+      "/images/news/article-17.jpg",
+      "/images/news/article-20.jpg",
+      "/images/news/article-23.jpg",
+      "/images/news/article-24.jpg",
+      "/images/news/article-45.jpg",
+      "/images/news/article-51.jpg",
+      "/images/news/article-52.jpg",
+      "/images/news/article-65.jpg",
+      "/images/news/article-75.jpg",
+      "/images/news/article-161.jpg"
     ],
     content: [
       {
@@ -71,7 +71,7 @@ export const newsData = [
     title: "Кібербезпека в медицині: травневий випуск Кібер-дайджесту МОЗ України",
     date: "24 червня 2026",
     excerpt: "Міністерство охорони здоров'я України оприлюднило випуск «Кібер-дайджесту» за травень 2026 року з аналітикою актуальних загроз та рекомендаціями щодо посилення кіберстійкості.",
-    image: "/images/news/cyber-digest.png",
+    image: "/images/news/cyber-digest-cover.png",
     content: [
       {
         type: "paragraph",
